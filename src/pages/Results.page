@@ -66,10 +66,10 @@
 		var options = {
 			title : chartTitle,
 			colors : ['blue'],
-			height: Math.max(results.rWrappers.length * 20, 400),
+			height: results.rWrappers.length * 25,
 			width: 500,
 			chartArea : {
-				left : 150
+				left: 150
 			},
 			hAxis : { 
 				format : '#0.0',
@@ -93,10 +93,10 @@
 		var options = {
 			title : chartTitle,
 			colors : ['red'],
-			height: Math.max(results.rWrappers.length * 20, 400),
+			height: results.rWrappers.length * 25,
 			width: 500,
 			chartArea : {
-				left : 150
+				left: 150
 			},
 			hAxis : { 
 				format : '0.000'
