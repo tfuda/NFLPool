@@ -1,0 +1,33 @@
+Name,Short_Name__c
+San Francisco 49ers,49ers
+Chicago Bears,Bears
+Cincinnati Bengals,Bengals
+Buffalo Bills,Bills
+Denver Broncos,Broncos
+Cleveland Browns,Browns
+Tampa Bay Buccaneers,Buccaneers
+Arizona Cardinals,Cardinals
+San Diego Chargers,Chargers
+Kansas City Chiefs,Chiefs
+Indianapolis Colts,Colts
+Dallas Cowboys,Cowboys
+Miami Dolphins,Dolphins
+Philadelphia Eagles,Eagles
+Atlanta Falcons,Falcons
+New York Giants,Giants
+Jacksonville Jaguars,Jaguars
+New York Jets,Jets
+Detroit Lions,Lions
+Green Bay Packers,Packers
+Carolina Panthers,Panthers
+New England Patriots,Patriots
+Oakland Raiders,Raiders
+Saint Louis Rams,Rams
+Baltimore Ravens,Ravens
+Washington Redskins,Redskins
+New Orleans Saints,Saints
+Seattle Seahawks,Seahawks
+Pittsburgh Steelers,Steelers
+Houston Texans,Texans
+Tennessee Titans,Titans
+Minnesota Vikings,Vikings

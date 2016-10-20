@@ -1,0 +1,41 @@
+<apex:page controller="MessageBoardController" id="messageBoardPage" tabStyle="MessageBoard__tab" >
+    <apex:pageMessages id="messages" />
+    <apex:form id="messageForm">
+        <apex:sectionHeader id="messageListSection" title="Messages" />
+        <apex:pageBlock id="messageListBlock">
+            <apex:dataTable id="messageTable" value="{!messages}" var="msg" >
+                <apex:column >
+                    <span>
+                        Posted by:&nbsp;
+                        <apex:outputText value="{!msg.CreatedBy.FirstName} {!msg.CreatedBy.LastName} ({!msg.CreatedBy.CommunityNickname})" style="font-weight:bold;" />
+                        &nbsp;on:&nbsp; 
+                        <apex:outputField value="{!msg.CreatedDate}"/>
+                    </span>
+                    <br/>
+                    <apex:outputText value="{!msg.Message__c}" style="font-size:12pt;" />
+                    <hr/>
+                </apex:column>
+            </apex:dataTable>
+            <br/>
+            <apex:outputPanel id="paginationPanel" >
+                <apex:panelGrid columns="4" id="buttons">
+                    <apex:commandButton action="{!first}" disabled="{!NOT(hasPrevious)}" value="Newest" style="width: 75px" />
+                    <apex:commandButton action="{!previous}" disabled="{!NOT(hasPrevious)}" value="Newer" style="width: 75px" />
+                    <apex:commandButton action="{!next}" disabled="{!NOT(hasNext)}" value="Older" style="width: 75px" />
+                    <apex:commandButton action="{!last}" disabled="{!NOT(hasNext)}" value="Oldest" style="width: 75px" />
+                </apex:panelGrid>   
+                <br />
+                <apex:outputText id="recordIndex"
+                    value="Showing records {!MIN((((pageNumber-1) * pageSize) + 1), resultSize)} to {!MIN((pageNumber * pageSize), resultSize)} of {!resultSize}" />
+            </apex:outputPanel>         
+        </apex:pageBlock>
+        <apex:pageBlock id="postSection">
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!post}" value="Post Message" />
+                <apex:commandButton action="{!cancel}" immediate="true" value="Cancel" />
+            </apex:pageBlockButtons>
+            <apex:outputLabel for="messageBody" value="Message Body:" />
+            <apex:inputField id="messageBody" style="width:100%" value="{!newMessage.Message__c}" />
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

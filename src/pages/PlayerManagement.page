@@ -1,0 +1,44 @@
+<apex:page controller="PlayerListController" id="playerListPage" tabStyle="PlayerManagement__tab" >
+	<apex:pageMessages id="messages" />
+	<apex:form id="playerListForm">
+		<apex:sectionHeader id="playerListSection" title="{!IF(activeOnly, 'Active Players', 'All Players (Includes Inactive)')}" >
+			<apex:commandButton action="{!toggleActiveOnly}" value="{!IF(activeOnly, 'Show All', 'Show Active Only')}" />
+		</apex:sectionHeader>
+		<apex:pageBlock id="playerListBlock">
+			<apex:pageBlockButtons >
+				<apex:commandButton action="{!newPlayer}" value="New Player" />
+			</apex:pageBlockButtons>
+			<apex:pageBlockTable id="playerListTable" value="{!playerWrappers}" var="wrapper" >
+				<apex:column >
+					<apex:commandLink action="{!deactivate}" value="Deactivate" style="font-weight:bold;" rendered="{!wrapper.usr.isactive}" >
+						<apex:param name="id" value="{!wrapper.usr.id}" />
+					</apex:commandLink>
+					<apex:commandLink action="{!activate}" value="Activate" style="font-weight:bold;" rendered="{!NOT(wrapper.usr.isactive)}">
+						<apex:param name="id" value="{!wrapper.usr.id}" />
+					</apex:commandLink>
+					<apex:outputText escape="false" value="&nbsp;|&nbsp;" style="font-weight:bold;" />
+					<apex:outputLink value="{!$Page.PlayerDetail}" style="font-weight:bold;">Edit
+						<apex:param name="id" value="{!wrapper.usr.id}" />
+						<apex:param name="mode" value="edit" />
+					</apex:outputLink>					
+				</apex:column>
+				<apex:column headerValue="Name">
+					<apex:outputLink value="{!$Page.PlayerDetail}">{!wrapper.usr.name}
+						<apex:param name="id" value="{!wrapper.usr.id}" />
+						<apex:param name="mode" value="view" />
+					</apex:outputLink>
+				</apex:column>
+				<apex:column value="{!wrapper.usr.communitynickname}" headerValue="Nickname" />
+				<apex:column value="{!wrapper.usr.username}" />
+				<apex:column value="{!wrapper.usr.phone}" />
+				<apex:column value="{!wrapper.usr.email}" />
+				<apex:column value="{!wrapper.player.BalanceDueFormula__c}" headerValue="Balance Due" />
+				<apex:column value="{!wrapper.usr.profileid}" headerValue="Profile" />
+				<apex:column headerValue="Active">
+					<apex:image value="/img/checkbox_checked.gif" rendered="{!wrapper.usr.isactive}" />
+					<apex:image value="/img/checkbox_unchecked.gif" rendered="{!NOT(wrapper.usr.isactive)}" />
+				</apex:column>
+			</apex:pageBlockTable>
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

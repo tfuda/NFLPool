@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Game</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Games</value>
+    </caseValues>
+    <fields>
+        <label><!-- External ID --></label>
+        <name>External_ID__c</name>
+    </fields>
+    <fields>
+        <label><!-- Final --></label>
+        <name>Final__c</name>
+    </fields>
+    <fields>
+        <label><!-- Home Score --></label>
+        <name>Home_Score__c</name>
+    </fields>
+    <fields>
+        <label><!-- Home Team --></label>
+        <name>Home_Team__c</name>
+        <relationshipLabel><!-- Games --></relationshipLabel>
+    </fields>
+    <fields>
+        <help><!-- 1 if current time is greater than game start time. --></help>
+        <label><!-- Locked --></label>
+        <name>Locked__c</name>
+    </fields>
+    <fields>
+        <label><!-- Points --></label>
+        <name>Points__c</name>
+    </fields>
+    <fields>
+        <label><!-- Spread --></label>
+        <name>Spread__c</name>
+    </fields>
+    <fields>
+        <label><!-- Start Time --></label>
+        <name>Start_Time__c</name>
+    </fields>
+    <fields>
+        <label><!-- Visiting Score --></label>
+        <name>Visiting_Score__c</name>
+    </fields>
+    <fields>
+        <label><!-- Visiting Team --></label>
+        <name>Visiting_Team__c</name>
+        <relationshipLabel><!-- Games (Visiting Team) --></relationshipLabel>
+    </fields>
+    <fields>
+        <label><!-- Week --></label>
+        <name>Week__c</name>
+    </fields>
+    <fields>
+        <label><!-- Winner --></label>
+        <name>Winner__c</name>
+    </fields>
+    <layouts>
+        <layout>Game Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+</CustomObjectTranslation>

@@ -1,0 +1,56 @@
+<apex:page id="emailPage" controller="EmailController" tabStyle="Email__tab" >
+    <apex:pageMessages id="errorMessages" />
+    <apex:form id="emailForm" >
+    	<apex:sectionHeader title="Email" />
+        <apex:pageBlock id="emailBlock" >
+        	<apex:pageBlockButtons >
+        		<apex:commandButton value="Send" action="{!send}" />
+        		<apex:commandButton value="Cancel" immediate="true" action="{!cancel}" />
+        	</apex:pageBlockButtons>
+       		<apex:outputPanel id="emailPlayerPanel" layout="none" rendered="{!mode == 'emailPlayers'}" >
+       			<span style="font-weight:bold;">Select Recipients ( * denotes Pool Administrator ):</span>
+       			<br/>
+       			<br/>
+        		<table>
+	       			<apex:repeat id="row" value="{!playerList}" var="row">
+	       				<tr align="left" >
+	       					<apex:repeat id="col" value="{!row}" var="player">
+	       						<td style="width:225px;">	       						
+			        				<apex:inputCheckbox id="playerSelect" value="{!player.selected}" />
+			        				<apex:outputLabel for="playerSelect" value="{!player.label}" />
+			        			</td>
+	        				</apex:repeat>
+	        			</tr>
+		        	</apex:repeat>
+		        	<tr><td>&nbsp;</td></tr>
+	        		<tr align="left">
+	        			<td style="width:225px;" >
+				        	<apex:inputCheckbox id="selectAll" value="{!selectAll}" >
+				        		<apex:actionSupport event="onclick" action="{!selectDeselectAll}" rerender="emailBlock"/>
+				        	</apex:inputCheckbox>
+				        	<apex:outputLabel for="selectAll" value="Select / Deselect All: " style="font-weight:bold;" />
+			        	</td>
+	        		</tr>
+	        	</table>
+        	</apex:outputPanel>
+        	
+       		<apex:outputPanel id="emailAdminPanel" layout="none" rendered="{!mode == 'emailAdmins'}" >
+       			<h2>Your email will be sent to the Pool Administrators</h2>
+        	</apex:outputPanel>
+        	
+  			<hr/>
+        	<apex:outputLabel for="copyMe" value="Copy Me: " style="font-weight:bold;" />
+        	<apex:inputCheckbox id="copyMe" value="{!copyMe}" />
+        	<br/>
+        	<br/>
+        	<apex:outputLabel for="subject" value="Subject: " style="font-weight:bold;"/>
+        	<br/>
+        	<apex:inputText id="subject" value="{!subject}" size="100" maxLength="500" />
+        	<br/>
+        	<br/>
+        	<apex:outputLabel for="body" value="Message: " style="font-weight:bold;"/>
+        	<br/>
+        	<apex:inputTextarea id="body" rows="8" style="width:700px;" value="{!message}" />
+        </apex:pageBlock>
+	</apex:form>
+</apex:page>
