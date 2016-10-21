@@ -22,7 +22,7 @@ Green Bay Packers,Packers
 Carolina Panthers,Panthers
 New England Patriots,Patriots
 Oakland Raiders,Raiders
-Saint Louis Rams,Rams
+Los Angeles Rams,Rams
 Baltimore Ravens,Ravens
 Washington Redskins,Redskins
 New Orleans Saints,Saints

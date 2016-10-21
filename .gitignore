@@ -1,4 +1,4 @@
 .idea
 IlluminatedCloud
-Production.iml
+*.iml
 build.properties
