@@ -13,7 +13,9 @@
         <name>ApexPage</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Game</members>
+        <members>Player</members>
+        <members>Selection</members>
         <name>ApexTrigger</name>
     </types>
     <types>

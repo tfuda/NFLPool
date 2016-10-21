@@ -247,7 +247,8 @@ private class Test_ResultsStuff {
         System.assertEquals(0, wrList.size());
         
     }
-    
+
+    // This test actually covers the Game trigger. It verifies that changes to Games properly updates player results
     static testMethod void testResultsController() {
         Scaffold s = new Scaffold();
         
@@ -336,7 +337,184 @@ private class Test_ResultsStuff {
 		System.assertEquals(2.0, r.pointsScored);
 		System.assertEquals(0.667, r.winPercentage);
     }
-    
+
+    static testMethod void testPushesOnly() {
+        Scaffold s = new Scaffold();
+
+        // Delete players we're not going to use for this test so they don't throw off the results
+        delete s.player3;
+        delete s.player4;
+        delete s.player5;
+
+        // Add three games for week 1
+        List<Game__c> gameList = new List<Game__c>();
+        s.ninersVsBears = new Game__c(Week__c='1', Start_Time__c=DateTime.now(),
+                Home_Team__c=s.niners.Id, Visiting_Team__c=s.bears.Id, Spread__c=-3.0);
+        gameList.add(s.ninersVsBears);
+        s.bengalsVsBills = new Game__c(Week__c='1', Start_Time__c=DateTime.now(),
+                Home_Team__c=s.bengals.Id, Visiting_Team__c=s.bills.Id, Spread__c=-3.0);
+        gameList.add(s.bengalsVsBills);
+        s.broncosVsBrowns = new Game__c(Week__c='1', Start_Time__c=DateTime.now(),
+                Home_Team__c=s.broncos.Id, Visiting_Team__c=s.browns.Id, Spread__c=-3.0);
+        gameList.add(s.broncosVsBrowns);
+        insert gameList;
+
+        // Create player selections for players 1
+        List<Selection__c> selectionList = new List<Selection__c>();
+        Selection__c sel11 = new Selection__c(Game__c=s.ninersVsBears.Id, Player__c=s.player1.Id, Team__c=s.niners.Id);
+        selectionList.add(sel11);
+        Selection__c sel12 = new Selection__c(Game__c=s.bengalsVsBills.Id, Player__c=s.player1.Id, Team__c=s.bills.Id);
+        selectionList.add(sel12);
+        Selection__c sel13 = new Selection__c(Game__c=s.broncosVsBrowns.Id, Player__c=s.player1.Id, Team__c=s.broncos.Id);
+        selectionList.add(sel13);
+        // Create player selections for player 2, omitting a selection for the first game
+        Selection__c sel22 = new Selection__c(Game__c=s.bengalsVsBills.Id, Player__c=s.player2.Id, Team__c=s.bills.Id);
+        selectionList.add(sel22);
+        Selection__c sel23 = new Selection__c(Game__c=s.broncosVsBrowns.Id, Player__c=s.player2.Id, Team__c=s.broncos.Id);
+        selectionList.add(sel23);
+        insert selectionList;
+
+        // Update the games to set a score and make them finals
+        // Niners win
+        s.ninersVsBears.Home_Score__c=20;
+        s.ninersVsBears.Visiting_Score__c=10;
+        s.ninersVsBears.Final__c = true;
+        // Bills and Bengals push
+        s.bengalsVsBills.Home_Score__c=17;
+        s.bengalsVsBills.Visiting_Score__c=14;
+        s.bengalsVsBills.Final__c = true;
+        // Broncos and Browns push
+        s.broncosVsBrowns.Home_Score__c=17;
+        s.broncosVsBrowns.Visiting_Score__c=14;
+        s.broncosVsBrowns.Final__c = true;
+        update gameList;
+
+        // Instantiate the ResultsController
+        System.Test.setCurrentPage(Page.Results);
+        ResultsController con = new ResultsController();
+        System.assertEquals('1', con.currentWeek);
+        System.assertEquals('1', con.selectedWeek);
+        System.assertEquals(1, con.weeks.size());
+        System.assertEquals('1', con.weeks[0]);
+
+        // Get the results for week 1
+        ResultsController.Results results = ResultsController.getWeeklyResults('1');
+        System.assertEquals(2.0, results.pointsAvailable);
+        System.assertEquals(2, results.rWrappers.size());
+        // Player 1 should be first (1 win and 2 pushes), player 2 second (0 wins and 2 pushes)
+        ResultsController.ResultWrapper r = results.rWrappers[0];
+        System.assertEquals('Player1', r.nickname);
+        System.assertEquals(2.0, r.pointsScored);
+        System.assertEquals(1.000, r.winPercentage);
+        r = results.rWrappers[1];
+        System.assertEquals('Player2', r.nickname);
+        System.assertEquals(1.0, r.pointsScored);
+        System.assertEquals(0.500, r.winPercentage);
+
+        // Get seasonal results
+        results = ResultsController.getSeasonalResults();
+        System.assertEquals(2.0, results.pointsAvailable);
+        System.assertEquals(2, results.rWrappers.size());
+        // Player 1 should be first (1 win and 2 pushes), player 2 second (0 wins and 2 pushes)
+        r = results.rWrappers[0];
+        System.assertEquals('Player1', r.nickname);
+        System.assertEquals(2.0, r.pointsScored);
+        System.assertEquals(1.000, r.winPercentage);
+        r = results.rWrappers[1];
+        System.assertEquals('Player2', r.nickname);
+        System.assertEquals(1.0, r.pointsScored);
+        System.assertEquals(0.500, r.winPercentage);
+    }
+
+    // This test covers the Selection trigger. It verifies that modifying selections associated with final games updates the results properly
+    static testMethod void testChangeSelectionsAfterGameIsFinal() {
+        Scaffold s = new Scaffold();
+
+        // Delete players we're not going to use for this test so they don't throw off the results
+        delete s.player3;
+        delete s.player4;
+        delete s.player5;
+
+        // Add three games for week 1
+        List<Game__c> gameList = new List<Game__c>();
+        s.ninersVsBears = new Game__c(Week__c='1', Start_Time__c=DateTime.now(),
+                Home_Team__c=s.niners.Id, Visiting_Team__c=s.bears.Id, Spread__c=-3.0);
+        gameList.add(s.ninersVsBears);
+        s.bengalsVsBills = new Game__c(Week__c='1', Start_Time__c=DateTime.now(),
+                Home_Team__c=s.bengals.Id, Visiting_Team__c=s.bills.Id, Spread__c=-3.0);
+        gameList.add(s.bengalsVsBills);
+        s.broncosVsBrowns = new Game__c(Week__c='1', Start_Time__c=DateTime.now(),
+                Home_Team__c=s.broncos.Id, Visiting_Team__c=s.browns.Id, Spread__c=-3.0);
+        gameList.add(s.broncosVsBrowns);
+        insert gameList;
+
+        // Update the games to set a score and make them finals
+        // Niners win
+        s.ninersVsBears.Home_Score__c=20;
+        s.ninersVsBears.Visiting_Score__c=10;
+        s.ninersVsBears.Final__c = true;
+        // Bills and Bengals push
+        s.bengalsVsBills.Home_Score__c=17;
+        s.bengalsVsBills.Visiting_Score__c=14;
+        s.bengalsVsBills.Final__c = true;
+        // Broncos and Browns push
+        s.broncosVsBrowns.Home_Score__c=17;
+        s.broncosVsBrowns.Visiting_Score__c=14;
+        s.broncosVsBrowns.Final__c = true;
+        update gameList;
+
+        // Create player selections for players 1
+        List<Selection__c> selectionList = new List<Selection__c>();
+        Selection__c sel11 = new Selection__c(Game__c=s.ninersVsBears.Id, Player__c=s.player1.Id, Team__c=s.niners.Id);
+        selectionList.add(sel11);
+        Selection__c sel12 = new Selection__c(Game__c=s.bengalsVsBills.Id, Player__c=s.player1.Id, Team__c=s.bills.Id);
+        selectionList.add(sel12);
+        Selection__c sel13 = new Selection__c(Game__c=s.broncosVsBrowns.Id, Player__c=s.player1.Id, Team__c=s.broncos.Id);
+        selectionList.add(sel13);
+        // Create player selections for player 2, omitting a selection for the first game
+        Selection__c sel22 = new Selection__c(Game__c=s.bengalsVsBills.Id, Player__c=s.player2.Id, Team__c=s.bills.Id);
+        selectionList.add(sel22);
+        Selection__c sel23 = new Selection__c(Game__c=s.broncosVsBrowns.Id, Player__c=s.player2.Id, Team__c=s.broncos.Id);
+        selectionList.add(sel23);
+        insert selectionList;
+
+        // Instantiate the ResultsController
+        System.Test.setCurrentPage(Page.Results);
+        ResultsController con = new ResultsController();
+        System.assertEquals('1', con.currentWeek);
+        System.assertEquals('1', con.selectedWeek);
+        System.assertEquals(1, con.weeks.size());
+        System.assertEquals('1', con.weeks[0]);
+
+        // Get the results for week 1
+        ResultsController.Results results = ResultsController.getWeeklyResults('1');
+        System.assertEquals(2.0, results.pointsAvailable);
+        System.assertEquals(2, results.rWrappers.size());
+        // Player 1 should be first (1 win and 2 pushes), player 2 second (0 wins and 2 pushes)
+        ResultsController.ResultWrapper r = results.rWrappers[0];
+        System.assertEquals('Player1', r.nickname);
+        System.assertEquals(2.0, r.pointsScored);
+        System.assertEquals(1.000, r.winPercentage);
+        r = results.rWrappers[1];
+        System.assertEquals('Player2', r.nickname);
+        System.assertEquals(1.0, r.pointsScored);
+        System.assertEquals(0.500, r.winPercentage);
+
+        // Get seasonal results
+        results = ResultsController.getSeasonalResults();
+        System.assertEquals(2.0, results.pointsAvailable);
+        System.assertEquals(2, results.rWrappers.size());
+        // Player 1 should be first (1 win and 2 pushes), player 2 second (0 wins and 2 pushes)
+        r = results.rWrappers[0];
+        System.assertEquals('Player1', r.nickname);
+        System.assertEquals(2.0, r.pointsScored);
+        System.assertEquals(1.000, r.winPercentage);
+        r = results.rWrappers[1];
+        System.assertEquals('Player2', r.nickname);
+        System.assertEquals(1.0, r.pointsScored);
+        System.assertEquals(0.500, r.winPercentage);
+    }
+
     public class Scaffold {
     	Settings__c settings { get; set; }
     	

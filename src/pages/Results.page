@@ -66,7 +66,7 @@
 		var options = {
 			title : chartTitle,
 			colors : ['blue'],
-			height: results.rWrappers.length * 25,
+			height: Math.max(results.rWrappers.length * 25, 500),
 			width: 500,
 			chartArea : {
 				left: 150
@@ -93,7 +93,7 @@
 		var options = {
 			title : chartTitle,
 			colors : ['red'],
-			height: results.rWrappers.length * 25,
+			height: Math.max(results.rWrappers.length * 25, 500),
 			width: 500,
 			chartArea : {
 				left: 150
