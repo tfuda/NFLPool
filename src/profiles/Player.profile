@@ -34,10 +34,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>New_GameSelection</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>PlayerController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
