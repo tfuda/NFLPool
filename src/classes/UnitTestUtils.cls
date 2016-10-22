@@ -15,24 +15,24 @@ public with sharing class UnitTestUtils {
 	}
 	
 	public static User createTestUser() {
-		Profile p = [select id from profile where name='Player'];
+		Profile p = [select id from profile where name = 'Player'];
 		User u = new User(
-			Alias = 'tplayer', 
+			Alias = 'tplayer',
 			EmailEncodingKey = 'UTF-8',
-			FirstName = 'Test', 
+			FirstName = 'Test',
 			LastName = 'Player',
 			Email = 'tuser@test.com',
 			Phone = '(222) 333-4444',
-			Street = '123 Main Street', 
-			City = 'Stamford', 
-			State = 'CT', 
+			Street = '123 Main Street',
+			City = 'Stamford',
+			State = 'CT',
 			PostalCode = '06905',
-			LanguageLocaleKey='en_US', 
-			LocaleSidKey = 'en_US', 
+			LanguageLocaleKey = 'en_US',
+			LocaleSidKey = 'en_US',
 			ProfileId = p.Id,
-			TimeZoneSidKey = 'America/New_York', 
-			Username='test.player@nflpool.com',
-			CommunityNickname='tplayer123'
+			TimeZoneSidKey = 'America/New_York',
+			Username = 'test.player@nflpool.com',
+			CommunityNickname = 'tplayer123'
 		);
 		return u;
 	}
@@ -62,7 +62,7 @@ public with sharing class UnitTestUtils {
 			Game__c game = new Game__c(
 				Week__c = String.valueOf(settings.CurrentWeek__c),
 				Home_Team__c = teamList[i].Id,
-				Visiting_Team__c = teamList[i+1].Id,
+				Visiting_Team__c = teamList[i + 1].Id,
 				Final__c = false,
 				Start_Time__c = DateTime.now().addDays(1),
 				Spread__c = Double.valueOf(i)
