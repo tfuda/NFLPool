@@ -14,7 +14,7 @@ public class ResultsController {
 			selectedWeek = currentWeek;
 		}
 		weeks = new List<String>();
-		for (Integer i=1; i <= s.CurrentWeek__c; i++) {
+		for (Integer i = 1; i <= s.CurrentWeek__c; i++) {
 			weeks.add(i.format());
 		}
 	}
@@ -23,9 +23,13 @@ public class ResultsController {
 	public static Results getWeeklyResults(String week) {
 		AggregateResult[] ar = [SELECT SUM(Points__c) pointsAvailable FROM Game__c WHERE Week__c = :week AND Final__c = true];
 		Decimal pointsAvailable = (Decimal) ar[0].get('pointsAvailable');
-		List<Weekly_Result__c> wrList = [SELECT Id, Name, Week__c, Player__r.Nickname__c, 
-			Total_Points__c, Total_Points_Available__c, Win_Percentage__c 
-			FROM Weekly_Result__c WHERE Week__c = :week ORDER BY Total_Points__c DESC];
+		List<Weekly_Result__c> wrList = [
+			SELECT Id, Name, Week__c, Player__r.Nickname__c,
+				Total_Points__c, Total_Points_Available__c, Win_Percentage__c
+			FROM Weekly_Result__c
+			WHERE Week__c = :week
+			ORDER BY Total_Points__c DESC
+		];
 		return getWeeklyResults(pointsAvailable, wrList);
 	}
 	
@@ -35,15 +39,20 @@ public class ResultsController {
 		Decimal pointsAvailable = (Decimal) ar[0].get('pointsAvailable');
 		List<Player__c> pList;
 		if (!System.Test.isRunningTest()) {
-			pList = [SELECT Id, Nickname__c, Total_Points__c, 
-				Total_Points_Available__c, Win_Percentage__c
-				FROM Player__c WHERE User__r.IsActive = true
-				ORDER BY Total_Points__c DESC];
-		} else {
-			pList = [SELECT Id, Nickname__c, Total_Points__c, 
-				Total_Points_Available__c, Win_Percentage__c
+			pList = [
+				SELECT Id, Nickname__c, Total_Points__c,
+					Total_Points_Available__c, Win_Percentage__c
 				FROM Player__c
-				ORDER BY Total_Points__c DESC];			
+				WHERE User__r.IsActive = true
+				ORDER BY Total_Points__c DESC
+			];
+		} else {
+			pList = [
+				SELECT Id, Nickname__c, Total_Points__c,
+					Total_Points_Available__c, Win_Percentage__c
+				FROM Player__c
+				ORDER BY Total_Points__c DESC
+			];
 		}
 		return getSeasonalResults(pointsAvailable, pList);
 	}

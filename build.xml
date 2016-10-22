@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project name="buildSystem" default="deploy" xmlns:sf="antlib:com.salesforce">
 	<property file="build.properties"/>
-	<property name="sf.server" value="https://login.salesforce.com"/>
+	<property name="sf.server" value="test.salesforce.com"/>
 	<echo>Salesforce User: ${sf.username}</echo>
 	<import file="ant/deploy.xml"/>
 	<import file="ant/undeploy.xml"/>

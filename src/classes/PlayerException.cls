@@ -1,1 +1,2 @@
-public class PlayerException extends Exception { }
+public class PlayerException extends Exception {
+}

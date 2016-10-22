@@ -1,1 +1,2 @@
-public class PoolManagerException extends Exception { }
+public class PoolManagerException extends Exception {
+}

@@ -1,59 +1,6 @@
 @isTest
 private class Test_SelectionController {
-	
 	static testMethod void testSelectionController() {
-		Settings__c settings = UnitTestUtils.createTestSettings();
-		UnitTestUtils.createTestTeams();
-		UnitTestUtils.createTestGames(settings, 16);
-		User playerUser = UnitTestUtils.createTestUser();
-		User adminUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
-		System.runAs(adminUser) {
-			insert playerUser;
-			Player__c player = UnitTestUtils.createTestPlayer(playerUser, 'Player');
-		
-			PageReference selectionsPage = Page.Selections;
-			System.Test.setCurrentPage(selectionsPage);
-			SelectionController con = new SelectionController();
-			System.assert(con.isadmin);
-			System.assertEquals('view', con.mode);
-			System.assertEquals(settings.CurrentWeek__c, Integer.valueOf(con.weekNumber));
-			
-			// Simulate selection of a player
-			con.selectedPlayer = player.id;
-			System.assertEquals(playerUser.CommunityNickname, con.playerName);
-			PageReference pgRef = con.go();
-			System.assert(pgRef == null);
-			System.assertEquals('view', con.mode);
-			System.assertEquals(player.Id, con.selectedPlayer);
-			con.refreshGameSelections(con.weekNumber, con.selectedPlayer);
-			System.assertEquals(16, con.gameSelections.size());
-			
-			// Simulate editing player selections
-			pgRef = con.edit();
-			System.assert(pgRef == null);
-			System.assertEquals('edit', con.mode);
-			
-			// Change a game selection and try to save it
-			GameSelection gs = con.gameSelections.get(0);
-			gs.hSelect = true;
-			pgRef = con.save();
-			System.assertEquals('view', con.mode);
-			gs = con.gameSelections.get(0);
-			System.assertEquals(gs.game.home_team__c, gs.selection.team__c);
-			pgRef = con.edit();
-			pgRef = con.cancel();
-			
-			System.assertEquals(playerUser.communitynickname, con.playerName);
-			System.assert(con.players != null && con.players.size() > 0);
-			System.assert(con.weekNumber != null && con.weekNumbers.size() > 0);
-			
-			// Get a little more coverage
-			Boolean test = con.allLocked;		
-			pgRef = con.go();
-		}
-	}
-
-	static testMethod void testNewSelectionController() {
 		Settings__c s = UnitTestUtils.createTestSettings();
 		UnitTestUtils.createTestTeams();
 		UnitTestUtils.createTestGames(s, 16);
@@ -65,11 +12,11 @@ private class Test_SelectionController {
 			Player__c player = UnitTestUtils.createTestPlayer(playerUser, 'Player');
 			PageReference selectionsPage = Page.Selections;
 			System.Test.setCurrentPage(selectionsPage);
-			New_SelectionController con = new New_SelectionController();
+			SelectionController con = new SelectionController();
 			System.assert(con.isadmin);
 			System.assertEquals('view', con.mode);
 			System.assertEquals(s.currentweek__c, Integer.valueOf(con.weekNumber));
-		
+			
 			// Simulate selection of a player
 			con.selectedPlayer = player.id;
 			System.assertEquals(playerUser.CommunityNickname, con.playerName);
@@ -86,7 +33,7 @@ private class Test_SelectionController {
 			System.assertEquals('edit', con.mode);
 			
 			// Change a game selection and try to save it
-			New_GameSelection gs = con.gameSelections.get(0);
+			GameSelection gs = con.gameSelections.get(0);
 			gs.hSelect = true;
 			con.selectedGame = 1;
 			pgRef = con.saveSelection();
