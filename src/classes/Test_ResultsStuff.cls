@@ -513,6 +513,148 @@ private class Test_ResultsStuff {
         System.assertEquals('Player2', r.nickname);
         System.assertEquals(1.0, r.pointsScored);
         System.assertEquals(0.500, r.winPercentage);
+
+        // Delete the last Selection (player 2
+        Id selectionId = sel23.Id;
+        delete sel23;
+
+        // Instantiate the ResultsController
+        System.Test.setCurrentPage(Page.Results);
+        con = new ResultsController();
+        System.assertEquals('1', con.currentWeek);
+        System.assertEquals('1', con.selectedWeek);
+        System.assertEquals(1, con.weeks.size());
+        System.assertEquals('1', con.weeks[0]);
+
+        // Get the results for week 1
+        results = ResultsController.getWeeklyResults('1');
+        System.assertEquals(2.0, results.pointsAvailable);
+        System.assertEquals(2, results.rWrappers.size());
+        // Player 1 should be first (1 win and 2 pushes), player 2 second (0 wins and 1 push)
+        r = results.rWrappers[0];
+        System.assertEquals('Player1', r.nickname);
+        System.assertEquals(2.0, r.pointsScored);
+        System.assertEquals(1.000, r.winPercentage);
+        r = results.rWrappers[1];
+        System.assertEquals('Player2', r.nickname);
+        System.assertEquals(0.5, r.pointsScored);
+        System.assertEquals(0.250, r.winPercentage);
+
+        // Get seasonal results
+        results = ResultsController.getSeasonalResults();
+        System.assertEquals(2.0, results.pointsAvailable);
+        System.assertEquals(2, results.rWrappers.size());
+        // Player 1 should be first (1 win and 2 pushes), player 2 second (0 wins and 1 pushes)
+        r = results.rWrappers[0];
+        System.assertEquals('Player1', r.nickname);
+        System.assertEquals(2.0, r.pointsScored);
+        System.assertEquals(1.000, r.winPercentage);
+        r = results.rWrappers[1];
+        System.assertEquals('Player2', r.nickname);
+        System.assertEquals(0.5, r.pointsScored);
+        System.assertEquals(0.250, r.winPercentage);
+
+        // Undelete the Selection for player 2 that we deleted previously
+        undelete new Selection__c(Id = selectionId);
+
+        // Instantiate the ResultsController
+        System.Test.setCurrentPage(Page.Results);
+        con = new ResultsController();
+        System.assertEquals('1', con.currentWeek);
+        System.assertEquals('1', con.selectedWeek);
+        System.assertEquals(1, con.weeks.size());
+        System.assertEquals('1', con.weeks[0]);
+
+        // Get the results for week 1
+        results = ResultsController.getWeeklyResults('1');
+        System.assertEquals(2.0, results.pointsAvailable);
+        System.assertEquals(2, results.rWrappers.size());
+        // Player 1 should be first (1 win and 2 pushes), player 2 second (0 wins and 2 pushes)
+        r = results.rWrappers[0];
+        System.assertEquals('Player1', r.nickname);
+        System.assertEquals(2.0, r.pointsScored);
+        System.assertEquals(1.000, r.winPercentage);
+        r = results.rWrappers[1];
+        System.assertEquals('Player2', r.nickname);
+        System.assertEquals(1.0, r.pointsScored);
+        System.assertEquals(0.500, r.winPercentage);
+
+        // Get seasonal results
+        results = ResultsController.getSeasonalResults();
+        System.assertEquals(2.0, results.pointsAvailable);
+        System.assertEquals(2, results.rWrappers.size());
+        // Player 1 should be first (1 win and 2 pushes), player 2 second (0 wins and 2 pushes)
+        r = results.rWrappers[0];
+        System.assertEquals('Player1', r.nickname);
+        System.assertEquals(2.0, r.pointsScored);
+        System.assertEquals(1.000, r.winPercentage);
+        r = results.rWrappers[1];
+        System.assertEquals('Player2', r.nickname);
+        System.assertEquals(1.0, r.pointsScored);
+        System.assertEquals(0.500, r.winPercentage);
+
+        // Delete all of Player 2's selections. He should end up with 0 points scored and win percentage of 0.0
+        delete new List<Selection__c>{sel22, sel23};
+
+        // Get the results for week 1
+        results = ResultsController.getWeeklyResults('1');
+        System.assertEquals(2.0, results.pointsAvailable);
+        System.assertEquals(2, results.rWrappers.size());
+        // Player 1 should be first (1 win and 2 pushes), player 2 second (0 points)
+        r = results.rWrappers[0];
+        System.assertEquals('Player1', r.nickname);
+        System.assertEquals(2.0, r.pointsScored);
+        System.assertEquals(1.000, r.winPercentage);
+        r = results.rWrappers[1];
+        System.assertEquals('Player2', r.nickname);
+        System.assertEquals(0.0, r.pointsScored);
+        System.assertEquals(0.0, r.winPercentage);
+
+        // Get seasonal results
+        results = ResultsController.getSeasonalResults();
+        System.assertEquals(2.0, results.pointsAvailable);
+        System.assertEquals(2, results.rWrappers.size());
+        // Player 1 should be first (1 win and 2 pushes), player 2 second (0 wins and 2 pushes)
+        r = results.rWrappers[0];
+        System.assertEquals('Player1', r.nickname);
+        System.assertEquals(2.0, r.pointsScored);
+        System.assertEquals(1.000, r.winPercentage);
+        r = results.rWrappers[1];
+        System.assertEquals('Player2', r.nickname);
+        System.assertEquals(0.0, r.pointsScored);
+        System.assertEquals(0.0, r.winPercentage);
+
+        // Change a selection for player 1, making this game a loser
+        sel11.Team__c = s.bears.Id;
+        update sel11;
+
+        // Get the results for week 1
+        results = ResultsController.getWeeklyResults('1');
+        System.assertEquals(2.0, results.pointsAvailable);
+        System.assertEquals(2, results.rWrappers.size());
+        // Player 1 should be first (1 win and 2 pushes), player 2 second (0 points)
+        r = results.rWrappers[0];
+        System.assertEquals('Player1', r.nickname);
+        System.assertEquals(1.0, r.pointsScored);
+        System.assertEquals(0.500, r.winPercentage);
+        r = results.rWrappers[1];
+        System.assertEquals('Player2', r.nickname);
+        System.assertEquals(0.0, r.pointsScored);
+        System.assertEquals(0.0, r.winPercentage);
+
+        // Get seasonal results
+        results = ResultsController.getSeasonalResults();
+        System.assertEquals(2.0, results.pointsAvailable);
+        System.assertEquals(2, results.rWrappers.size());
+        // Player 1 should be first (1 win and 2 pushes), player 2 second (0 wins and 2 pushes)
+        r = results.rWrappers[0];
+        System.assertEquals('Player1', r.nickname);
+        System.assertEquals(1.0, r.pointsScored);
+        System.assertEquals(0.500, r.winPercentage);
+        r = results.rWrappers[1];
+        System.assertEquals('Player2', r.nickname);
+        System.assertEquals(0.0, r.pointsScored);
+        System.assertEquals(0.0, r.winPercentage);
     }
 
     public class Scaffold {
