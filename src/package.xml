@@ -70,7 +70,6 @@
         <members>Selection__c</members>
         <members>Settings__c</members>
         <members>Team__c</members>
-        <members>User</members>
         <members>Weekly_Result__c</members>
         <name>CustomObject</name>
     </types>
