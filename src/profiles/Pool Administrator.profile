@@ -23,7 +23,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GameSelection</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>GamesController</apexClass>
@@ -31,7 +31,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>MessageBoardController</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>PlayerController</apexClass>
@@ -67,7 +67,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>SelectionController</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>SoapUtils</apexClass>
@@ -401,11 +401,11 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>HomePageMessage</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>MessageBoard</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>MyAccount</apexPage>
@@ -429,7 +429,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>Selections</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <tabVisibilities>
         <tab>AdminMessageBoard</tab>

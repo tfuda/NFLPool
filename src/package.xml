@@ -1,15 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
     <types>
-        <members>*</members>
+        <members>ChatterMsgBoardController</members>
+        <members>ContactInfoController</members>
+        <members>EmailController</members>
+        <members>EmailTemplateDeleter</members>
+        <members>GameSelection</members>
+        <members>GamesController</members>
+        <members>MessageBoardController</members>
+        <members>PlayerController</members>
+        <members>PlayerException</members>
+        <members>PlayerListController</members>
+        <members>PlayerWrapper</members>
+        <members>PoolManagerException</members>
+        <members>PoolManagerUtils</members>
+        <members>ResultsController</members>
+        <members>SaveException</members>
+        <members>SelectionController</members>
+        <members>SoapUtils</members>
+        <members>Test_ContactInfoController</members>
+        <members>Test_EmailController</members>
+        <members>Test_EmailTemplateDeleter</members>
+        <members>Test_GameSelection</members>
+        <members>Test_GamesController</members>
+        <members>Test_MessageBoardController</members>
+        <members>Test_PlayerController</members>
+        <members>Test_PlayerListController</members>
+        <members>Test_PlayerWrapper</members>
+        <members>Test_PoolManagerUtils</members>
+        <members>Test_ResultsStuff</members>
+        <members>Test_SelectionController</members>
+        <members>Test_SoapUtils</members>
+        <members>TriggerTests</members>
+        <members>UnitTestUtils</members>
         <name>ApexClass</name>
     </types>
     <types>
-        <members>*</members>
-        <name>ApexComponent</name>
-    </types>
-    <types>
-        <members>*</members>
+        <members>AdminMessageBoard</members>
+        <members>ChatterMessageBoard</members>
+        <members>ContactInfo</members>
+        <members>Email</members>
+        <members>EmailLanding</members>
+        <members>Games</members>
+        <members>HomePageMessage</members>
+        <members>MessageBoard</members>
+        <members>MyAccount</members>
+        <members>PlayerDetail</members>
+        <members>PlayerManagement</members>
+        <members>PrintableSelections</members>
+        <members>Results</members>
+        <members>Selections</members>
         <name>ApexPage</name>
     </types>
     <types>
@@ -21,52 +61,6 @@
     <types>
         <members>PoolManager</members>
         <name>CustomApplication</name>
-    </types>
-    <types>
-        <members>Game__c.External_ID__c</members>
-        <members>Game__c.Final__c</members>
-        <members>Game__c.Home_Score__c</members>
-        <members>Game__c.Home_Team__c</members>
-        <members>Game__c.Locked__c</members>
-        <members>Game__c.Points__c</members>
-        <members>Game__c.Spread__c</members>
-        <members>Game__c.Start_Time__c</members>
-        <members>Game__c.Visiting_Score__c</members>
-        <members>Game__c.Visiting_Team__c</members>
-        <members>Game__c.Week__c</members>
-        <members>Game__c.Winner__c</members>
-        <members>Message__c.Message__c</members>
-        <members>PlayerPayment__c.Amount__c</members>
-        <members>PlayerPayment__c.PaymentDate__c</members>
-        <members>PlayerPayment__c.Player__c</members>
-        <members>Player__c.BalanceDueFormula__c</members>
-        <members>Player__c.External_ID__c</members>
-        <members>Player__c.Nickname__c</members>
-        <members>Player__c.Phone__c</members>
-        <members>Player__c.Settings__c</members>
-        <members>Player__c.TotalPaymentsRollup__c</members>
-        <members>Player__c.Total_Points_Available__c</members>
-        <members>Player__c.Total_Points__c</members>
-        <members>Player__c.User__c</members>
-        <members>Player__c.Win_Percentage__c</members>
-        <members>Selection__c.Game__c</members>
-        <members>Selection__c.Player__c</members>
-        <members>Selection__c.Points__c</members>
-        <members>Selection__c.Team__c</members>
-        <members>Settings__c.CurrentWeek__c</members>
-        <members>Settings__c.EntryFee__c</members>
-        <members>Settings__c.MaxGames__c</members>
-        <members>Settings__c.NumberOfWeeks__c</members>
-        <members>Settings__c.PoolAccount__c</members>
-        <members>Settings__c.UsernameSuffix__c</members>
-        <members>Team__c.External_ID__c</members>
-        <members>Team__c.Short_Name__c</members>
-        <members>Weekly_Result__c.Player__c</members>
-        <members>Weekly_Result__c.Total_Points_Available__c</members>
-        <members>Weekly_Result__c.Total_Points__c</members>
-        <members>Weekly_Result__c.Week__c</members>
-        <members>Weekly_Result__c.Win_Percentage__c</members>
-        <name>CustomField</name>
     </types>
     <types>
         <members>Game__c</members>
@@ -81,11 +75,37 @@
         <name>CustomObject</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Game__c-en_US</members>
+        <members>Message__c-en_US</members>
+        <members>PlayerPayment__c-en_US</members>
+        <members>Player__c-en_US</members>
+        <members>Selection__c-en_US</members>
+        <members>Settings__c-en_US</members>
+        <members>Team__c-en_US</members>
+        <members>Weekly_Result__c-en_US</members>
         <name>CustomObjectTranslation</name>
     </types>
     <types>
-        <members>*</members>
+        <members>AdminMessageBoard</members>
+        <members>ContactInfo</members>
+        <members>Email</members>
+        <members>Game__c</members>
+        <members>Games</members>
+        <members>MessageBoard</members>
+        <members>Message__c</members>
+        <members>MyAccount</members>
+        <members>NFL_Lines_Backup</members>
+        <members>NFL_Lines_Primary</members>
+        <members>NFL_com</members>
+        <members>PlayerManagement</members>
+        <members>PlayerPayment__c</members>
+        <members>Player__c</members>
+        <members>Results</members>
+        <members>Selection__c</members>
+        <members>Selections</members>
+        <members>Settings__c</members>
+        <members>Team__c</members>
+        <members>Weekly_Result__c</members>
         <name>CustomTab</name>
     </types>
     <types>
@@ -96,15 +116,20 @@
         <name>Dashboard</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Players</members>
+        <members>PoolAdministrators</members>
         <name>Group</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Messages %26 Alerts</members>
+        <members>Suppress Chatter</members>
         <name>HomePageComponent</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Dashboard Home Page Default</members>
+        <members>NFL Pool</members>
+        <members>Pool Administrators</members>
+        <members>Sysadmin Home</members>
         <name>HomePageLayout</name>
     </types>
     <types>
@@ -140,11 +165,16 @@
         <name>Report</name>
     </types>
     <types>
-        <members>*</members>
+        <members>Game_Selections</members>
+        <members>Player_Selections</members>
+        <members>Players_with_User_Info</members>
+        <members>Selections</members>
         <name>ReportType</name>
     </types>
     <types>
-        <members>*</members>
+        <members>jquery</members>
+        <members>jqueryui</members>
+        <members>testTeams</members>
         <name>StaticResource</name>
     </types>
     <types>
