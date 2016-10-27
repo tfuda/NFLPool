@@ -1,0 +1,9 @@
+<aura:component description="gameList" controller="LCGamesController">
+    <aura:attribute name="weekNumber" type="Integer" required="true" />
+	<aura:attribute name="games" type="Game__c[]" required="true" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+
+	<aura:iteration items="{!v.games}" var="game">
+		<c:game game="{!v.game}" />
+	</aura:iteration>
+</aura:component>

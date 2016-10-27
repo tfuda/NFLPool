@@ -1,0 +1,13 @@
+<aura:component description="game">
+    <aura:attribute name="game" type="Game__c" required="true"/>
+    <div class="slds-grid">
+        <div class="slds-col">{!v.game.Name}</div>
+        <div class="slds-col">{!v.game.Start_Time__c}</div>
+        <div class="slds-col">{!v.game.Home_Team__r.Name}</div>
+	    <div class="slds-col">{!v.game.Home_Score__c}</div>
+	    <div class="slds-col">{!v.game.Spread__c}</div>
+	    <div class="slds-col">{!v.game.Visiting_Team__c_Team__r.Name}</div>
+	    <div class="slds-col">{!v.game.Visiting_Score__c}</div>
+	    <div class="slds-col">{!v.game.Final__c}</div>
+    </div>
+</aura:component>
