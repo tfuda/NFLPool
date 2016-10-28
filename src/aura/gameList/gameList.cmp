@@ -1,9 +1,42 @@
-<aura:component description="gameList" controller="LCGamesController">
-    <aura:attribute name="weekNumber" type="Integer" required="true" />
-	<aura:attribute name="games" type="Game__c[]" required="true" />
-    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+<aura:component controller="LCGamesController" >
+    <aura:attribute name="weekNumber" type="String" required="true"/>
+	<aura:attribute name="games" type="Game__c[]" />
+    <aura:handler name="init" action="{!c.onInit}" value="{!this}" />
 
-	<aura:iteration items="{!v.games}" var="game">
-		<c:game game="{!v.game}" />
-	</aura:iteration>
+	<table class="slds-table slds-table--bordered slds-table--cell-buffer">
+		<thead>
+            <tr class="slds-text-title--caps">
+                <th scope="col">
+                    <div class="slds-truncate" title="Name">Name</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Start Time">Start Time</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Home Team">Home Team</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Home Score">Home Score</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Spread">Spread</div>
+                </th>
+                <th scope="col">
+                    <div class="slds-truncate" title="Visiting Team">Visiting Team</div>
+                </th>
+                <th scope="col">
+	                <div class="slds-truncate" title="Visiting Score">Visiting Score</div>
+                </th>
+	            <th scope="col">
+		            <div class="slds-truncate" title="Final">Final</div>
+	            </th>
+            </tr>
+		</thead>
+		<tbody>
+            <aura:iteration items="{!v.games}" var="game">
+                <c:game game="{!game}"/>
+            </aura:iteration>
+		</tbody>
+	</table>
+
 </aura:component>

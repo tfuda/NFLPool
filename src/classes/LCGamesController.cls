@@ -1,6 +1,6 @@
 public with sharing class LCGamesController {
 	@AuraEnabled
-	public static List<Game__c> getGames(String weekNumber) {
+	public static Game__c[] getGames(String weekNumber) {
 		return [SELECT Id, Name, Start_Time__c, Home_Team__c, Home_Team__r.Name, Home_Score__c,
 			Visiting_Team__c, Visiting_Team__r.Name, Visiting_Score__c, Spread__c, Final__c
 			FROM Game__c
