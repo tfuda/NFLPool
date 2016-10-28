@@ -1,30 +1,16 @@
 <aura:component >
     <aura:attribute name="game" type="Game__c" required="true"/>
 
-	<tr>
-		<th scope="row" data-label="Name">
-			<div class="slds-truncate" title="Name">{!v.game.Name}</div>
-		</th>
-		<td data-label="Start Time">
-			<div class="slds-truncate" title="Start Time">{!v.game.Start_Time__c}</div>
-		</td>
-		<td data-label="Home Team">
-			<div class="slds-truncate" title="Home Team">{!v.game.Home_Team__r.Name}</div>
-		</td>
-		<td data-label="Home Score">
-			<div class="slds-truncate" title="Home Score">{!v.game.Home_Score__c}</div>
-		</td>
-		<td data-label="Spread">
-			<div class="slds-truncate" title="Spread">{!v.game.Spread__c}</div>
-		</td>
-		<td data-label="Visiting Team">
-			<div class="slds-truncate" title="Visiting Team">{!v.game.Visiting_Team__r.Name}</div>
-		</td>
-		<td data-label="Visiting Score">
-			<div class="slds-truncate" title="Visiting Score">{!v.game.Visiting_Score__c}</div>
-		</td>
-		<td data-label="Final">
-			<div class="slds-truncate" title="Final">{!v.game.Final__c}</div>
-		</td>
-	</tr>
+	<div class="slds-tile slds-tile--board slds-p-around--x-small game" >
+		<h3 class="slds-truncate" ><a href="javascript:void(0);">{!v.game.Name}</a></h3>
+		<div class="slds-tile__detail slds-text-body--small">
+			<p class="slds-truncate">Start time: {!v.game.Start_Time__c}</p>
+			<p class="slds-truncate">Home: {!v.game.Home_Team__r.Name}</p>
+			<p class="slds-truncate">Score: {!v.game.Home_Score__c}</p>
+			<p class="slds-truncate">Spread: {!v.game.Spread__c}</p>
+			<p class="slds-truncate">Visitor: {!v.game.Visiting_Team__r.Name}</p>
+			<p class="slds-truncate">Score: {!v.game.Visiting_Score__c}</p>
+			<p class="slds-truncate">Final: {!v.game.Final__c}</p>
+		</div>
+	</div>
 </aura:component>
