@@ -1,9 +1,32 @@
-trigger Game on Game__c (after insert, after update, after delete, after undelete, before delete) {
-    if (Trigger.isBefore && Trigger.isDelete) {
+trigger Game on Game__c (before update, before delete, after insert, after update, after delete, after undelete) {
+    if (Trigger.isBefore) {
         List<Selection__c> selections = [SELECT Id, Game__c FROM Selection__c WHERE Game__c IN :Trigger.oldMap.keySet()];
+        // Map selections by Game
+        Map<Id, List<Selection__c>> selectionsMappedByGame = new Map<Id, List<Selection__c>>();
         for (Selection__c sel : selections) {
-            Game__c g = Trigger.oldMap.get(sel.Game__c);
-            Trigger.oldMap.get(sel.Game__c).addError('Unable to delete game with ID: ' + g.Id + ' because it has one or more selections associated with it.');
+            List<Selection__c> selectionsForGame = selectionsMappedByGame.get(sel.Game__c);
+            if (selectionsForGame == null) {
+                selectionsForGame = new List<Selection__c>();
+                selectionsMappedByGame.put(sel.Game__c, selectionsForGame);
+            }
+            selectionsForGame.add(sel);
+        }
+        if (Trigger.isUpdate) {
+            // TODO - Don't allow changes to week number if game has selections associated
+            for (Game__c g : Trigger.new) {
+                Game__c oldGame = Trigger.oldMap.get(g.Id);
+                if ((g.Week__c != oldGame.Week__c) && (selectionsMappedByGame.get(g.Id).size() > 0)) {
+                    g.addError('Unable to modify the week number of the game with ID ' + g.Id + ' because it has one or more selections associated with it.');
+                }
+            }
+        }
+        if (Trigger.isDelete) {
+            // Don't allow games to be deleted if they have selections associated
+            for (Game__c g : Trigger.old) {
+                if (selectionsMappedByGame.get(g.Id).size() > 0) {
+                    g.addError('Unable to delete game with ID: ' + g.Id + ' because it has one or more selections associated with it.');
+                }
+            }
         }
     }
     // Get a Set containing the week numbers of the games that have been modified

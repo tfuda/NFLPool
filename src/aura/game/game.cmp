@@ -2,20 +2,26 @@
     <aura:attribute name="game" type="Game__c" required="true"/>
 
 	<div class="slds-tile slds-tile--board slds-p-around--x-small game" >
-		<h3 class="slds-truncate" ><a href="javascript:void(0);" onclick="{!c.navigateToGame}" >{!v.game.Name}</a></h3>
+		<div class="slds-grid slds-grid--align-spread">
+			<h3 class="slds-col" ><a href="javascript:void(0);" onclick="{!c.navigateToGame}" >{!v.game.Name}</a></h3>
+			<span class="slds-col"><ui:outputDateTime value="{!v.game.Start_Time__c}"/></span>
+		</div>
 		<div class="slds-tile__detail slds-text-body--small">
-			<p class="slds-truncate">Start time: <ui:outputDateTime value="{!v.game.Start_Time__c}"/></p>
-			<div class="slds-grid slds-grid--align-spread" >
-				<div class="slds-col">Home: {!v.game.Home_Team__r.Name} (<ui:outputNumber value="{!v.game.Spread__c}" format="0.0"/>)</div>
-				<div class="slds-col">Score: {!v.game.Home_Score__c}</div>
-			</div>
-			<div class="slds-grid slds-grid--align-spread" >
-				<div class="slds-col">Visitor: {!v.game.Visiting_Team__r.Name} (<ui:outputNumber value="{!v.game.Spread__c * -1}" format="0.0"/>)</div>
-				<div class="slds-col">Score: {!v.game.Visiting_Score__c}</div>
-			</div>
-			<p class="slds-truncate slds-p-top--small">Final: <ui:outputCheckbox value="{!v.game.Final__c}"/></p>
-			<p class="slds-truncate">Winner: {!v.game.Winner__c}</p>
-			<p class="slds-truncate">Points: <ui:outputNumber value="{!v.game.Points__c}" format="0.0"/></p>
+			<p class="slds-text-heading--small slds-p-top--x-small">Home: {!v.game.Home_Team__r.Name}
+				<aura:if isTrue="{!v.game.Spread__c != null}">
+					<span class="spread"> (<ui:outputNumber value="{!v.game.Spread__c}" format="0.0"/>)</span>
+				</aura:if>
+			</p>
+			<p>Score: {!v.game.Home_Score__c}</p>
+			<p class="slds-text-heading--small slds-p-top--x-small">Visitor: {!v.game.Visiting_Team__r.Name}
+				<aura:if isTrue="{!v.game.Spread__c != null}">
+					<span class="spread"> (<ui:outputNumber value="{!v.game.Spread__c * -1}" format="0.0"/>)</span>
+				</aura:if>
+			</p>
+			<p>Score: {!v.game.Visiting_Score__c}</p>
+			<p class="slds-p-top--small">Final: <ui:outputCheckbox value="{!v.game.Final__c}"/></p>
+			<p class="slds-text-heading--small">Winner: {!v.game.Winner__c}</p>
+			<p>Points: <ui:outputNumber value="{!v.game.Points__c}" format="0.0"/></p>
 		</div>
 	</div>
 </aura:component>
