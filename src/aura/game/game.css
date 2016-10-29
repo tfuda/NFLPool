@@ -1,4 +1,4 @@
-.THIS div.game {
+.THIS.game {
     border: 1px solid token(colorBorder);
     border-radius: token(borderRadiusSmall);
 }

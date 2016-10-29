@@ -178,6 +178,7 @@
     <types>
         <members>jquery</members>
         <members>jqueryui</members>
+        <members>SLDS213</members>
         <members>testTeams</members>
         <name>StaticResource</name>
     </types>
@@ -196,5 +197,5 @@
         <members>User.ThursdayGameReminder</members>
         <name>WorkflowAlert</name>
     </types>
-    <version>37.0</version>
+    <version>38.0</version>
 </Package>

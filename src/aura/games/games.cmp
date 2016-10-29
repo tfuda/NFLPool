@@ -1,0 +1,9 @@
+<aura:component controller="LCGamesController" implements="force:appHostable">
+	<ltng:require styles="{!$Resource.SLDS213 + '/assets/styles/lightning-design-system-ltng.css'}"/>
+	<aura:attribute name="weekNumber" type="String" default="1"/>
+	<aura:attribute name="games" type="Game__c[]" />
+	<aura:handler name="init" action="{!c.onInit}" value="{!this}" />
+	<div class="slds">
+		<c:gameList games="{!v.games}"/>
+	</div>
+</aura:component>

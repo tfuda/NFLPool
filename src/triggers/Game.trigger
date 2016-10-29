@@ -1,4 +1,11 @@
-trigger Game on Game__c (after insert, after update, after delete, after undelete) {
+trigger Game on Game__c (after insert, after update, after delete, after undelete, before delete) {
+    if (Trigger.isBefore && Trigger.isDelete) {
+        List<Selection__c> selections = [SELECT Id, Game__c FROM Selection__c WHERE Game__c IN :Trigger.oldMap.keySet()];
+        for (Selection__c sel : selections) {
+            Game__c g = Trigger.oldMap.get(sel.Game__c);
+            Trigger.oldMap.get(sel.Game__c).addError('Unable to delete game with ID: ' + g.Id + ' because it has one or more selections associated with it.');
+        }
+    }
     // Get a Set containing the week numbers of the games that have been modified
     Set<String> weeks = new Set<String>();
     if (Trigger.isInsert || Trigger.isUpdate || Trigger.isUndelete) {

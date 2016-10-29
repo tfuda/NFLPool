@@ -1,8 +1,5 @@
-<aura:component controller="LCGamesController" >
-    <aura:attribute name="weekNumber" type="String" required="true"/>
+<aura:component >
 	<aura:attribute name="games" type="Game__c[]" />
-    <aura:handler name="init" action="{!c.onInit}" value="{!this}" />
-
     <div class="slds-grid slds-wrap">
         <aura:iteration items="{!v.games}" var="game">
             <div class="slds-col slds-p-around--small">

@@ -2,15 +2,20 @@
     <aura:attribute name="game" type="Game__c" required="true"/>
 
 	<div class="slds-tile slds-tile--board slds-p-around--x-small game" >
-		<h3 class="slds-truncate" ><a href="javascript:void(0);">{!v.game.Name}</a></h3>
+		<h3 class="slds-truncate" ><a href="javascript:void(0);" onclick="{!c.navigateToGame}" >{!v.game.Name}</a></h3>
 		<div class="slds-tile__detail slds-text-body--small">
-			<p class="slds-truncate">Start time: {!v.game.Start_Time__c}</p>
-			<p class="slds-truncate">Home: {!v.game.Home_Team__r.Name}</p>
-			<p class="slds-truncate">Score: {!v.game.Home_Score__c}</p>
-			<p class="slds-truncate">Spread: {!v.game.Spread__c}</p>
-			<p class="slds-truncate">Visitor: {!v.game.Visiting_Team__r.Name}</p>
-			<p class="slds-truncate">Score: {!v.game.Visiting_Score__c}</p>
-			<p class="slds-truncate">Final: {!v.game.Final__c}</p>
+			<p class="slds-truncate">Start time: <ui:outputDateTime value="{!v.game.Start_Time__c}"/></p>
+			<div class="slds-grid slds-grid--align-spread" >
+				<div class="slds-col">Home: {!v.game.Home_Team__r.Name} (<ui:outputNumber value="{!v.game.Spread__c}" format="0.0"/>)</div>
+				<div class="slds-col">Score: {!v.game.Home_Score__c}</div>
+			</div>
+			<div class="slds-grid slds-grid--align-spread" >
+				<div class="slds-col">Visitor: {!v.game.Visiting_Team__r.Name} (<ui:outputNumber value="{!v.game.Spread__c * -1}" format="0.0"/>)</div>
+				<div class="slds-col">Score: {!v.game.Visiting_Score__c}</div>
+			</div>
+			<p class="slds-truncate slds-p-top--small">Final: <ui:outputCheckbox value="{!v.game.Final__c}"/></p>
+			<p class="slds-truncate">Winner: {!v.game.Winner__c}</p>
+			<p class="slds-truncate">Points: <ui:outputNumber value="{!v.game.Points__c}" format="0.0"/></p>
 		</div>
 	</div>
 </aura:component>
