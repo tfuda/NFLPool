@@ -1,28 +1,40 @@
 ({
     onInit : function(cmp) {
-        var action = cmp.get("c.getGames");
-        action.setParams({ weekNumber : cmp.get("v.weekNumber") });
+        var serverSideCall = function(action, component) {
+            return new Promise(function(resolve, reject) {
+                action.setCallback(this,
+                    function(response) {
+                        var state = response.getState();
+                        if (component.isValid() && state === "SUCCESS") {
+                            resolve(response.getReturnValue());
+                        } else if (component.isValid() && state === "ERROR") {
+                            reject(new Error(_getErrorDescription(response.getError())));
+                        }
+                    });
+                $A.enqueueAction(action);
+            });
+        }
 
-        action.setCallback(this, function(response) {
-            var state = response.getState();
-            if (state === "SUCCESS") {
-                var games = response.getReturnValue();
+        var getSettings = cmp.get("c.getSettings");
+        serverSideCall(getSettings, cmp).then(
+            function(settings) {
+                console.log(settings);
+                cmp.set("v.selectedWeek", settings.CurrentWeek__c);
+                cmp.set("v.numWeeks", settings.NumberOfWeeks__c);
+                var getGames = cmp.get("c.getGames");
+                getGames.setParams({"weekNumber": settings.CurrentWeek__c.toString()});
+                return serverSideCall(getGames, cmp);
+            }
+        ).then(
+            function(games) {
                 console.log(games);
                 cmp.set("v.games", games);
-            } else if (state === "INCOMPLETE") {
-                // TODO - do something
-            } else if (state === "ERROR") {
-                var errors = response.getError();
-                if (errors) {
-                    if (errors[0] && errors[0].message) {
-                        console.log("Error message: " + errors[0].message);
-                    }
-                } else {
-                    console.log("Unknown error");
-                }
             }
-        });
-
-        $A.enqueueAction(action);
+        ).catch(
+            function(error) {
+                console.error(error);
+                throw new Error(error);
+            }
+        );
     }
 })

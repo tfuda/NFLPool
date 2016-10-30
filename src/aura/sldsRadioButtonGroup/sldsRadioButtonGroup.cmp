@@ -1,0 +1,16 @@
+<aura:component description="SLDS Radio Button Group">
+    <aura:attribute name="name" required="true" type="String" />
+    <aura:attribute name="label" default="" type="String" />
+    <aura:attribute name="selectedValue" required="true" default="" type="String" />
+    <aura:attribute name="options" required="true" type="Object[]" />
+	<fieldset class="slds-form-element">
+		<legend class="slds-form-element__legend slds-form-element__label">{!v.label}</legend>
+		<div class="slds-form-element__control">
+			<div class="slds-radio--button-group">
+                <aura:iteration items="{!v.options}" var="option">
+                    <c:sldsRadioButton name="{!v.name}" value="{!option.value}" label="{!option.label}" checked="{!v.selectedValue == option.value}" />
+                </aura:iteration>
+            </div>
+        </div>
+    </fieldset>
+</aura:component>

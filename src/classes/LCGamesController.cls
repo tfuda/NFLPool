@@ -1,4 +1,11 @@
 public with sharing class LCGamesController {
+	
+	@AuraEnabled
+	public static Settings__c getSettings() {
+		Settings__c s = [SELECT Id, Name, CurrentWeek__c, EntryFee__c, NumberOfWeeks__c, MaxGames__c, UsernameSuffix__c  FROM Settings__c LIMIT 2];
+		return s;
+	}
+	
 	@AuraEnabled
 	public static Game__c[] getGames(String weekNumber) {
 		return [SELECT Id, Name, Start_Time__c, Home_Team__c, Home_Team__r.Name, Home_Score__c,
