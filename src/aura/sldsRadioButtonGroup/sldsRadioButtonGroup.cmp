@@ -7,8 +7,14 @@
 		<legend class="slds-form-element__legend slds-form-element__label">{!v.label}</legend>
 		<div class="slds-form-element__control">
 			<div class="slds-radio--button-group">
-                <aura:iteration items="{!v.options}" var="option">
-                    <c:sldsRadioButton name="{!v.name}" value="{!option.value}" label="{!option.label}" checked="{!v.selectedValue == option.value}" />
+                <aura:iteration items="{!v.options}" var="option" indexVar="index">
+                    <c:sldsRadioButton
+                            id="{!v.name + '-' + index}"
+                            name="{!v.name}"
+                            value="{!option.value}"
+                            label="{!option.label}"
+                            checked="{!v.selectedValue == option.value}"
+                    />
                 </aura:iteration>
             </div>
         </div>

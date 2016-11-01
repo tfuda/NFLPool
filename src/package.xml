@@ -176,6 +176,7 @@
         <name>ReportType</name>
     </types>
     <types>
+        <members>AuraPromise</members>
         <members>jquery</members>
         <members>jqueryui</members>
         <members>SLDS213</members>

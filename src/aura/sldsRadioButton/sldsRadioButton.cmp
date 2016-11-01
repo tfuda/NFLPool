@@ -1,11 +1,14 @@
 <aura:component description="A single option button to be rendered within an SLDS Radio Button Group">
+    <aura:attribute name="id" required="true" type="String" />
     <aura:attribute name="name" required="true" type="String" />
     <aura:attribute name="value" required="true" type="String" />
     <aura:attribute name="checked" required="true" type="Boolean" />
     <aura:attribute name="label" required="true" type="String" />
-    <span class="slds-button slds-radio--button">
-        <input name="{!v.name}" type="radio" value="{!v.value}" checked="{!v.checked}" />
-        <label class="slds-radio--button__label" >
+	<aura:registerEvent name="optionSelected" type="c:optionSelected"/>
+
+	<span class="slds-button slds-radio--button" onclick="{!c.handleClick}">
+        <input id="{!v.id}" name="{!v.name}" type="radio" value="{!v.value}" checked="{!v.checked}" />
+        <label class="slds-radio--button__label" for="{!v.id}" >
             <span class="slds-radio--faux">{!v.label}</span>
         </label>
     </span>
