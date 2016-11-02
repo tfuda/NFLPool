@@ -1,9 +1,8 @@
 <aura:component controller="LCGamesController" implements="force:appHostable">
 	<ltng:require styles="{!$Resource.SLDS213 + '/assets/styles/lightning-design-system-ltng.css'}"/>
-	<ltng:require scripts="{!$Resource.AuraPromise}" />
 
 	<aura:attribute name="selectedWeek" type="Integer" default="1" />
-	<aura:attribute name="numWeeks" type="Integer" default="{!17}" />
+	<aura:attribute name="weekOptions" type="Object[]" required="true" />
 	<aura:attribute name="games" type="Game__c[]" />
 	<aura:handler name="init" action="{!c.onInit}" value="{!this}" />
 	<aura:handler name="optionSelected" event="c:optionSelected" action="{!c.onOptionSelected}" value="{!this}" />
@@ -27,7 +26,8 @@
 					</div>
 				</div>
 				<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom--xx-small">
-					<c:sldsRadioButtonGroup label="Week" name="week" selectedValue="{!v.selectedWeek}" options="[{label:'1', value:'1'},{label:'2', value:'2'}]"/>
+					<c:sldsSelect label="Week" name="week" selectedValue="{!v.selectedWeek}" options="{!v.weekOptions}"/>
+					<!-- <c:sldsRadioButtonGroup label="Week" name="week" selectedValue="{!v.selectedWeek}" options="{!v.weekOptions}"/> -->
 				</div>
 			</div>
 		</div>

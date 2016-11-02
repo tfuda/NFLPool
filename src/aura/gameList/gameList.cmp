@@ -2,7 +2,7 @@
 	<aura:attribute name="games" type="Game__c[]" />
     <div class="slds-grid slds-wrap">
         <aura:iteration items="{!v.games}" var="game">
-            <div class="slds-col slds-p-around--small">
+            <div class="slds-p-around--small">
 	            <c:game game="{!game}"/>
             </div>
         </aura:iteration>

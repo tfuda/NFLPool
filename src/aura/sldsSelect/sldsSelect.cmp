@@ -1,0 +1,20 @@
+<aura:component description="SLDS Select">
+	<aura:attribute name="name" required="true" type="String" />
+	<aura:attribute name="label" default="" type="String" />
+	<aura:attribute name="selectedValue" required="true" default="" type="String" />
+	<aura:attribute name="options" required="true" type="Object[]" />
+	<aura:registerEvent name="optionSelected" type="c:optionSelected"/>
+
+	<div class="slds-form-element">
+		<label class="slds-form-element__label" for="{!'select-' + v.name}">{!v.label}</label>
+		<div class="slds-form-element__control">
+			<div class="slds-select_container">
+				<select id="{!'select-' + v.name}" name="{!v.name}" class="slds-select" onchange="{!c.handleChange}">
+                    <aura:iteration items="{!v.options}" var="opt">
+                        <option value="{!opt.value}" selected="{!v.selectedValue == opt.value}" >{!opt.label}</option>
+                    </aura:iteration>
+				</select>
+			</div>
+		</div>
+	</div>
+</aura:component>
