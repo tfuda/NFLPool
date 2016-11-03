@@ -23,24 +23,20 @@
             }
         );
     },
-    onOptionSelected: function(cmp, evt, helper) {
-        console.log(evt);
-        if (evt.getParam("fieldName") === "week") {
-            var selectedWeek = evt.getParam("selectedValue");
-            cmp.set("v.selectedWeek", selectedWeek);
-            var getGames = cmp.get("c.getGames");
-            getGames.setParams({"weekNumber": selectedWeek});
-            helper.serverSideCall(getGames, cmp).then(
-                function(games) {
-                    console.log(games);
-                    cmp.set("v.games", games);
-                }
-            ).catch(
-                function(error) {
-                    console.error(error);
-                    throw new Error(error);
-                }
-            );
-        }
+    weekSelected: function(cmp, evt, helper) {
+        var selectedWeek = cmp.get("v.selectedWeek");
+        var getGames = cmp.get("c.getGames");
+        getGames.setParams({"weekNumber": selectedWeek});
+        helper.serverSideCall(getGames, cmp).then(
+            function(games) {
+                console.log(games);
+                cmp.set("v.games", games);
+            }
+        ).catch(
+            function(error) {
+                console.error(error);
+                throw new Error(error);
+            }
+        );
     }
 })

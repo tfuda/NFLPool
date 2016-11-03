@@ -4,8 +4,8 @@
 	<aura:attribute name="selectedWeek" type="Integer" default="1" />
 	<aura:attribute name="weekOptions" type="Object[]" required="true" />
 	<aura:attribute name="games" type="Game__c[]" />
+
 	<aura:handler name="init" action="{!c.onInit}" value="{!this}" />
-	<aura:handler name="optionSelected" event="c:optionSelected" action="{!c.onOptionSelected}" value="{!this}" />
 
 	<div class="slds">
 		<div class="slds-page-header slds-page-header--object-home" role="banner">
@@ -26,8 +26,11 @@
 					</div>
 				</div>
 				<div class="slds-col slds-no-flex slds-grid slds-align-top slds-p-bottom--xx-small">
-					<c:sldsSelect label="Week" name="week" selectedValue="{!v.selectedWeek}" options="{!v.weekOptions}"/>
-					<!-- <c:sldsRadioButtonGroup label="Week" name="week" selectedValue="{!v.selectedWeek}" options="{!v.weekOptions}"/> -->
+					<lightning:select name="week" label="Week" value="{!v.selectedWeek}" onchange="{!c.weekSelected}">
+						<aura:iteration items="{!v.weekOptions}" var="opt">
+							<option value="{!opt.value}">{!opt.label}</option>
+						</aura:iteration>
+					</lightning:select>
 				</div>
 			</div>
 		</div>

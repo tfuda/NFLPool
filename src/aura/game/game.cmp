@@ -4,7 +4,7 @@
 	<div class="slds-tile slds-tile--board slds-p-around--x-small game" >
 		<div class="slds-grid slds-grid--align-spread">
 			<h3 class="slds-col" ><a href="javascript:void(0);" onclick="{!c.navigateToGame}" >{!v.game.Name}</a></h3>
-			<span class="slds-col"><ui:outputDateTime value="{!v.game.Start_Time__c}"/></span>
+			<span class="slds-col"><ui:outputDateTime value="{!v.game.Start_Time__c}" class="slds-p-left--medium"/></span>
 		</div>
 		<div class="slds-tile__detail slds-text-body--small">
 			<p class="slds-text-heading--small slds-p-top--x-small">Home: {!v.game.Home_Team__r.Name}
