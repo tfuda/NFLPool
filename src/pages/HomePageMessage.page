@@ -1,17 +1,14 @@
 <apex:page >
     <div style="font-weight: bold; color: red;">
-        <p>Here is the prize breakdown for the 2016 regular season pool:</p>
+        <p>Here is the prize breakdown for the 2017 playoff pool:</p>
         <ul style="padding-left: 3px;">
-            <li>Number of entrants: 26</li>
-            <li>Total prize pool: 26 X $200 = $5200</li>
-            <li>Weekly prize: $100</li>
-            <li>Seasonal prize pool: $5200 - (17 X $100) = $3500</li>
-            <li>Seasonal prize breakdown:
+            <li>Number of entrants: 25</li>
+            <li>Total prize pool: 25 X $50 = $1250</li>
+            <li>Breakdown:
                 <ul style="padding-left: 3px;">
-                    <li>First place: $1750</li>
-                    <li>Second place: $1025</li>
-                    <li>Third place: $525</li>
-                    <li>Fourth place: $200</li>
+                    <li>First place: $675</li>
+                    <li>Second place: $375</li>
+                    <li>Third place: $200</li>
                 </ul>
             </li>
         </ul>

@@ -32,6 +32,7 @@
     <filter>
         <criteriaItems>
             <column>Player__c$User__c.IsActive</column>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>1</value>
         </criteriaItems>
@@ -42,6 +43,8 @@
     <rowLimit>99</rowLimit>
     <scope>organization</scope>
     <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
     <sortColumn>Player__c$Name</sortColumn>
     <sortOrder>Asc</sortOrder>
     <timeFrameFilter>

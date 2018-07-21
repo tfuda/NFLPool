@@ -21,10 +21,6 @@
         <type>Default</type>
     </actionOverrides>
     <actionOverrides>
-        <actionName>Follow</actionName>
-        <type>Default</type>
-    </actionOverrides>
-    <actionOverrides>
         <actionName>List</actionName>
         <type>Default</type>
     </actionOverrides>
@@ -49,6 +45,7 @@
     <deploymentStatus>Deployed</deploymentStatus>
     <enableActivities>false</enableActivities>
     <enableBulkApi>true</enableBulkApi>
+    <enableChangeDataCapture>false</enableChangeDataCapture>
     <enableEnhancedLookup>false</enableEnhancedLookup>
     <enableFeeds>false</enableFeeds>
     <enableHistory>false</enableHistory>
@@ -212,6 +209,26 @@
         <label>All</label>
     </listViews>
     <listViews>
+        <fullName>Week1</fullName>
+        <columns>NAME</columns>
+        <columns>Start_Time__c</columns>
+        <columns>Home_Team__c</columns>
+        <columns>Home_Score__c</columns>
+        <columns>Spread__c</columns>
+        <columns>Visiting_Team__c</columns>
+        <columns>Visiting_Score__c</columns>
+        <columns>Winner__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Week__c</field>
+            <operation>equals</operation>
+            <value>1</value>
+        </filters>
+        <label>Week 1</label>
+    </listViews>
+    <listViews>
         <fullName>Week10</fullName>
         <columns>NAME</columns>
         <columns>Start_Time__c</columns>
@@ -261,6 +278,46 @@
         </filters>
         <label>Week 17</label>
     </listViews>
+    <listViews>
+        <fullName>Week3</fullName>
+        <columns>NAME</columns>
+        <columns>Start_Time__c</columns>
+        <columns>Home_Team__c</columns>
+        <columns>Home_Score__c</columns>
+        <columns>Spread__c</columns>
+        <columns>Visiting_Team__c</columns>
+        <columns>Visiting_Score__c</columns>
+        <columns>Winner__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Week__c</field>
+            <operation>equals</operation>
+            <value>3</value>
+        </filters>
+        <label>Week 3</label>
+    </listViews>
+    <listViews>
+        <fullName>Week6</fullName>
+        <columns>NAME</columns>
+        <columns>Start_Time__c</columns>
+        <columns>Home_Team__c</columns>
+        <columns>Home_Score__c</columns>
+        <columns>Spread__c</columns>
+        <columns>Visiting_Team__c</columns>
+        <columns>Visiting_Score__c</columns>
+        <columns>Winner__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>CREATEDBY_USER</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Week__c</field>
+            <operation>equals</operation>
+            <value>6</value>
+        </filters>
+        <label>Week 6</label>
+    </listViews>
     <nameField>
         <displayFormat>GAME-{0000}</displayFormat>
         <label>Game Number</label>
@@ -286,4 +343,5 @@
         <searchResultsAdditionalFields>Visiting_Team__c</searchResultsAdditionalFields>
     </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
+    <visibility>Public</visibility>
 </CustomObject>

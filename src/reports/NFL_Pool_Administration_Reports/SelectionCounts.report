@@ -7,11 +7,13 @@
     <filter>
         <criteriaItems>
             <column>Player__c.Selections__r$Team__c</column>
+            <isUnlocked>false</isUnlocked>
             <operator>notEqual</operator>
             <value></value>
         </criteriaItems>
         <criteriaItems>
             <column>Player__c$User__c.IsActive</column>
+            <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
             <value>1</value>
         </criteriaItems>
@@ -35,6 +37,8 @@
     <reportType>Player_Selections__c</reportType>
     <scope>organization</scope>
     <showDetails>false</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>Player__c$CreatedDate</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>

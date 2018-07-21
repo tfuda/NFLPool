@@ -24,6 +24,8 @@
     <reportType>Players_with_User_Info__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>
+    <showGrandTotal>true</showGrandTotal>
+    <showSubTotals>true</showSubTotals>
     <timeFrameFilter>
         <dateColumn>Player__c$CreatedDate</dateColumn>
         <interval>INTERVAL_CUSTOM</interval>
