@@ -13,6 +13,6 @@
             <type>group</type>
         </recipients>
         <senderType>CurrentUser</senderType>
-        <template>unfiled$public/ThursdayGameReminder</template>
+        <template>Pool_Manager_Email_Templates/ThursdayGameReminder</template>
     </alerts>
 </Workflow>
