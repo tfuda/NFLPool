@@ -47,7 +47,7 @@
             <useReportChart>false</useReportChart>
         </components>
     </rightSection>
-    <runningUser>tom.fuda@nflpool.com</runningUser>
+    <runningUser>sysadmin@poolman.com</runningUser>
     <textColor>#000000</textColor>
     <title>NFL Pool Results</title>
     <titleColor>#000000</titleColor>

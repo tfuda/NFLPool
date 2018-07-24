@@ -39,6 +39,10 @@
     </filter>
     <format>Tabular</format>
     <name>Player Balances</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
     <reportType>Players_with_User_Info__c</reportType>
     <rowLimit>99</rowLimit>
     <scope>organization</scope>

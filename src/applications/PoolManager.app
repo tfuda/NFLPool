@@ -19,4 +19,5 @@
     <tabs>NFL_com</tabs>
     <tabs>NFL_Lines_Primary</tabs>
     <tabs>NFL_Lines_Backup</tabs>
+    <tabs>standard-report</tabs>
 </CustomApplication>
