@@ -1,14 +1,15 @@
 <apex:page >
     <div style="font-weight: bold; color: red;">
-        <p>Here is the prize breakdown for the 2017 playoff pool:</p>
+        <p>Here is the prize breakdown for the 2018 regular season pool:</p>
         <ul style="padding-left: 3px;">
-            <li>Number of entrants: 25</li>
-            <li>Total prize pool: 25 X $50 = $1250</li>
+            <li>Number of entrants: TBD</li>
+            <li>Total prize pool: TBD X $200 = $TBD</li>
             <li>Breakdown:
                 <ul style="padding-left: 3px;">
-                    <li>First place: $675</li>
-                    <li>Second place: $375</li>
-                    <li>Third place: $200</li>
+                    <li>First place: $TBD</li>
+                    <li>Second place: $TBD</li>
+                    <li>Third place: $TBD</li>
+                    <li>Fourth place: $TBD</li>
                 </ul>
             </li>
         </ul>
