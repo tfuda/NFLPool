@@ -149,6 +149,7 @@
     </types>
     <types>
         <members>Player</members>
+        <members>Player - Platform</members>
         <members>Pool Administrator</members>
         <name>Profile</name>
     </types>
