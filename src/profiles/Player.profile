@@ -55,7 +55,7 @@
     </classAccesses>
     <classAccesses>
         <apexClass>PoolManagerUtils</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>ResultsController</apexClass>

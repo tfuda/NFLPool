@@ -27,7 +27,7 @@ global class PlayerController {
 			if (profileOptions == null) {
 				profileOptions = new List<SelectOption>();
 				// Get profiles
-				List<Profile> profiles = [select id, name from profile where name = 'Player' or name = 'Pool Administrator'];
+				List<Profile> profiles = [select id, name from profile where name = 'Player' or name = 'Player - Platform' or name = 'Pool Administrator'];
 				for (Profile pro : profiles) {
 					profileOptions.add(new SelectOption(pro.id, pro.name));
 				}
