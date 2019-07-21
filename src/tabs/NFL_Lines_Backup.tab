@@ -3,7 +3,6 @@
     <frameHeight>600</frameHeight>
     <hasSidebar>false</hasSidebar>
     <label>NFL Lines (Backup)</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom52: Balls</motif>
     <url>https://sports.bovada.lv/football</url>
     <urlEncodingKey>UTF-8</urlEncodingKey>

@@ -16,6 +16,7 @@
             <drillToDetailEnabled>false</drillToDetailEnabled>
             <enableHover>false</enableHover>
             <expandOthers>false</expandOthers>
+            <groupingSortProperties/>
             <header>Weekly Results</header>
             <legendPosition>Bottom</legendPosition>
             <report>NFL_Pool_Reports/Weekly_Results</report>
@@ -37,6 +38,7 @@
             <drillToDetailEnabled>false</drillToDetailEnabled>
             <enableHover>false</enableHover>
             <expandOthers>false</expandOthers>
+            <groupingSortProperties/>
             <header>Seasonal Results</header>
             <legendPosition>Bottom</legendPosition>
             <report>NFL_Pool_Reports/Seasonal_Results</report>
