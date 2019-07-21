@@ -3,7 +3,6 @@
     <frameHeight>600</frameHeight>
     <hasSidebar>false</hasSidebar>
     <label>NFL.com</label>
-    <mobileReady>false</mobileReady>
     <motif>Custom52: Balls</motif>
     <url>https://www.nfl.com</url>
     <urlEncodingKey>UTF-8</urlEncodingKey>

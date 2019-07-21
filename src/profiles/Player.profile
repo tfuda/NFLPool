@@ -30,10 +30,6 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>MessageBoardController</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>PlayerController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -91,10 +87,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>Test_GamesController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>Test_MessageBoardController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -303,6 +295,9 @@
     <layoutAssignments>
         <layout>User-User Layout</layout>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>Weekly_Result__c-Weekly Result Layout</layout>
+    </layoutAssignments>
     <objectPermissions>
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
@@ -402,10 +397,6 @@
     <pageAccesses>
         <apexPage>HomePageMessage</apexPage>
         <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>MessageBoard</apexPage>
-        <enabled>false</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>MyAccount</apexPage>

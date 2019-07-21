@@ -7,7 +7,6 @@
         <members>EmailTemplateDeleter</members>
         <members>GameSelection</members>
         <members>GamesController</members>
-        <members>MessageBoardController</members>
         <members>PlayerController</members>
         <members>PlayerException</members>
         <members>PlayerListController</members>
@@ -23,7 +22,6 @@
         <members>Test_EmailTemplateDeleter</members>
         <members>Test_GameSelection</members>
         <members>Test_GamesController</members>
-        <members>Test_MessageBoardController</members>
         <members>Test_PlayerController</members>
         <members>Test_PlayerListController</members>
         <members>Test_PlayerWrapper</members>
@@ -43,7 +41,6 @@
         <members>EmailLanding</members>
         <members>Games</members>
         <members>HomePageMessage</members>
-        <members>MessageBoard</members>
         <members>MyAccount</members>
         <members>PlayerDetail</members>
         <members>PlayerManagement</members>
@@ -145,9 +142,11 @@
         <members>Settings__c-Settings Layout</members>
         <members>Team__c-Team Layout</members>
         <members>User-User Layout</members>
+        <members>Weekly_Result__c-Weekly Result Layout</members>
         <name>Layout</name>
     </types>
     <types>
+        <members>Admin</members>
         <members>Player</members>
         <members>Pool Administrator</members>
         <name>Profile</name>
@@ -197,5 +196,5 @@
         <members>User.ThursdayGameReminder</members>
         <name>WorkflowAlert</name>
     </types>
-    <version>43.0</version>
+    <version>46.0</version>
 </Package>
