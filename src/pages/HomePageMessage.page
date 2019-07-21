@@ -1,5 +1,5 @@
-<apex:page >
-    <div style="font-weight: bold; color: red;">
+<apex:page lightningStylesheets="true">
+    <apex:pageBlock >
         <p>Here is the prize breakdown for the 2017 playoff pool:</p>
         <ul style="padding-left: 3px;">
             <li>Number of entrants: 25</li>
@@ -12,5 +12,5 @@
                 </ul>
             </li>
         </ul>
-    </div>
+    </apex:pageBlock>
 </apex:page>

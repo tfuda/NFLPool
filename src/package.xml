@@ -7,7 +7,6 @@
         <members>EmailTemplateDeleter</members>
         <members>GameSelection</members>
         <members>GamesController</members>
-        <members>MessageBoardController</members>
         <members>PlayerController</members>
         <members>PlayerException</members>
         <members>PlayerListController</members>
@@ -23,7 +22,6 @@
         <members>Test_EmailTemplateDeleter</members>
         <members>Test_GameSelection</members>
         <members>Test_GamesController</members>
-        <members>Test_MessageBoardController</members>
         <members>Test_PlayerController</members>
         <members>Test_PlayerListController</members>
         <members>Test_PlayerWrapper</members>
@@ -43,7 +41,6 @@
         <members>EmailLanding</members>
         <members>Games</members>
         <members>HomePageMessage</members>
-        <members>MessageBoard</members>
         <members>MyAccount</members>
         <members>PlayerDetail</members>
         <members>PlayerManagement</members>
@@ -60,6 +57,8 @@
     </types>
     <types>
         <members>PoolManager</members>
+        <members>PoolManagerAdmin_Lightning</members>
+        <members>PoolManager_Lightning</members>
         <name>CustomApplication</name>
     </types>
     <types>
@@ -120,6 +119,11 @@
         <name>EmailTemplate</name>
     </types>
     <types>
+        <members>PoolManagerAdminHome</members>
+        <members>PoolManagerHome</members>
+        <name>FlexiPage</name>
+    </types>
+    <types>
         <members>Players</members>
         <members>PoolAdministrators</members>
         <name>Group</name>
@@ -148,6 +152,7 @@
         <name>Layout</name>
     </types>
     <types>
+        <members>Admin</members>
         <members>Player</members>
         <members>Player - Platform</members>
         <members>Pool Administrator</members>

@@ -5,6 +5,16 @@
         <default>true</default>
         <visible>true</visible>
     </applicationVisibilities>
+    <applicationVisibilities>
+        <application>PoolManagerAdmin_Lightning</application>
+        <default>false</default>
+        <visible>false</visible>
+    </applicationVisibilities>
+    <applicationVisibilities>
+        <application>PoolManager_Lightning</application>
+        <default>false</default>
+        <visible>true</visible>
+    </applicationVisibilities>
     <classAccesses>
         <apexClass>ChatterMsgBoardController</apexClass>
         <enabled>false</enabled>
@@ -27,10 +37,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>GamesController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>MessageBoardController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -91,10 +97,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>Test_GamesController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>Test_MessageBoardController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -401,10 +403,6 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>HomePageMessage</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
-        <apexPage>MessageBoard</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
