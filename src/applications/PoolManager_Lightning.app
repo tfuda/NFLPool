@@ -60,5 +60,4 @@
     <tabs>NFL_Lines_Primary</tabs>
     <tabs>NFL_Lines_Backup</tabs>
     <uiType>Lightning</uiType>
-    <utilityBar>Pool_Manager_UtilityBar</utilityBar>
 </CustomApplication>
