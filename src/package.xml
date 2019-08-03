@@ -104,7 +104,6 @@
         <members>Settings__c</members>
         <members>Team__c</members>
         <members>Weekly_Result__c</members>
-        <members>standard-home</members>
         <name>CustomTab</name>
     </types>
     <types>
