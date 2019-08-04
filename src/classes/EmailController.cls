@@ -21,7 +21,7 @@ public class EmailController {
 		}
 	}
 	
-	public Integer numColumns = 4;
+	public Integer numColumns = 3;
 	public String mode { get; set; }
 	public String subject { get; set; }
 	public String message { get; set; }

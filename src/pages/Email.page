@@ -15,7 +15,7 @@
                     <apex:repeat id="row" value="{!playerList}" var="row">
                         <tr align="left" >
                             <apex:repeat id="col" value="{!row}" var="player">
-                                <td style="width:225px;">                               
+                                <td style="width:300px;">
                                     <apex:inputCheckbox id="playerSelect" value="{!player.selected}" />
                                     <apex:outputLabel for="playerSelect" value="{!player.label}" />
                                 </td>
@@ -24,7 +24,7 @@
                     </apex:repeat>
                     <tr><td>&nbsp;</td></tr>
                     <tr align="left">
-                        <td style="width:225px;" >
+                        <td style="width:300px;" >
                             <apex:inputCheckbox id="selectAll" value="{!selectAll}" >
                                 <apex:actionSupport event="onclick" action="{!selectDeselectAll}" rerender="emailBlock"/>
                             </apex:inputCheckbox>
