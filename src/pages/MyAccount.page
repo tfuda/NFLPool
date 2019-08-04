@@ -1,8 +1,7 @@
 <apex:page controller="PlayerController" id="playerPage" tabStyle="MyAccount__tab" lightningStylesheets="true">
     <apex:pageMessages />
     <apex:form id="playerForm"> 
-        <input type="hidden" name="serverUrl" value="{!$Api.Enterprise_Server_URL_150}" />
-        <apex:sectionHeader title="Player Details" />           
+        <apex:sectionHeader title="Player Details" />
         <apex:pageBlock id="playerDetailsBlock" >
             <apex:pageBlockButtons >
                 <apex:commandButton id="editButton" value="Edit" action="{!edit}" disabled="{!(mode == 'new') || (mode == 'edit')}"  />

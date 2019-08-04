@@ -27,7 +27,12 @@ global class PlayerController {
 			if (profileOptions == null) {
 				profileOptions = new List<SelectOption>();
 				// Get profiles
-				List<Profile> profiles = [select id, name from profile where name = 'Player' or name = 'Player - Platform' or name = 'Pool Administrator'];
+				List<Profile> profiles = [
+					select id, name
+					from profile
+					where name = :Constants.PLAYER_PROFILE
+					or name = :Constants.PLAYER_PLATFORM_PROFILE
+					or name = :Constants.POOL_ADMIN_PROFILE];
 				for (Profile pro : profiles) {
 					profileOptions.add(new SelectOption(pro.id, pro.name));
 				}
@@ -37,39 +42,6 @@ global class PlayerController {
 		set;
 	}
     
-    /* The Salesforce Server URL */
-	public String serverUrl {
-		get {
-			return ApexPages.currentPage().getParameters().get('serverUrl');
-		}
-	}
-
-    /* URL to use as the web service endpoint. You must append the '/class/<packagename>/<classname>' to it. */
-	public String webServiceUrl {
-		get {
-			Pattern serverUrlPattern = Pattern.compile('(https://.*?/services/Soap).*?');
-			Matcher serverUrlMatcher = serverUrlPattern.matcher(serverUrl);
-			if (serverUrlMatcher.matches()) {
-				return serverUrlMatcher.group(1);
-			} else {
-				return null;
-			}
-		}
-	}
-    
-    /* Salesforce server name. For example: na6.salesforce.com */
-	public String serverName {
-		get {
-			Pattern serverUrlPattern = Pattern.compile('https://(.*?)/.*?');
-			Matcher serverUrlMatcher = serverUrlPattern.matcher(serverUrl);
-			if (serverUrlMatcher.matches()) {
-				return serverUrlMatcher.group(1);
-			} else {
-				return null;
-			}
-		}
-	}
-	
 	public Settings__c settings {
 		get {
 			return PoolManagerUtils.getSettings();
@@ -182,7 +154,7 @@ global class PlayerController {
 			SoapUtils.PoolManagerUtils soap = new SoapUtils.PoolManagerUtils();
 			
 			// Determine the endpoing dynamically
-			soap.endpoint_x = webServiceUrl + '/class/PoolManagerUtils';
+			soap.endpoint_x = URL.getOrgDomainUrl().toExternalForm() + '/services/Soap/class/PoolManagerUtils';
 			System.debug('Soap Endpoint = ' + soap.endpoint_x);
 			
 			soap.SessionHeader = new SoapUtils.SessionHeader_element();
@@ -223,7 +195,7 @@ global class PlayerController {
 			SoapUtils.PoolManagerUtils soap = new SoapUtils.PoolManagerUtils();
 			
 			// Determine the endpoing dynamically
-			soap.endpoint_x = webServiceUrl + '/class/PoolManagerUtils';
+			soap.endpoint_x = URL.getOrgDomainUrl().toExternalForm() + '/services/Soap/class/PoolManagerUtils';
 			System.debug('Soap Endpoint = ' + soap.endpoint_x);
 			
 			soap.SessionHeader = new SoapUtils.SessionHeader_element();
