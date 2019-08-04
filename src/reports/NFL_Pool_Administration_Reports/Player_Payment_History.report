@@ -24,6 +24,10 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Player Payment History</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
     <reportType>CustomEntityCustomEntity$Player__c$PlayerPayment__c</reportType>
     <scope>organization</scope>
     <showDetails>true</showDetails>

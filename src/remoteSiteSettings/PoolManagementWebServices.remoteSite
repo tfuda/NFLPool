@@ -3,5 +3,5 @@
     <description>Local Apex web services</description>
     <disableProtocolSecurity>false</disableProtocolSecurity>
     <isActive>true</isActive>
-    <url>https://c.na91.visual.force.com</url>
+    <url>https://poolman-dev-ed.my.salesforce.com</url>
 </RemoteSiteSetting>

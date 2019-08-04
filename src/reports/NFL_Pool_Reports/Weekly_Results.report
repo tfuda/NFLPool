@@ -63,7 +63,7 @@
             <column>Game__c$Week__c</column>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>4</value>
+            <value>1</value>
         </criteriaItems>
         <criteriaItems>
             <column>Game__c$Locked__c</column>

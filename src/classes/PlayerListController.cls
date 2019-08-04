@@ -34,8 +34,10 @@ public class PlayerListController {
 			Database.getQueryLocator(
 				'select id, name, username, firstname, lastname, phone, email, communitynickname, '
 					+ 'alias, isactive, profileid, profile.name from user '
-					+ 'where (profile.name = \'Player\' or profile.name = \'Pool Administrator\') '
-					+ ((activeOnly) ? 'and isactive = true ' : '')
+					+ 'where (profile.name = \'' + Constants.PLAYER_PROFILE
+					+ '\' or profile.name = \'' + Constants.PLAYER_PLATFORM_PROFILE
+					+ '\' or profile.name = \'' + Constants.POOL_ADMIN_PROFILE
+					+ '\') ' + ((activeOnly) ? 'and isactive = true ' : '')
 					+ 'order by name asc'
 			)
 		);

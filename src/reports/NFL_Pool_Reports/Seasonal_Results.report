@@ -85,6 +85,10 @@
         <sortOrder>Asc</sortOrder>
     </groupingsDown>
     <name>Seasonal Results</name>
+    <params>
+        <name>co</name>
+        <value>1</value>
+    </params>
     <reportType>Game_Selections__c</reportType>
     <scope>organization</scope>
     <showDetails>false</showDetails>

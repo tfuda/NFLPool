@@ -31,8 +31,9 @@ public class SelectionController {
 						p.user__r.communitynickname, p.user__r.isactive, p.user__r.profile.name
 					from player__c p
 					where (p.user__r.isactive = true)
-					and (p.user__r.profile.name = 'Player'
-					or p.user__r.profile.name = 'Pool Administrator')
+					and (p.user__r.profile.name = :Constants.PLAYER_PROFILE
+					or p.user__r.profile.name = :Constants.PLAYER_PLATFORM_PROFILE
+					or p.user__r.profile.name = :Constants.POOL_ADMIN_PROFILE)
 					order by p.name
 				];
 				for (Player__c p : pList) {
@@ -69,9 +70,8 @@ public class SelectionController {
 				List<Profile> adminProfiles = [
 					select id, name
 					from profile
-					where name = 'System Administrator'
-					or name = 'Platform System Admin'
-					or name = 'Pool Administrator'
+					where name = :Constants.SYSTEM_ADMIN_PROFILE
+					or name = :Constants.POOL_ADMIN_PROFILE
 				];
 				for (Profile p : adminProfiles) {
 					if (p.id == UserInfo.getProfileId()) {

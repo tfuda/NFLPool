@@ -10,10 +10,12 @@ public class EmailController {
 		public UserWrapper(Integer index, User usr) {
 			this.index = index;
 			this.usr = usr;
-			if ('Player'.equals(usr.profile.name)) {
+			if (Constants.PLAYER_PROFILE.equals(usr.profile.name) || (Constants.PLAYER_PLATFORM_PROFILE).equals(usr.profile.name)) {
 				this.label = usr.name + ' (' + usr.communitynickname + ')';
-			} else if ('Pool Administrator'.equals(usr.profile.name)) {
+			} else if (Constants.POOL_ADMIN_PROFILE.equals(usr.profile.name)) {
 				this.label = usr.name + ' (' + usr.communitynickname + ') *';
+			} else if (Constants.SYSTEM_ADMIN_PROFILE.equals(usr.profile.name)) {
+				this.label = usr.name + ' *';
 			}
 			this.selected = false;
 		}
@@ -41,8 +43,11 @@ public class EmailController {
 					select id, name, communitynickname,
 						username, email, profile.name
 					from user
-					where isactive = true and (profile.name = 'Player'
-					or profile.name = 'Pool Administrator')
+					where isactive = true and
+					(profile.name = :Constants.PLAYER_PROFILE
+					or profile.name = :Constants.PLAYER_PLATFORM_PROFILE
+					or profile.name = :Constants.POOL_ADMIN_PROFILE
+					or profile.name = :Constants.SYSTEM_ADMIN_PROFILE)
 					order by name asc
 				];
 				
@@ -105,7 +110,7 @@ public class EmailController {
 		message = null;
 		copyMe = null;
 		selectAll = null;
-		return Page.Email;
+		return Page.EmailLanding;
 	}
 	
 	public PageReference send() {
@@ -132,8 +137,8 @@ public class EmailController {
 			List<User> admins = [
 				select id, email, name, communitynickname, profile.name
 				from user
-				where isactive = true and
-				(profile.name = 'Pool Administrator' or profile.name = 'Platform System Admin')
+				where isactive = true
+				and (profile.name = :Constants.POOL_ADMIN_PROFILE or profile.name = :Constants.SYSTEM_ADMIN_PROFILE)
 			];
 			for (User admin : admins) {
 				targetIds.add(admin.Id);

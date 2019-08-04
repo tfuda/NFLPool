@@ -1,4 +1,4 @@
-<apex:page controller="ResultsController" tabStyle="Results__tab" >
+<apex:page controller="ResultsController" tabStyle="Results__tab" lightningStylesheets="true" >
     <apex:includeScript value="https://www.google.com/jsapi" />
     <apex:includeScript value="{!$Resource.jquery}" />
     <script type="text/javascript">
@@ -31,7 +31,7 @@
                     flashErrorMessage(event.message);
                 }
             },
-            {escape: false}
+            {escape: true}
         );
         Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ResultsController.getSeasonalResults}',
@@ -50,7 +50,7 @@
                     flashErrorMessage(event.message);
                 }
             },
-            {escape: false}
+            {escape: true}
         );
         setLastRefreshed();
         setTimeout('refreshResults()', 120000);

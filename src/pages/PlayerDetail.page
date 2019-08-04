@@ -1,109 +1,108 @@
-<apex:page controller="PlayerController" id="playerPage" tabStyle="PlayerManagement__tab" >
-	<apex:pageMessages id="messages" />
-	<apex:form id="playerForm">	
-		<input type="hidden" name="serverUrl" value="{!$Api.Enterprise_Server_URL_150}" />
-		<apex:sectionHeader title="Player Details" />			
-		<apex:pageBlock id="playerDetailsBlock" >
-			<apex:pageBlockButtons >
-				<apex:commandButton id="editButton" value="Edit" action="{!edit}" disabled="{!(mode == 'new') || (mode == 'edit')}"  />
-				<apex:commandButton id="saveButton" value="Save" action="{!save}" disabled="{!mode == 'view'}"/>
-				<apex:commandButton id="cancelButton" immediate="true" value="Cancel" action="{!cancel}" disabled="{!mode == 'view'}" />
-			</apex:pageBlockButtons>
-			
-			<apex:pageBlockSection id="viewPlayer" columns="1" title="Player Details" rendered="{!mode == 'view'}">
-				<apex:outputField value="{!wrapper.usr.firstname}"/>
-				<apex:outputField value="{!wrapper.usr.lastname}"/>
-				<apex:outputField value="{!wrapper.usr.username}"/>
-				<apex:pageBlockSectionItem >
-					<apex:outputLabel for="nicknameOutput" value="Nickname" />
-					<apex:outputField id="nicknameOutput" value="{!wrapper.usr.communitynickname}"/>
-				</apex:pageBlockSectionItem>
-				<apex:pageBlockSectionItem >
-					<apex:outputLabel for="playerLink" value="Player Object" />
-					<apex:outputLink id="playerLink" value="/{!wrapper.player.id}">{!wrapper.player.name}</apex:outputLink>
-				</apex:pageBlockSectionItem>				
-				<apex:outputField value="{!wrapper.usr.email}"/>
-				<apex:outputField value="{!wrapper.usr.phone}"/>
-				<apex:outputField value="{!wrapper.usr.street}"/>
-				<apex:outputField value="{!wrapper.usr.city}"/>
-				<apex:outputField value="{!wrapper.usr.state}"/>
-				<apex:outputField value="{!wrapper.usr.postalcode}"/>
-				<apex:outputField value="{!wrapper.usr.profileid}"/>
-				<apex:outputField value="{!wrapper.usr.isactive}"/>
-			</apex:pageBlockSection>
-			
-			<apex:pageBlockSection id="editPlayer" columns="1" title="Player Details" rendered="{!(mode == 'new') || (mode == 'edit')}" >
-				<apex:inputField value="{!wrapper.usr.firstname}"/>
-				<apex:inputField value="{!wrapper.usr.lastname}"/>
-				<apex:inputField value="{!wrapper.usr.username}"/>
-				<apex:pageBlockSectionItem >
-					<apex:outputLabel for="nicknameInput" value="Nickname" />
-					<apex:inputField id="nicknameInput" value="{!wrapper.usr.communitynickname}"/>
-				</apex:pageBlockSectionItem>
-				<apex:pageBlockSectionItem >
-					<apex:outputLabel for="playerLink" value="Player Object" />
-					<apex:outputLink id="playerLink" value="/{!wrapper.player.id}">{!wrapper.player.name}</apex:outputLink>
-				</apex:pageBlockSectionItem>				
-				<apex:inputField value="{!wrapper.usr.email}"/>
-				<apex:inputField value="{!wrapper.usr.phone}"/>
-				<apex:inputField value="{!wrapper.usr.street}"/>
-				<apex:inputField value="{!wrapper.usr.city}"/>
-				<apex:inputField value="{!wrapper.usr.state}"/>
-				<apex:inputField value="{!wrapper.usr.postalcode}"/>
-				<apex:pageBlockSectionItem >
-					<apex:outputLabel for="profileList" value="Profile"/>
-					<apex:selectList id="profileList" value="{!wrapper.usr.profileid}" multiselect="false" size="1">
-						<apex:selectOptions value="{!profileOptions}" />
-					</apex:selectList>
-				</apex:pageBlockSectionItem>
-				<apex:inputField value="{!wrapper.usr.isactive}" rendered="{!mode == 'edit'}"/>
-			</apex:pageBlockSection>			
-		</apex:pageBlock>
-		
-		<apex:pageBlock id="paymentHistory" title="Payment History" >
-			<apex:pageBlockButtons >
-				<apex:commandButton action="{!addPayment}" value="Add Payment" rerender="paymentHistory" disabled="{!(mode == 'new') || (mode == 'edit') || (editingPayment)}" />				
-			</apex:pageBlockButtons>
-			<apex:panelGrid columns="5" >
-				<apex:outputLabel for="totalPayments" value="Total Payments: " style="font-weight:bold;" />
-				<apex:outputField id="totalPayments" value="{!wrapper.player.TotalPaymentsRollup__c}" />
-				<span>&nbsp;&nbsp;&nbsp;</span>
-				<apex:outputLabel for="balanceDue" value="Balance Due: " style="font-weight:bold;" />
-				<apex:outputField id="balanceDue" value="{!wrapper.player.BalanceDueFormula__c}" />
-			</apex:panelGrid>
-			<br/>
-			<apex:pageBlockTable value="{!pmtWrappers}" var="pmtWrapper" >
-				<apex:column width="150px;">
-					<apex:outputPanel rendered="{!pmtWrapper.mode == 'view'}">
-						<apex:commandButton action="{!editPayment}" value="Edit" rerender="paymentHistory, messages" disabled="{!editingPayment}" style="width:60px;">
-							<apex:param name="paymentIndex" value="{!pmtWrapper.index}" />
-						</apex:commandButton>
-						<apex:outputText escape="false" value="&nbsp;" />
-						<apex:commandButton action="{!deletePayment}" value="Delete" rerender="paymentHistory, messages" disabled="{!editingPayment}" style="width:60px;">
-							<apex:param name="paymentIndex" value="{!pmtWrapper.index}" />
-						</apex:commandButton>
-					</apex:outputPanel>
-					<apex:outputPanel rendered="{!pmtWrapper.mode == 'edit'}">
-						<apex:commandButton action="{!savePayment}" value="Save" rerender="paymentHistory, messages" style="width:60px;">
-							<apex:param name="paymentIndex" value="{!pmtWrapper.index}" />
-						</apex:commandButton>
-						<apex:outputText escape="false" value="&nbsp;" />
-						<apex:commandButton action="{!cancelPayment}" value="Cancel" rerender="paymentHistory, messages" style="width:60px;">
-							<apex:param name="paymentIndex" value="{!pmtWrapper.index}" />
-						</apex:commandButton>
-					</apex:outputPanel>
-				</apex:column>
-				<apex:column headerValue="Amount" >
-					<apex:outputField value="{!pmtWrapper.payment.Amount__c}" rendered="{!pmtWrapper.mode == 'view'}" /> 
-					<apex:inputField id="amount" value="{!pmtWrapper.payment.Amount__c}" rendered="{!pmtWrapper.mode == 'edit'}" /> 
-				</apex:column>
-				<apex:column headerValue="Payment Date" >
-					<apex:outputField value="{!pmtWrapper.payment.PaymentDate__c}" rendered="{!pmtWrapper.mode == 'view'}" /> 
-					<apex:inputField id="paymentdate" value="{!pmtWrapper.payment.PaymentDate__c}" rendered="{!pmtWrapper.mode == 'edit'}" /> 
-				</apex:column>
-				<apex:column value="{!pmtWrapper.payment.createddate}" headerValue="Created Date" />				
-				<apex:column value="{!pmtWrapper.payment.createdbyid}" headerValue="Created By" />				
-			</apex:pageBlockTable>
-		</apex:pageBlock>
-	</apex:form>
+<apex:page controller="PlayerController" id="playerPage" tabStyle="PlayerManagement__tab" lightningStylesheets="true">
+    <apex:pageMessages id="messages" />
+    <apex:form id="playerForm"> 
+        <apex:sectionHeader title="Player Details" />
+        <apex:pageBlock id="playerDetailsBlock" >
+            <apex:pageBlockButtons >
+                <apex:commandButton id="editButton" value="Edit" action="{!edit}" disabled="{!(mode == 'new') || (mode == 'edit')}"  />
+                <apex:commandButton id="saveButton" value="Save" action="{!save}" disabled="{!mode == 'view'}"/>
+                <apex:commandButton id="cancelButton" immediate="true" value="Cancel" action="{!cancel}" disabled="{!mode == 'view'}" />
+            </apex:pageBlockButtons>
+            
+            <apex:pageBlockSection id="viewPlayer" columns="1" title="Player Details" rendered="{!mode == 'view'}">
+                <apex:outputField value="{!wrapper.usr.firstname}"/>
+                <apex:outputField value="{!wrapper.usr.lastname}"/>
+                <apex:outputField value="{!wrapper.usr.username}"/>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel for="nicknameOutput" value="Nickname" />
+                    <apex:outputField id="nicknameOutput" value="{!wrapper.usr.communitynickname}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel for="playerLink" value="Player Object" />
+                    <apex:outputLink id="playerLink" value="/{!wrapper.player.id}">{!wrapper.player.name}</apex:outputLink>
+                </apex:pageBlockSectionItem>                
+                <apex:outputField value="{!wrapper.usr.email}"/>
+                <apex:outputField value="{!wrapper.usr.phone}"/>
+                <apex:outputField value="{!wrapper.usr.street}"/>
+                <apex:outputField value="{!wrapper.usr.city}"/>
+                <apex:outputField value="{!wrapper.usr.state}"/>
+                <apex:outputField value="{!wrapper.usr.postalcode}"/>
+                <apex:outputField value="{!wrapper.usr.profileid}"/>
+                <apex:outputField value="{!wrapper.usr.isactive}"/>
+            </apex:pageBlockSection>
+            
+            <apex:pageBlockSection id="editPlayer" columns="1" title="Player Details" rendered="{!(mode == 'new') || (mode == 'edit')}" >
+                <apex:inputField value="{!wrapper.usr.firstname}"/>
+                <apex:inputField value="{!wrapper.usr.lastname}"/>
+                <apex:inputField value="{!wrapper.usr.username}"/>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel for="nicknameInput" value="Nickname" />
+                    <apex:inputField id="nicknameInput" value="{!wrapper.usr.communitynickname}"/>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel for="playerLink" value="Player Object" />
+                    <apex:outputLink id="playerLink" value="/{!wrapper.player.id}">{!wrapper.player.name}</apex:outputLink>
+                </apex:pageBlockSectionItem>                
+                <apex:inputField value="{!wrapper.usr.email}"/>
+                <apex:inputField value="{!wrapper.usr.phone}"/>
+                <apex:inputField value="{!wrapper.usr.street}"/>
+                <apex:inputField value="{!wrapper.usr.city}"/>
+                <apex:inputField value="{!wrapper.usr.state}"/>
+                <apex:inputField value="{!wrapper.usr.postalcode}"/>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel for="profileList" value="Profile"/>
+                    <apex:selectList id="profileList" value="{!wrapper.usr.profileid}" multiselect="false" size="1">
+                        <apex:selectOptions value="{!profileOptions}" />
+                    </apex:selectList>
+                </apex:pageBlockSectionItem>
+                <apex:inputField value="{!wrapper.usr.isactive}" rendered="{!mode == 'edit'}"/>
+            </apex:pageBlockSection>            
+        </apex:pageBlock>
+        
+        <apex:pageBlock id="paymentHistory" title="Payment History" >
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!addPayment}" value="Add Payment" rerender="paymentHistory" disabled="{!(mode == 'new') || (mode == 'edit') || (editingPayment)}" />               
+            </apex:pageBlockButtons>
+            <apex:panelGrid columns="5" >
+                <apex:outputLabel for="totalPayments" value="Total Payments: " style="font-weight:bold;" />
+                <apex:outputField id="totalPayments" value="{!wrapper.player.TotalPaymentsRollup__c}" />
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                <apex:outputLabel for="balanceDue" value="Balance Due: " style="font-weight:bold;" />
+                <apex:outputField id="balanceDue" value="{!wrapper.player.BalanceDueFormula__c}" />
+            </apex:panelGrid>
+            <br/>
+            <apex:pageBlockTable value="{!pmtWrappers}" var="pmtWrapper" >
+                <apex:column width="150px;">
+                    <apex:outputPanel rendered="{!pmtWrapper.mode == 'view'}">
+                        <apex:commandButton action="{!editPayment}" value="Edit" rerender="paymentHistory, messages" disabled="{!editingPayment}" style="width:60px;">
+                            <apex:param name="paymentIndex" value="{!pmtWrapper.index}" />
+                        </apex:commandButton>
+                        <apex:outputText escape="false" value="&nbsp;" />
+                        <apex:commandButton action="{!deletePayment}" value="Delete" rerender="paymentHistory, messages" disabled="{!editingPayment}" style="width:60px;">
+                            <apex:param name="paymentIndex" value="{!pmtWrapper.index}" />
+                        </apex:commandButton>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!pmtWrapper.mode == 'edit'}">
+                        <apex:commandButton action="{!savePayment}" value="Save" rerender="paymentHistory, messages" style="width:60px;">
+                            <apex:param name="paymentIndex" value="{!pmtWrapper.index}" />
+                        </apex:commandButton>
+                        <apex:outputText escape="false" value="&nbsp;" />
+                        <apex:commandButton action="{!cancelPayment}" value="Cancel" rerender="paymentHistory, messages" style="width:60px;">
+                            <apex:param name="paymentIndex" value="{!pmtWrapper.index}" />
+                        </apex:commandButton>
+                    </apex:outputPanel>
+                </apex:column>
+                <apex:column headerValue="Amount" >
+                    <apex:outputField value="{!pmtWrapper.payment.Amount__c}" rendered="{!pmtWrapper.mode == 'view'}" /> 
+                    <apex:inputField id="amount" value="{!pmtWrapper.payment.Amount__c}" rendered="{!pmtWrapper.mode == 'edit'}" /> 
+                </apex:column>
+                <apex:column headerValue="Payment Date" >
+                    <apex:outputField value="{!pmtWrapper.payment.PaymentDate__c}" rendered="{!pmtWrapper.mode == 'view'}" /> 
+                    <apex:inputField id="paymentdate" value="{!pmtWrapper.payment.PaymentDate__c}" rendered="{!pmtWrapper.mode == 'edit'}" /> 
+                </apex:column>
+                <apex:column value="{!pmtWrapper.payment.createddate}" headerValue="Created Date" />                
+                <apex:column value="{!pmtWrapper.payment.createdbyid}" headerValue="Created By" />              
+            </apex:pageBlockTable>
+        </apex:pageBlock>
+    </apex:form>
 </apex:page>

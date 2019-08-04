@@ -1,25 +1,25 @@
-<apex:page id="contactInfoPage" controller="ContactInfoController" >
-	<apex:pageMessages id="errorMessages" />
-	<apex:sectionHeader title="Contact Information" />
-		<apex:pageBlock id="selectionBlock" title="Contacting Pool Administrators" >
-			Use the information provided below to contact your pool administrator(s). Use this information if you need to report a problem, or submit late selections.
-			<table>
-				<apex:repeat value="{!poolAdmins}" var="wrapper" >
-					<tr>
-						<td>
-							<hr/>
-							<table>
-								<tr><td>Name: {!wrapper.usr.Name}</td></tr>
-								<tr><td>Nickname: {!wrapper.usr.CommunityNickname}</td></tr>
-								<tr><td>Email: {!wrapper.usr.Email}</td></tr>
-								<tr><td>Phone: {!wrapper.usr.Phone}</td></tr>
-								<apex:outputPanel layout="none" rendered="{!NOT(ISNULL(wrapper.usr.MobilePhone))}" >
-									<tr><td>Mobile: {!wrapper.usr.MobilePhone}</td></tr>
-								</apex:outputPanel>
-							</table>
-						</td>
-					</tr>
-				</apex:repeat>				
-			</table>
-		</apex:pageBlock>
+<apex:page id="contactInfoPage" controller="ContactInfoController" lightningStylesheets="true">
+    <apex:pageMessages id="errorMessages" />
+    <apex:sectionHeader title="Contact Information" />
+        <apex:pageBlock id="selectionBlock" title="Contacting Pool Administrators" >
+            Use the information provided below to contact your pool administrator(s). Use this information if you need to report a problem, or submit late selections.
+            <table>
+                <apex:repeat value="{!poolAdmins}" var="wrapper" >
+                    <tr>
+                        <td>
+                            <hr/>
+                            <table>
+                                <tr><td>Name: {!wrapper.usr.Name}</td></tr>
+                                <tr><td>Nickname: {!wrapper.usr.CommunityNickname}</td></tr>
+                                <tr><td>Email: {!wrapper.usr.Email}</td></tr>
+                                <tr><td>Phone: {!wrapper.usr.Phone}</td></tr>
+                                <apex:outputPanel layout="none" rendered="{!NOT(ISNULL(wrapper.usr.MobilePhone))}" >
+                                    <tr><td>Mobile: {!wrapper.usr.MobilePhone}</td></tr>
+                                </apex:outputPanel>
+                            </table>
+                        </td>
+                    </tr>
+                </apex:repeat>              
+            </table>
+        </apex:pageBlock>
 </apex:page>

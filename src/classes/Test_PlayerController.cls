@@ -112,16 +112,6 @@ private class Test_PlayerController {
 			con.editingPayment = false;
 			System.assert(con.profileOptions.size() != null);
 			
-			playerPage.getParameters().put('serverUrl', 'https://test.salesforce.com/services/Soap/test');
-			System.assertEquals('https://test.salesforce.com/services/Soap/test', con.serverUrl);
-			System.assertEquals('https://test.salesforce.com/services/Soap', con.webServiceUrl);
-			System.assertEquals('test.salesforce.com', con.serverName);
-			
-			playerPage.getParameters().put('serverUrl', 'http://test.salesforce.com/notamatch/test');
-			System.assertEquals('http://test.salesforce.com/notamatch/test', con.serverUrl);
-			System.assert(con.webServiceUrl == null);
-			System.assert(con.serverName == null);
-			
 			// Call a few of the utility methods for code coverage
 			con.updatePlayerObject(testPlayer.id, testUser.id);
 			con.createPlayerObject(testUser.id);
