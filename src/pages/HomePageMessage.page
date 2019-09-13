@@ -4,12 +4,14 @@
         <ul style="padding-left: 3px;">
             <li>Number of entrants: 25</li>
             <li>Total prize pool: 25 X $200 = $5000</li>
+            <li>Total allocated to weekly prize: 17 X $100 = $1700</li>
+            <li>Total allocated to season long pool: $5000 - $1700 = $3300</li>
             <li>Breakdown:
                 <ul style="padding-left: 3px;">
-                    <li>First place: $TBD</li>
-                    <li>Second place: $TBD</li>
-                    <li>Third place: $TBD</li>
-                    <li>Fourth place: $TBD</li>
+                    <li>First place: $1700</li>
+                    <li>Second place: $940</li>
+                    <li>Third place: $450</li>
+                    <li>Fourth place: $210</li>
                 </ul>
             </li>
         </ul>
