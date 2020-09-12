@@ -205,5 +205,5 @@
         <members>User.ThursdayGameReminder</members>
         <name>WorkflowAlert</name>
     </types>
-    <version>46.0</version>
+    <version>49.0</version>
 </Package>

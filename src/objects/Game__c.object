@@ -341,6 +341,11 @@
         <columns>CREATED_DATE</columns>
         <columns>CREATEDBY_USER</columns>
         <filterScope>Everything</filterScope>
+        <filters>
+            <field>Week__c</field>
+            <operation>equals</operation>
+            <value>10</value>
+        </filters>
         <label>Week 10</label>
     </listViews>
     <listViews>
