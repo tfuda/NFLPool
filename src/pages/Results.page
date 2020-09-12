@@ -1,15 +1,9 @@
 <apex:page controller="ResultsController" tabStyle="Results__tab" lightningStylesheets="true" >
-    <apex:includeScript value="https://www.google.com/jsapi" />
+    <apex:includeScript value="https://cdn.jsdelivr.net/npm/chart.js@2.8.0" />
     <apex:includeScript value="{!$Resource.jquery}" />
     <script type="text/javascript">
     var selectedWeek = '{!selectedWeek}';
     
-    // Load the Visualization API and the core chart package.
-    google.load('visualization', '1.0', {'packages':['corechart']});
-        
-    // Set a callback to run when the Google Visualization API is loaded.
-    google.setOnLoadCallback(refreshResults);
-
     // Callback that creates and populates a data table,
     // instantiates the pie chart, passes in the data and
     // draws it.
@@ -22,10 +16,10 @@
                         $('#wrNotAvailable').hide();
                         drawPointsChart(results, 'Points Scored - Week ' + selectedWeek, 'currentPointsDiv');
                         drawPercentageChart(results, 'Win Percentage - Week ' + selectedWeek, 'currentPercentageDiv');
-                        $('#wrRow').show();
+//                        $('#wrRow').show();
                     } else {
                         $('#wrNotAvailable').show();
-                        $('#wrRow').hide();
+//                        $('#wrRow').hide();
                     }
                 } else {
                     flashErrorMessage(event.message);
@@ -41,10 +35,10 @@
                         $('#srNotAvailable').hide();
                         drawPointsChart(results, 'Points Scored - Season', 'seasonPointsDiv');
                         drawPercentageChart(results, 'Win Percentage - Season', 'seasonPercentageDiv');
-                        $('#srRow').show();
+//                        $('#srRow').show();
                     } else {
                         $('#srNotAvailable').show();
-                        $('#srRow').hide();
+//                        $('#srRow').hide();
                     }
                 } else {
                     flashErrorMessage(event.message);
@@ -57,6 +51,21 @@
     }
     
     function drawPointsChart(results, chartTitle, domId) {
+        const pointsData = {
+            labels: results.rWrappers.map(result => result.nickname),
+            datasets: [{
+                label: chartTitle,
+                backgroundColor: 'blue',
+                data: results.rWrappers.map(result => result.pointsScored),
+            }]
+        }
+        const ctx = document.getElementById(domId);
+        const pointsChart = new Chart(ctx, {
+           type: 'horizontalBar',
+           data: pointsData,
+           options: {}
+        });
+        /*
         var pointsData = new google.visualization.DataTable();
         pointsData.addColumn({type : 'string', label : 'Nickname'});
         pointsData.addColumn({type : 'number', label : 'Points Scored'});
@@ -81,9 +90,25 @@
         }
         var chart = new google.visualization.BarChart(document.getElementById(domId));
         chart.draw(pointsData, options);
+        */
     }
     
     function drawPercentageChart(results, chartTitle, domId) {
+        var percentageData = {
+            labels: results.rWrappers.map(result => result.nickname),
+            datasets: [{
+                label: chartTitle,
+                backgroundColor: 'red',
+                data: results.rWrappers.map(result => result.winPercentage),
+            }]
+        }
+        var ctx = document.getElementById(domId);
+        var pointsChart = new Chart(ctx, {
+           type: 'horizontalBar',
+           data: percentageData,
+           options: {}
+        });
+        /*
         var percentageData = new google.visualization.DataTable();
         percentageData.addColumn({type : 'string', label : 'Nickname'});
         percentageData.addColumn({type : 'number', label : 'Win Percentage'});
@@ -107,6 +132,7 @@
         }
         var chart = new google.visualization.BarChart(document.getElementById(domId));
         chart.draw(percentageData, options);
+        */
     }
     
     function setLastRefreshed() {
@@ -140,9 +166,8 @@
     $(document).ready(function() {
         $('#errorMsg').hide();
         $('#wrNotAvailable').hide();
-        $('#wrRow').hide();
         $('#srNotAvailable').hide();
-        $('#srRow').hide();
+        refreshResults();
     });
     </script>
     
@@ -153,9 +178,7 @@
         <apex:outputPanel layout="inline" rendered="{!VALUE(currentWeek) > 1}" >
             <apex:outputLabel value="Click here to view results for prior weeks: " />
             <apex:repeat value="{!weeks}" var="weekNumber" >
-                &nbsp;
-                <apex:outputLink value="{!$Page.Results}" 
-                    style="{!IF(weekNumber == selectedWeek, 'font-weight:bold; color:red', 'font-weight:normal;')}" >
+                <apex:outputLink value="{!$Page.Results}" style="{!IF(weekNumber == selectedWeek, 'font-weight:bold; color:red', 'font-weight:normal;')}" >
                     <apex:outputText value="{!weekNumber}" />
                     <apex:param name="week" value="{!weekNumber}" />
                 </apex:outputLink>
@@ -169,10 +192,10 @@
             </tr>
             <tr id="wrRow" >
                 <td>
-                    <div id="currentPointsDiv"></div>
+                    <canvas id="currentPointsDiv" height="400" width="400"></canvas>
                 </td>
                 <td>
-                    <div id="currentPercentageDiv"></div>
+                    <canvas id="currentPercentageDiv" height="400" width="400"></canvas>
                 </td>
             </tr>
             <tr id="srNotAvailable" >
@@ -180,10 +203,10 @@
             </tr>
             <tr id="srRow" >
                 <td>
-                    <div id="seasonPointsDiv"></div>
+                    <canvas id="seasonPointsDiv" height="400" width="400"></canvas>
                 </td>
                 <td>
-                    <div id="seasonPercentageDiv"></div>
+                    <canvas id="seasonPercentageDiv" height="400" width="400"></canvas>
                 </td>
             </tr>
         </tbody>
