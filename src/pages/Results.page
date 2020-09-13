@@ -178,63 +178,52 @@
     </script>
 
     <style>
-    h1 {
-        font-size: 1.3em;
-    }
-
-    h2 {
-        font-size: 1.2em;
-    }
-
-    #ErrorMsg {
-        font-weight: bold;
-        color: red;
-    }
-
-    #LastRefreshed {
-        font-weight: bold;
-    }
-
-    .resultsContainer {
-        padding-top: 20px;
-    }
-
     .notAvailableMessage {
         font-weight: bold;
         color: orange;
     }
     </style>
 
-    <h2 id="ErrorMsg"></h2>
-    <h2 id="LastRefreshed"></h2>
-    <p>
-        This page will refresh automatically every two minutes.
-        <apex:outputPanel layout="inline" rendered="{!VALUE(currentWeek) > 1}" >
-            <apex:outputLabel value="Click here to view results for prior weeks: " />
-            <apex:repeat value="{!weeks}" var="weekNumber" >
-                <apex:outputLink value="{!$Page.Results}" style="{!IF(weekNumber == selectedWeek, 'font-weight:bold; color:red', 'font-weight:normal;')}" >
-                    <apex:outputText value="{!weekNumber}" />
-                    <apex:param name="week" value="{!weekNumber}" />
-                </apex:outputLink>
-            </apex:repeat> 
-        </apex:outputPanel>
-    </p>
-    <div style="width: 60%">
-        <div class="resultsContainer">
-            <h1>Weekly Results</h1>
-            <h2 id="WRNotAvailable">
-                Weekly results not yet available
-            </h2>
-            <canvas id="CurrentPoints"></canvas>
-            <canvas id="CurrentPercentage"></canvas>
+    <apex:slds/>
+
+    <div class="slds-scope">
+        <div id="ErrorMsg" class="slds-text-heading_medium slds-text-color_error"></div>
+        <div id="LastRefreshed" class="slds-text-heading_medium"></div>
+        <p>
+            This page will refresh automatically every two minutes.
+            <apex:outputPanel layout="inline" rendered="{!VALUE(currentWeek) > 1}" >
+                <apex:outputLabel value="Click here to view results for prior weeks: " />
+                <apex:repeat value="{!weeks}" var="weekNumber" >
+                    <apex:outputLink value="{!$Page.Results}" style="{!IF(weekNumber == selectedWeek, 'font-weight:bold; color:red', 'font-weight:normal;')}" >
+                        <apex:outputText value="{!weekNumber}" />
+                        <apex:param name="week" value="{!weekNumber}" />
+                    </apex:outputLink>
+                </apex:repeat>
+            </apex:outputPanel>
+        </p>
+        <div class="slds-text-heading_large slds-p-top_medium">Weekly Results</div>
+        <div id="WRNotAvailable" class="slds-text-heading_medium notAvailableMessage">
+            Weekly results not yet available
         </div>
-        <div class="resultsContainer">
-            <h1>Seasonal Results</h1>
-            <h2 id="SRNotAvailable">
-                Seasonal results not yet available
-            </h2>
-            <canvas id="SeasonPoints"></canvas>
-            <canvas id="SeasonPercentage"></canvas>
+        <div class="slds-grid">
+            <div class="slds-col slds-size_1-of-2">
+                <canvas id="CurrentPoints"></canvas>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+                <canvas id="CurrentPercentage"></canvas>
+            </div>
+        </div>
+        <div class="slds-text-heading_large slds-p-top_medium">Seasonal Results</div>
+        <div id="SRNotAvailable" class="slds-text-heading_medium notAvailableMessage">
+            Seasonal results not yet available
+        </div>
+        <div class="slds-grid">
+            <div class="slds-col slds-size_1-of-2">
+                <canvas id="SeasonPoints"></canvas>
+            </div>
+            <div class="slds-col slds-size_1-of-2">
+                <canvas id="SeasonPercentage"></canvas>
+            </div>
         </div>
     </div>
 </apex:page>
