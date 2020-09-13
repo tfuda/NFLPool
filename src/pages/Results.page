@@ -4,9 +4,6 @@
     <script type="text/javascript">
     var selectedWeek = '{!selectedWeek}';
     
-    // Callback that creates and populates a data table,
-    // instantiates the pie chart, passes in the data and
-    // draws it.
     function refreshResults() {
         Visualforce.remoting.Manager.invokeAction(
             '{!$RemoteAction.ResultsController.getWeeklyResults}', selectedWeek,
@@ -16,10 +13,8 @@
                         $('#wrNotAvailable').hide();
                         drawPointsChart(results, 'Points Scored - Week ' + selectedWeek, 'currentPointsDiv');
                         drawPercentageChart(results, 'Win Percentage - Week ' + selectedWeek, 'currentPercentageDiv');
-//                        $('#wrRow').show();
                     } else {
                         $('#wrNotAvailable').show();
-//                        $('#wrRow').hide();
                     }
                 } else {
                     flashErrorMessage(event.message);
@@ -35,10 +30,8 @@
                         $('#srNotAvailable').hide();
                         drawPointsChart(results, 'Points Scored - Season', 'seasonPointsDiv');
                         drawPercentageChart(results, 'Win Percentage - Season', 'seasonPercentageDiv');
-//                        $('#srRow').show();
                     } else {
                         $('#srNotAvailable').show();
-//                        $('#srRow').hide();
                     }
                 } else {
                     flashErrorMessage(event.message);
@@ -61,36 +54,33 @@
         }
         const ctx = document.getElementById(domId);
         const pointsChart = new Chart(ctx, {
-           type: 'horizontalBar',
-           data: pointsData,
-           options: {}
-        });
-        /*
-        var pointsData = new google.visualization.DataTable();
-        pointsData.addColumn({type : 'string', label : 'Nickname'});
-        pointsData.addColumn({type : 'number', label : 'Points Scored'});
-        for (var i=0; i < results.rWrappers.length; i++) {
-            pointsData.addRow([{v:results.rWrappers[i].nickname}, {v:results.rWrappers[i].pointsScored, f:results.rWrappers[i].pointsScored.toFixed(1)}]);
-        }
-        var options = {
-            title : chartTitle,
-            colors : ['blue'],
-            height: Math.max(results.rWrappers.length * 25, 500),
-            width: 500,
-            chartArea : {
-                left: 150
-            },
-            hAxis : { 
-                format : '#0.0',
-                title : 'Total points available: ' + results.pointsAvailable.toFixed(1)
-            },
-            legend : { 
-                position : 'none' 
+            type: 'horizontalBar',
+            data: pointsData,
+            options: {
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        type: 'linear',
+                        ticks: {
+                            min: 0,
+                            max: results.pointsAvailable,
+                            precision: 1
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Total points available: ' + results.pointsAvailable.toFixed(1)
+                        }
+                    }]
+                },
+                tooltips: {
+                    callbacks: {
+                        label: (tooltipItem, data) => {
+                            return Number(tooltipItem.xLabel).toFixed(1);
+                        }
+                    }
+                },
             }
-        }
-        var chart = new google.visualization.BarChart(document.getElementById(domId));
-        chart.draw(pointsData, options);
-        */
+        });
     }
     
     function drawPercentageChart(results, chartTitle, domId) {
@@ -104,35 +94,29 @@
         }
         var ctx = document.getElementById(domId);
         var pointsChart = new Chart(ctx, {
-           type: 'horizontalBar',
-           data: percentageData,
-           options: {}
-        });
-        /*
-        var percentageData = new google.visualization.DataTable();
-        percentageData.addColumn({type : 'string', label : 'Nickname'});
-        percentageData.addColumn({type : 'number', label : 'Win Percentage'});
-        for (var i=0; i < results.rWrappers.length; i++) {
-            percentageData.addRow([{v:results.rWrappers[i].nickname}, {v:results.rWrappers[i].winPercentage, f:results.rWrappers[i].winPercentage.toFixed(3)}]);
-        }
-        var options = {
-            title : chartTitle,
-            colors : ['red'],
-            height: Math.max(results.rWrappers.length * 25, 500),
-            width: 500,
-            chartArea : {
-                left: 150
-            },
-            hAxis : { 
-                format : '0.000'
-            },
-            legend : { 
-                position : 'none' 
+            type: 'horizontalBar',
+            data: percentageData,
+            options: {
+                scales: {
+                    xAxes: [{
+                        display: true,
+                        type: 'linear',
+                        ticks: {
+                            min: 0.000,
+                            max: 1.000,
+                            callback: (value) => value.toFixed(3)
+                        }
+                    }]
+                },
+                tooltips: {
+                    callbacks: {
+                        label: (tooltipItem, data) => {
+                            return Number(tooltipItem.xLabel).toFixed(3);
+                        }
+                    }
+                },
             }
-        }
-        var chart = new google.visualization.BarChart(document.getElementById(domId));
-        chart.draw(percentageData, options);
-        */
+        });
     }
     
     function setLastRefreshed() {
