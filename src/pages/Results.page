@@ -10,11 +10,11 @@
             function(results, event) {
                 if (event.status) {
                     if (results.pointsAvailable && results.rWrappers && results.rWrappers.length > 0) {
-                        $('#wrNotAvailable').hide();
-                        drawPointsChart(results, 'Points Scored - Week ' + selectedWeek, 'currentPointsDiv');
-                        drawPercentageChart(results, 'Win Percentage - Week ' + selectedWeek, 'currentPercentageDiv');
+                        $('#WRNotAvailable').hide();
+                        drawPointsChart(results, 'Points Scored - Week ' + selectedWeek, 'CurrentPoints');
+                        drawPercentageChart(results, 'Win Percentage - Week ' + selectedWeek, 'CurrentPercentage');
                     } else {
-                        $('#wrNotAvailable').show();
+                        $('#WRNotAvailable').show();
                     }
                 } else {
                     flashErrorMessage(event.message);
@@ -27,11 +27,11 @@
             function(results, event) {
                 if (event.status) {
                     if (results.pointsAvailable && results.rWrappers && results.rWrappers.length > 0) {
-                        $('#srNotAvailable').hide();
-                        drawPointsChart(results, 'Points Scored - Season', 'seasonPointsDiv');
-                        drawPercentageChart(results, 'Win Percentage - Season', 'seasonPercentageDiv');
+                        $('#SRNotAvailable').hide();
+                        drawPointsChart(results, 'Points Scored - Season', 'SeasonPoints');
+                        drawPercentageChart(results, 'Win Percentage - Season', 'SeasonPercentage');
                     } else {
-                        $('#srNotAvailable').show();
+                        $('#SRNotAvailable').show();
                     }
                 } else {
                     flashErrorMessage(event.message);
@@ -57,6 +57,7 @@
             type: 'horizontalBar',
             data: pointsData,
             options: {
+                responsive: true,
                 scales: {
                     xAxes: [{
                         display: true,
@@ -79,6 +80,12 @@
                         }
                     }
                 },
+                legend: {
+                    display: true,
+                    labels: {
+                        boxWidth: 0,
+                    }
+                },
             }
         });
     }
@@ -97,6 +104,7 @@
             type: 'horizontalBar',
             data: percentageData,
             options: {
+                responsive: true,
                 scales: {
                     xAxes: [{
                         display: true,
@@ -115,6 +123,20 @@
                         }
                     }
                 },
+                legend: {
+                    display: true,
+                    labels: {
+                        boxWidth: 0,
+                    }
+                },
+                layout: {
+                    padding: {
+                        top: 20,
+                        right: 0,
+                        bottom: 0,
+                        left: 0
+                    }
+                }
             }
         });
     }
@@ -137,27 +159,55 @@
         if (hours == 0) {
             hours = 12;
         }
-        $('#lastRefreshed').html('Last refreshed: ' + month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ' ' + suffix);
+        $('#LastRefreshed').html('Last refreshed: ' + month + '/' + day + '/' + year + ' ' + hours + ':' + minutes + ' ' + suffix);
     }
     
     function flashErrorMessage(msg) {
-        $('#errorMsg').html(msg);
-        $('#errorMsg').fadeIn(600, function() {
-            setTimeout('$(\'#errorMsg\').fadeOut(600)', 10000);
+        $('#ErrorMsg').html(msg);
+        $('#ErrorMsg').fadeIn(600, function() {
+            setTimeout('$(\'#ErrorMsg\').fadeOut(600)', 10000);
         });
     }
 
     $(document).ready(function() {
-        $('#errorMsg').hide();
-        $('#wrNotAvailable').hide();
-        $('#srNotAvailable').hide();
+        $('#ErrorMsg').hide();
+        $('#WRNotAvailable').hide();
+        $('#SRNotAvailable').hide();
         refreshResults();
     });
     </script>
-    
-    <h1 id="errorMsg" style="font-size:1.2em; font-weight:bold; color:red;"></h1>
-    <p id="lastRefreshed" style="font-size:1.2em; font-weight:bold" ></p>
-    <p style="font-size:1.1em;" >
+
+    <style>
+    h1 {
+        font-size: 1.3em;
+    }
+
+    h2 {
+        font-size: 1.2em;
+    }
+
+    #ErrorMsg {
+        font-weight: bold;
+        color: red;
+    }
+
+    #LastRefreshed {
+        font-weight: bold;
+    }
+
+    .resultsContainer {
+        padding-top: 20px;
+    }
+
+    .notAvailableMessage {
+        font-weight: bold;
+        color: orange;
+    }
+    </style>
+
+    <h2 id="ErrorMsg"></h2>
+    <h2 id="LastRefreshed"></h2>
+    <p>
         This page will refresh automatically every two minutes.
         <apex:outputPanel layout="inline" rendered="{!VALUE(currentWeek) > 1}" >
             <apex:outputLabel value="Click here to view results for prior weeks: " />
@@ -169,30 +219,22 @@
             </apex:repeat> 
         </apex:outputPanel>
     </p>
-    <table id="resultsTable" >
-        <tbody>
-            <tr id="wrNotAvailable" >
-                <td style="font-size:1.2em; font-weight:bold; color:orange; padding-bottom:20px;" >Weekly results not yet available</td>
-            </tr>
-            <tr id="wrRow" >
-                <td>
-                    <canvas id="currentPointsDiv" height="400" width="400"></canvas>
-                </td>
-                <td>
-                    <canvas id="currentPercentageDiv" height="400" width="400"></canvas>
-                </td>
-            </tr>
-            <tr id="srNotAvailable" >
-                <td style="font-size:1.2em; font-weight:bold; color:orange;" >Seasonal results not yet available</td>
-            </tr>
-            <tr id="srRow" >
-                <td>
-                    <canvas id="seasonPointsDiv" height="400" width="400"></canvas>
-                </td>
-                <td>
-                    <canvas id="seasonPercentageDiv" height="400" width="400"></canvas>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div style="width: 60%">
+        <div class="resultsContainer">
+            <h1>Weekly Results</h1>
+            <h2 id="WRNotAvailable">
+                Weekly results not yet available
+            </h2>
+            <canvas id="CurrentPoints"></canvas>
+            <canvas id="CurrentPercentage"></canvas>
+        </div>
+        <div class="resultsContainer">
+            <h1>Seasonal Results</h1>
+            <h2 id="SRNotAvailable">
+                Seasonal results not yet available
+            </h2>
+            <canvas id="SeasonPoints"></canvas>
+            <canvas id="SeasonPercentage"></canvas>
+        </div>
+    </div>
 </apex:page>
