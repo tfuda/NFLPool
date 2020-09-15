@@ -57,7 +57,8 @@
             type: 'horizontalBar',
             data: pointsData,
             options: {
-                mainAspectRatio: false,
+                responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     xAxes: [{
                         display: true,
@@ -104,7 +105,8 @@
             type: 'horizontalBar',
             data: percentageData,
             options: {
-                mainAspectRatio: false,
+                responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     xAxes: [{
                         display: true,
@@ -178,6 +180,10 @@
     </script>
 
     <style>
+    .chartContainer {
+        height: 400px;
+    }
+
     .notAvailableMessage {
         font-weight: bold;
         color: orange;
@@ -206,20 +212,20 @@
             <div id="WRNotAvailable" class="slds-col slds-text-heading_medium notAvailableMessage">
                 Weekly results not yet available
             </div>
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 chartContainer">
                 <canvas id="CurrentPoints"></canvas>
             </div>
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 chartContainer">
                 <canvas id="CurrentPercentage"></canvas>
             </div>
             <div class="slds-col slds-text-heading_large slds-p-top_medium">Seasonal Results</div>
             <div id="SRNotAvailable" class="slds-col slds-text-heading_medium notAvailableMessage">
                 Seasonal results not yet available
             </div>
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 chartContainer">
                 <canvas id="SeasonPoints"></canvas>
             </div>
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 chartContainer">
                 <canvas id="SeasonPercentage"></canvas>
             </div>
         </div>
