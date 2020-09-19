@@ -198,10 +198,13 @@
             <div id="LastRefreshed" class="slds-col slds-text-heading_medium"></div>
             <p class="slds-col">
                 This page will refresh automatically every two minutes.
-                <apex:outputPanel layout="inline" rendered="{!VALUE(currentWeek) > 1}" >
-                    <apex:outputLabel value="Click here to view results for prior weeks: " />
+                <apex:outputPanel layout="inline" rendered="{!VALUE(currentWeek) > 1}" styleClass="slds-p-left_x-small">
+                    <apex:outputLabel value="Click here to view results for prior weeks:" styleClass="slds-m-right_none"/>
                     <apex:repeat value="{!weeks}" var="weekNumber" >
-                        <apex:outputLink value="{!$Page.Results}" style="{!IF(weekNumber == selectedWeek, 'font-weight:bold; color:red', 'font-weight:normal;')}" >
+                        <apex:outputLink value="{!$Page.Results}"
+                                         styleClass="slds-p-left_xx-small"
+                                         style="{!IF(weekNumber == selectedWeek, 'font-weight:bold;', 'font-weight:normal;')}"
+                        >
                             <apex:outputText value="{!weekNumber}" />
                             <apex:param name="week" value="{!weekNumber}" />
                         </apex:outputLink>
