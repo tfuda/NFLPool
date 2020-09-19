@@ -1,6 +1,0 @@
-<apex:page controller="ChatterMsgBoardController" tabStyle="MessageBoard__tab" action="{!initNflGroup}" lightningStylesheets="true">
-    <apex:sectionHeader title="{!grp.Name}" />
-    <apex:pageBlock >
-        <chatter:feed entityId="{!grp.Id}" />
-    </apex:pageBlock>
-</apex:page>

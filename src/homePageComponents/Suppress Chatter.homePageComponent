@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<HomePageComponent xmlns="http://soap.sforce.com/2006/04/metadata">
-    <body>&lt;div id=&quot;suppress_chatter&quot;&gt;&lt;/div&gt;&lt;br&gt;</body>
-    <pageComponentType>htmlArea</pageComponentType>
-    <width>wide</width>
-</HomePageComponent>
