@@ -1,0 +1,25 @@
+<apex:page id="contactInfoPage" controller="ContactInfoController" lightningStylesheets="true">
+    <apex:pageMessages id="errorMessages" />
+    <apex:sectionHeader title="Contact Information" />
+        <apex:pageBlock id="selectionBlock" title="Contacting Pool Administrators" >
+            Use the information provided below to contact your pool administrator(s). Use this information if you need to report a problem, or submit late selections.
+            <table>
+                <apex:repeat value="{!poolAdmins}" var="wrapper" >
+                    <tr>
+                        <td>
+                            <hr/>
+                            <table>
+                                <tr><td>Name:&nbsp;{!wrapper.usr.Name}</td></tr>
+                                <tr><td>Nickname:&nbsp;{!wrapper.usr.CommunityNickname}</td></tr>
+                                <tr><td>Email:&nbsp;<apex:outputField value="{!wrapper.usr.Email}"/></td></tr>
+                                <tr><td>Phone:&nbsp;<apex:outputField value="{!wrapper.usr.Phone}"/></td></tr>
+                                <apex:outputPanel layout="none" rendered="{!NOT(ISNULL(wrapper.usr.MobilePhone))}" >
+                                    <tr><td>Mobile:&nbsp;<apex:outputField value="{!wrapper.usr.MobilePhone}"/></td></tr>
+                                </apex:outputPanel>
+                            </table>
+                        </td>
+                    </tr>
+                </apex:repeat>              
+            </table>
+        </apex:pageBlock>
+</apex:page>

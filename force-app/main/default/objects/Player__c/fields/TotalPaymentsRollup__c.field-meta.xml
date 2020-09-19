@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TotalPaymentsRollup__c</fullName>
+    <externalId>false</externalId>
+    <label>Total Payments</label>
+    <summarizedField>PlayerPayment__c.Amount__c</summarizedField>
+    <summaryForeignKey>PlayerPayment__c.Player__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

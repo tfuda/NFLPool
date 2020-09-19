@@ -1,0 +1,120 @@
+<apex:page id="gamesPage" controller="GamesController" tabStyle="Games__tab" lightningStylesheets="true">
+    
+    <script>
+        window.onload=function() {
+            focus('{!$Component.gamesForm.gamesBlock.weekNumbers}', '{!weekNumber}');
+        }
+        
+        function focus(id, weekNumber) {
+            var linkIndex = ((weekNumber.valueOf())-1).toString();
+            var component = document.getElementById(id + ':' + linkIndex + ':weekLink');
+            component.focus();
+        }
+    
+        var isDirty = false;
+        function showConfirmDialog() {
+            if (isDirty) {
+                var ok = confirm("WARNING! You have unsaved changes. Clicking OK will navigate away from this page and any unsaved changes will be lost. Clicking Cancel will cancel navigation and allow you to save changes.");
+                return ok;
+            } else {
+                return true;
+            }
+        }
+        
+        function setDeleteButtonId(button) {
+            var deleteIt = confirm("Are you sure you want to delete this game? Click OK to delete, or Cancel to continue editing.");
+            if (deleteIt) {
+                var hiddenInput = document.getElementById('{!$Component.gamesPage.gamesForm.deleteButtonId}');
+                hiddenInput.value = button.id;
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
+    
+    <apex:pageMessages />
+    <apex:form id="gamesForm">
+        <apex:inputHidden id="deleteButtonId" value="{!deleteButtonId}"/>
+        
+        <apex:sectionHeader title="Games - Week {!weekNumber}" />
+        <apex:outputText escape="false" style="font-weight:bold; color:red;" 
+            value="NOTE: Point spreads are with respect to the home team. Enter a positive spread if the home team is the underdog (getting points). Enter a negative spread if the home team is the favorite (giving points)." />
+        <br/>
+        <br/>
+        <apex:pageBlock id="gamesBlock">
+            <apex:pageBlockButtons >
+                <apex:commandButton action="{!edit}" value="Edit" disabled="{!mode=='edit' || mode='edit-locked'}"/>
+                <apex:commandButton action="{!editLocked}" value="Edit Locked Fields" disabled="{!mode=='edit-locked' || mode=='edit'}" 
+                    onclick="return confirm('You have chosen privileged edit mode. This will allow you to edit fields on locked games. Use this with caution. Click OK to proceed, or Cancel to abort.');" />
+                <apex:commandButton action="{!save}" value="Save" disabled="{!mode=='view'}"/>
+                <apex:commandButton action="{!quickSave}" value="Quick Save" disabled="{!mode=='view'}"/>
+                <apex:commandButton action="{!cancel}" value="Cancel" immediate="true" disabled="{!mode=='view'}"/>
+            </apex:pageBlockButtons>
+            
+            <apex:outputLabel for="weekNuberList" value="Week Number: "/>            
+            <apex:repeat id="weekNumbers" value="{!weekNumbers}" var="week">
+                &nbsp;
+                <apex:outputLink id="weekLink" value="{!$Page.Games}" onclick="return showConfirmDialog();" style="{!IF(week == weekNumber, 'font-weight:bold; color:red', 'font-weight:normal;')}">
+                    <apex:outputText value="{!week}" />
+                    <apex:param name="weekNumber" value="{!week}"/>
+                    <apex:param name="mode" value="view"/>
+                </apex:outputLink>
+                &nbsp;
+            </apex:repeat>
+            <br/>
+            <br/>
+            <apex:panelGrid columns="3" >
+                <apex:commandButton action="{!addGame}" value="Add Single Game" disabled="{!(mode=='view' || (gameCount >= settings.MaxGames__c))}"/> 
+                <apex:commandButton action="{!addMultipleGames}" value="Add Multiple Games" disabled="{!(mode=='view' || (gameCount >= settings.MaxGames__c))}" />
+                <apex:selectList value="{!numGamesToAdd}" size="1" multiselect="false" disabled="{!(mode=='view' || (gameCount >= settings.MaxGames__c) || numGameOptions.size == 0)}" >
+                    <apex:selectOptions value="{!numGameOptions}" />
+                </apex:selectList>
+            </apex:panelGrid>            
+            <br/>
+            <apex:pageBlockTable id="gamesTable" value="{!gameList}" var="wrapper">
+                <apex:column headerValue="Game">
+                    <apex:outputText value="{!wrapper.gameNumber}" />
+                </apex:column>
+                <apex:column headerValue="Start Time">
+                    <apex:outputField value="{!wrapper.game.Start_Time__c}" rendered="{!mode=='view' || (wrapper.isLocked && mode=='edit')}"/>
+                    <apex:inputField value="{!wrapper.game.Start_Time__c}" rendered="{!(mode=='edit' && NOT(wrapper.isLocked)) || (mode=='edit-locked')}" onchange="isDirty=true;" />
+                </apex:column>
+                <apex:column headerValue="Home Team">
+                    <apex:outputField value="{!wrapper.game.Home_Team__c}" rendered="{!mode=='view' || (wrapper.isLocked && mode=='edit')}"/>
+                    <apex:selectList value="{!wrapper.game.Home_Team__c}" size="1" multiselect="false" rendered="{!(mode=='edit' && NOT(wrapper.isLocked)) || (mode=='edit-locked')}" onchange="isDirty=true;" >
+                        <apex:selectOptions value="{!teamList}"/>
+                    </apex:selectList>
+                </apex:column>
+                <apex:column headerValue="Home Score">
+                    <apex:outputField value="{!wrapper.game.Home_Score__c}" rendered="{!mode=='view'}"/>
+                    <apex:inputField value="{!wrapper.game.Home_Score__c}" style="width:75px;" rendered="{!mode=='edit' || mode=='edit-locked'}" onchange="isDirty=true;"/>
+                </apex:column>
+                <apex:column headerValue="Spread">
+                    <apex:outputField value="{!wrapper.game.Spread__c}" rendered="{!mode=='view' || (wrapper.isLocked && mode=='edit')}"/>
+                    <apex:inputField value="{!wrapper.game.Spread__c}" style="width:75px;" rendered="{!(mode=='edit' && NOT(wrapper.isLocked)) || (mode=='edit-locked')}" onchange="isDirty=true;"/>
+                </apex:column>
+                <apex:column headerValue="Visiting Team">
+                    <apex:outputField value="{!wrapper.game.Visiting_Team__c}" rendered="{!mode=='view' || (wrapper.isLocked && mode=='edit')}"/>
+                    <apex:selectList value="{!wrapper.game.Visiting_Team__c}" size="1" multiselect="false" rendered="{!(mode=='edit' && NOT(wrapper.isLocked)) || (mode=='edit-locked')}" onchange="isDirty=true;">
+                        <apex:selectOptions value="{!teamList}"/>
+                    </apex:selectList>
+                </apex:column>
+                <apex:column headerValue="Visiting Score">
+                    <apex:outputField value="{!wrapper.game.Visiting_Score__c}" rendered="{!mode=='view'}"/>
+                    <apex:inputField value="{!wrapper.game.Visiting_Score__c}" style="width:75px;" rendered="{!mode=='edit' || mode=='edit-locked'}" onchange="isDirty=true;"/>
+                </apex:column>
+                <apex:column headerValue="Final">
+                    <apex:outputField value="{!wrapper.game.Final__c}" rendered="{!mode=='view'}"/>
+                    <apex:inputField value="{!wrapper.game.Final__c}" rendered="{!mode=='edit' || mode=='edit-locked'}" onchange="isDirty=true;"/>
+                </apex:column>
+                <apex:column headerValue="Winner" rendered="{!mode=='view'}">
+                    <apex:outputField value="{!wrapper.game.Winner__c}"/>
+                </apex:column>
+                <apex:column rendered="{!mode=='edit-locked'}">
+                    <apex:commandButton id="deleteButton" onclick="return setDeleteButtonId(this);" action="{!deleteGame}" value="Delete" disabled="{!wrapper.game.Final__c}"/>
+                </apex:column>
+            </apex:pageBlockTable>
+        </apex:pageBlock>        
+    </apex:form>    
+</apex:page>

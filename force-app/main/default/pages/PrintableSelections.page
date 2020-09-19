@@ -1,0 +1,32 @@
+<apex:page showHeader="false" sidebar="false" controller="SelectionController" tabStyle="Selections__tab" renderAs="PDF" >
+	 <apex:dataTable id="selectionTable" value="{!gameSelections}" var="gameSelection" style="font-size:14px" rules="rows" 
+	 	width="100%" cellpadding="5px" border="2px" captionStyle="font-weight:bold; font-size:14px;">
+	 	<apex:facet name="caption" >Player Selections {!IF(playerName != null, ' - Player: ' + playerName, '')} {!IF(weekNumber != null, ' - Week: ' + weekNumber, '')}</apex:facet>
+		<apex:column width="7%" headerValue="Game">
+			<apex:outputText value="{!gameSelection.gameNumber}" />
+		</apex:column>
+		<apex:column width="23%" headerValue="Start Time" >
+		    <apex:outputField value="{!gameSelection.game.Start_Time__c}" />
+		</apex:column>
+		<apex:column width="35%" headerValue="Home Team">
+		    <apex:outputPanel layout="none" >
+		    	<apex:image value="/img/checkbox_checked.gif" rendered="{!gameSelection.hSelect}" />
+		    	<apex:image value="/img/checkbox_unchecked.gif" rendered="{!NOT(gameSelection.hSelect)}" />
+		    </apex:outputPanel>
+		    <apex:outputText value="{!gameSelection.game.Home_Team__r.Name}" />
+            <apex:outputText value=" ({!IF(gameSelection.game.Spread__c > 0,'+','')}{0,number,#.#})" rendered="{!NOT(ISNULL(gameSelection.game.Spread__c))}" >
+                <apex:param value="{!gameSelection.game.Spread__c}" />
+            </apex:outputText>
+		</apex:column>
+		<apex:column headerValue="Visiting Team" >
+		    <apex:outputPanel layout="none" >
+		    	<apex:image value="/img/checkbox_checked.gif" rendered="{!gameSelection.vSelect}" />
+		    	<apex:image value="/img/checkbox_unchecked.gif" rendered="{!NOT(gameSelection.vSelect)}" />
+		    </apex:outputPanel>
+		    <apex:outputText value="{!gameSelection.game.Visiting_Team__r.Name}" />
+            <apex:outputText value=" ({!IF(gameSelection.game.Spread__c < 0,'+','')}{0,number,#.#})" rendered="{!NOT(ISNULL(gameSelection.game.Spread__c))}" >
+                <apex:param value="{!(-1 * gameSelection.game.Spread__c)}" />
+            </apex:outputText>
+		</apex:column>
+	 </apex:dataTable>
+</apex:page>

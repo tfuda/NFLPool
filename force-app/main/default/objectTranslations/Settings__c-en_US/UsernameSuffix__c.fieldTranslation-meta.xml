@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomFieldTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <help><!-- The string that is used as the default suffix for new usernames. For example nflpool.dev. This will appear in the &quot;Username&quot; field when creating new players. --></help>
+    <label><!-- Username Suffix --></label>
+    <name>UsernameSuffix__c</name>
+</CustomFieldTranslation>

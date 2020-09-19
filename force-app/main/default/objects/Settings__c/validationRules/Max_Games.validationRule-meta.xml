@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Max_Games</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR(MaxGames__c &lt; 1, MaxGames__c &gt; 16)</errorConditionFormula>
+    <errorDisplayField>MaxGames__c</errorDisplayField>
+    <errorMessage>The maximum number of games must be a number between 1 and 16 inclusive.</errorMessage>
+</ValidationRule>
