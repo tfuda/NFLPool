@@ -190,7 +190,7 @@
     }
     </style>
 
-    <apex:slds/>
+    <apex:slds />
 
     <div class="slds-scope">
         <div class="slds-grid slds-grid_vertical slds-m-horizontal_medium slds-p-top_medium">
