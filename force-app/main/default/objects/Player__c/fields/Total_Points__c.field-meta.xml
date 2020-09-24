@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Total_Points__c</fullName>
+    <externalId>false</externalId>
+    <label>Total Points</label>
+    <summarizedField>Weekly_Result__c.Total_Points__c</summarizedField>
+    <summaryForeignKey>Weekly_Result__c.Player__c</summaryForeignKey>
+    <summaryOperation>sum</summaryOperation>
+    <trackTrending>false</trackTrending>
+    <type>Summary</type>
+</CustomField>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Winner__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF (OR(ISNULL(Home_Score__c), ISNULL(Visiting_Score__c), ISNULL(Spread__c)), null,
+  IF ((Home_Score__c + Spread__c) =  Visiting_Score__c , &apos;PUSH&apos;,
+    IF ((Home_Score__c + Spread__c) &gt; Visiting_Score__c,   Home_Team__r.Name , Visiting_Team__r.Name)
+  )
+)</formula>
+    <label>Winner</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

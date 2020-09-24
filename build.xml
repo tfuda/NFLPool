@@ -1,8 +1,13 @@
 <?xml version="1.0"?>
-<project name="buildSystem" default="deploy" xmlns:sf="antlib:com.salesforce">
+<project name="buildSystem" default="deploy">
 	<property file="build.properties"/>
-	<echo>Salesforce User: ${sf.username}</echo>
+	<property environment="env"/>
+	<property name="scratchorg.alias" value="NFLPoolScratchOrg"/>
+
+	<condition property="sfdx.command" value="sfdx.cmd">
+		<os family="windows"/>
+	</condition>
+	<property name="sfdx.command" value="sfdx"/>
+
 	<import file="ant/deploy.xml"/>
-	<import file="ant/undeploy.xml"/>
-	<import file="ant/resource-bundles.xml"/>
 </project>

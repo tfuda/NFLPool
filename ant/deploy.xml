@@ -1,16 +1,55 @@
 <?xml version="1.0"?>
-<project name="deploy" xmlns:sf="antlib:com.salesforce" xmlns:artifact="antlib:org.apache.maven.artifact.ant" >
-	<taskdef uri="antlib:com.salesforce" resource="com/salesforce/antlib.xml" classpath="ant/lib/ant-salesforce.jar"/>
+<project name="deploy">
+	<target name="checkForDEAuthorization">
+		<!--Check to see if the org is already authorized on this machine-->
+		<exec executable="${sfdx.command}"
+			  failonerror="false"
+			  resultproperty="sfdx.org.display.result"
+		>
+			<arg line="force:org:display"/>
+		</exec>
+		<fail message="You don't have a default username set for this project directory.
+You should either: 'sfdx force:auth:web:login --setdefaultusername'
+or 'sfdx force:config:set defaultusername=[username]'">
+			<condition>
+				<not>
+					<equals arg1="${sfdx.org.display.result}" arg2="0"/>
+				</not>
+			</condition>
 
-	<target name="deploy">
-		<sf:deploy purgeOnDelete="true" ignoreWarnings="true" username="${sf.username}" password="${sf.password}" serverurl="${sf.server}" deployRoot="src" maxPoll="75" />
+		</fail>
+
 	</target>
-	
-	<target name="retrieve">
-		<sf:retrieve username="${sf.username}" password="${sf.password}" serverurl="${sf.server}" retrieveTarget="src" unpackaged="src/package.xml" />
+
+	<target name="deploy" depends="checkForDEAuthorization">
+		<exec executable="${sfdx.command}" failonerror="true">
+			<arg line="force:source:deploy -x manifest/package.xml"/>
+		</exec>
 	</target>
-		
-	<target name="test" unless="${skip.tests}" >
-		<sf:deploy ignoreWarnings="true" username="${sf.username}" password="${sf.password}" serverUrl="${sf.server}" checkOnly="true" testLevel="RunLocalTests" deployRoot="ant" maxPoll="360" />
+
+	<!--
+	Destructive changes are "deployed" using the force:mdapi:deploy command. The directory specified with the -d arg
+	should contain an empty package.xml, plus the destructiveChanges.xml file containing the artifacts to be destroyed.
+	-->
+	<target name="destroy" depends="checkForDEAuthorization" unless="${skip.destroy}">
+		<exec executable="${sfdx.command}" failonerror="true">
+			<arg line="force:mdapi:deploy -d destructive-changes -w 5 -g"/>
+		</exec>
+	</target>
+
+	<target name="deployThenDestroy" depends="deploy, destroy"/>
+
+	<target name="retrieve" depends="checkForDEAuthorization">
+		<exec executable="${sfdx.command}" failonerror="true">
+			<arg line="force:source:retrieve -x manifest/package.xml"/>
+		</exec>
+	</target>
+
+	<target name="test" depends="checkForDEAuthorization" unless="${skip.tests}">
+		<exec executable="${sfdx.command}" failonerror="true">
+			<!-- wait up to 60 minutes for the tests to finish -->
+			<!-- Currently running tests in parallel, that'll probably cause transient failures; consider the -y argument-->
+			<arg line="force:apex:test:run -w 60 --verbose"/>
+		</exec>
 	</target>
 </project>

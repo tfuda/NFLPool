@@ -1,9 +1,0 @@
-<?xml version="1.0" ?>
-<project name="resources-bundles" basedir=".." >
-	
-	<target name="buildResourceBundles" depends="buildJQueryUI" />
-	
-	<target name="buildJQueryUI">
-		<zip basedir="resource-bundles/jqueryui.resource" destfile="src/staticresources/jqueryui.resource" />
-	</target>
-</project>
