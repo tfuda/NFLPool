@@ -35,8 +35,12 @@ ehthumbs.db
 $RECYCLE.BIN/
 
 # Illuminated Cloud
+.idea/
+!.idea/inspectionProfiles/Project_Default.xml
+!.idea/*.iml
 IlluminatedCloud
-*.iml
+projectFilesBackup/
+
 
 # Miscellaneous
 build.properties

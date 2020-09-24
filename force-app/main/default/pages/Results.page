@@ -11,10 +11,14 @@
                 if (event.status) {
                     if (results.pointsAvailable && results.rWrappers && results.rWrappers.length > 0) {
                         $('#WRNotAvailable').hide();
+                        $('#CurrentPointsContainer').show();
+                        $('#CurrentPercentageContainer').show();
                         drawPointsChart(results, 'Points Scored - Week ' + selectedWeek, 'CurrentPoints');
                         drawPercentageChart(results, 'Win Percentage - Week ' + selectedWeek, 'CurrentPercentage');
                     } else {
                         $('#WRNotAvailable').show();
+                        $('#CurrentPointsContainer').hide();
+                        $('#CurrentPercentageContainer').hide();
                     }
                 } else {
                     flashErrorMessage(event.message);
@@ -28,10 +32,14 @@
                 if (event.status) {
                     if (results.pointsAvailable && results.rWrappers && results.rWrappers.length > 0) {
                         $('#SRNotAvailable').hide();
+                        $('#SeasonPointsContainer').show();
+                        $('#SeasonPercentageContainer').show();
                         drawPointsChart(results, 'Points Scored - Season', 'SeasonPoints');
                         drawPercentageChart(results, 'Win Percentage - Season', 'SeasonPercentage');
                     } else {
                         $('#SRNotAvailable').show();
+                        $('#SeasonPointsContainer').hide();
+                        $('#SeasonPercentageContainer').hide();
                     }
                 } else {
                     flashErrorMessage(event.message);
@@ -190,7 +198,7 @@
     }
     </style>
 
-    <apex:slds/>
+    <apex:slds />
 
     <div class="slds-scope">
         <div class="slds-grid slds-grid_vertical slds-m-horizontal_medium slds-p-top_medium">
@@ -215,20 +223,20 @@
             <div id="WRNotAvailable" class="slds-col slds-text-heading_medium notAvailableMessage">
                 Weekly results not yet available
             </div>
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 chartContainer">
+            <div id="CurrentPointsContainer" class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 chartContainer">
                 <canvas id="CurrentPoints"></canvas>
             </div>
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 chartContainer">
+            <div id="CurrentPercentageContainer" class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 chartContainer">
                 <canvas id="CurrentPercentage"></canvas>
             </div>
             <div class="slds-col slds-text-heading_large slds-p-top_medium">Seasonal Results</div>
             <div id="SRNotAvailable" class="slds-col slds-text-heading_medium notAvailableMessage">
                 Seasonal results not yet available
             </div>
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 chartContainer">
+            <div id="SeasonPointsContainer" class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 chartContainer">
                 <canvas id="SeasonPoints"></canvas>
             </div>
-            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 chartContainer">
+            <div id="SeasonPercentageContainer" class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2 chartContainer">
                 <canvas id="SeasonPercentage"></canvas>
             </div>
         </div>
