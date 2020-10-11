@@ -41,6 +41,7 @@
         <members>Email</members>
         <members>EmailLanding</members>
         <members>Games</members>
+        <members>HelpfulLinks</members>
         <members>HomePageMessage</members>
         <members>MyAccount</members>
         <members>PlayerDetail</members>
