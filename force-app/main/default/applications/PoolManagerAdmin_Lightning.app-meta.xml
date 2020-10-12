@@ -43,12 +43,10 @@
     <tabs>Email</tabs>
     <tabs>MessageBoard</tabs>
     <tabs>AdminMessageBoard</tabs>
-    <tabs>NFL_Lines_Primary</tabs>
-    <tabs>NFL_Lines_Backup</tabs>
+    <tabs>Helpful_Links</tabs>
     <tabs>standard-report</tabs>
     <tabs>standard-Dashboard</tabs>
     <tabs>Settings__c</tabs>
     <tabs>Team__c</tabs>
-    <tabs>Helpful_Links</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>

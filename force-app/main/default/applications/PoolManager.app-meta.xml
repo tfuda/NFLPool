@@ -15,9 +15,6 @@
     <tabs>AdminMessageBoard</tabs>
     <tabs>ContactInfo</tabs>
     <tabs>Settings__c</tabs>
-    <tabs>NFL_com</tabs>
-    <tabs>NFL_Lines_Primary</tabs>
-    <tabs>NFL_Lines_Backup</tabs>
-    <tabs>standard-report</tabs>
     <tabs>Helpful_Links</tabs>
+    <tabs>standard-report</tabs>
 </CustomApplication>
