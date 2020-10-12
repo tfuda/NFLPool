@@ -461,6 +461,10 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Helpful_Links</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>MessageBoard</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>

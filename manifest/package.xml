@@ -91,6 +91,7 @@
         <members>Email</members>
         <members>Game__c</members>
         <members>Games</members>
+        <members>Helpful_Links</members>
         <members>MessageBoard</members>
         <members>Message__c</members>
         <members>MyAccount</members>
