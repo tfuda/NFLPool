@@ -49,5 +49,6 @@
     <tabs>standard-Dashboard</tabs>
     <tabs>Settings__c</tabs>
     <tabs>Team__c</tabs>
+    <tabs>Helpful_Links</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>

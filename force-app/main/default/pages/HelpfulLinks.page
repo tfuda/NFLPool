@@ -1,19 +1,15 @@
-<apex:page id="HelpfulLinks" showHeader="false" applyHtmlTag="true" applyBodyTag="false">
-    <head>
-        <apex:slds />
-    </head>
-    <body class="slds-scope">
-        <div class="slds-p-left_large slds-p-top_large">
-            <div class="slds-text-heading_large">Helpful Links:</div>
-            <div class="slds-p-left_medium slds-p-top_medium">
-                <a class="slds-text-heading_medium" href="https://www.sportsbook.ag/sbk/sportsbook4/nfl-betting/nfl-game-lines.sbk" target="_blank">Game Lines (Primary)</a>
-            </div>
-            <div class="slds-p-left_medium slds-p-top_medium">
-                <a class="slds-text-heading_medium" href="https://www.bovada.lv/sports/football/nfl" target="_blank">Game Lines (Backup)</a>
-            </div>
-            <div class="slds-p-left_medium slds-p-top_medium">
-                <a class="slds-text-heading_medium" href="https://www.nfl.com" target="_blank">National Football League's Official Website</a>
-            </div>
+<apex:page id="HelpfulLinks">
+    <apex:slds />
+    <div class="slds-p-left_large slds-p-top_large">
+        <div class="slds-text-heading_large">Helpful Links:</div>
+        <div class="slds-p-left_medium slds-p-top_medium">
+            <a class="slds-text-heading_medium" href="https://www.sportsbook.ag/sbk/sportsbook4/nfl-betting/nfl-game-lines.sbk" target="_blank" rel="noopener noreferrer">Game Lines (Primary)</a>
         </div>
-    </body>
+        <div class="slds-p-left_medium slds-p-top_medium">
+            <a class="slds-text-heading_medium" href="https://www.bovada.lv/sports/football/nfl" target="_blank" rel="noopener noreferrer">Game Lines (Backup)</a>
+        </div>
+        <div class="slds-p-left_medium slds-p-top_medium">
+            <a class="slds-text-heading_medium" href="https://www.nfl.com" target="_blank" rel="noopener noreferrer">National Football League's Official Website</a>
+        </div>
+    </div>
 </apex:page>

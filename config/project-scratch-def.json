@@ -1,6 +1,7 @@
 {
   "orgName": "NFL Pool Scratch Org",
   "edition": "Developer",
+  "hasSampleData": false,
   "features": [],
   "settings": {
     "lightningExperienceSettings": {
