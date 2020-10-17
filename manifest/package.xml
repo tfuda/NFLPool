@@ -95,9 +95,6 @@
         <members>MessageBoard</members>
         <members>Message__c</members>
         <members>MyAccount</members>
-        <members>NFL_Lines_Backup</members>
-        <members>NFL_Lines_Primary</members>
-        <members>NFL_com</members>
         <members>PlayerManagement</members>
         <members>PlayerPayment__c</members>
         <members>Player__c</members>
