@@ -410,7 +410,7 @@
     </pageAccesses>
     <pageAccesses>
         <apexPage>HelpfulLinks</apexPage>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
         <apexPage>HomePageMessage</apexPage>
