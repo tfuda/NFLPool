@@ -91,6 +91,7 @@
         <members>fflib_System</members>
         <members>fflib_SystemTest</members>
         <members>fflib_VerificationMode</members>
+        <members>Selector_Team</members>
         <name>ApexClass</name>
     </types>
     <types>

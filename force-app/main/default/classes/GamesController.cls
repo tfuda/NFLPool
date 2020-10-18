@@ -37,7 +37,7 @@ public with sharing class GamesController {
 	public List<SelectOption> numGameOptions {
 		get {
 			List<SelectOption> numGameOptions = new List<SelectOption>();
-			for (Integer i = 1; i <= (settings.maxgames__c - gameCount); i++) {
+			for (Integer i = 1; i <= (settings.MaxGames__c - gameCount); i++) {
 				numGameOptions.add(new SelectOption(i.format(), i.format()));
 			}
 			return numGameOptions;
@@ -55,11 +55,7 @@ public with sharing class GamesController {
 			if (teamList == null) {
 				teamList = new List<SelectOption>();
 				teamList.add(new SelectOption('', '-- None --'));
-				List<Team__c> teams = [
-					select Id, Name, Short_Name__c
-					from Team__c
-					order by Short_Name__c asc
-				];
+				List<Team__c> teams = new Selector_Team().selectAll();
 				for (Team__c t : teams) {
 					teamList.add(new SelectOption(t.Id, t.Short_Name__c));
 				}
@@ -75,7 +71,7 @@ public with sharing class GamesController {
 		if (params.get('weekNumber') != null) {
 			this.weekNumber = params.get('weekNumber');
 		} else {
-			this.weekNumber = settings.currentweek__c.format();
+			this.weekNumber = settings.CurrentWeek__c.format();
 		}
 		
 		if (params.get('view') != null) {
@@ -100,7 +96,7 @@ public with sharing class GamesController {
 	public PageReference addGame() {
 		mode = 'edit';
 		// Add a single game
-		gameList.add(new GameWrapper(gameList.size() + 1, new Game__c(week__c = weekNumber)));
+		gameList.add(new GameWrapper(gameList.size() + 1, new Game__c(Week__c = weekNumber)));
 		// Adjust game numbers
 		for (Integer i = 0; i < gameList.size(); i++) {
 			gameList.get(i).gameNumber = i + 1;
@@ -113,7 +109,7 @@ public with sharing class GamesController {
 		// Add the specified number of games
 		Integer increment = Integer.valueOf(numGamesToAdd);
 		for (Integer i = 0; i < increment; i++) {
-			gameList.add(new GameWrapper(gameList.size() + 1, new Game__c(week__c = weekNumber)));
+			gameList.add(new GameWrapper(gameList.size() + 1, new Game__c(Week__c = weekNumber)));
 		}
 		// Adjust game numbers
 		for (Integer i = 0; i < gameList.size(); i++) {
@@ -160,7 +156,7 @@ public with sharing class GamesController {
 			
 			// See if there are any Selections referencing this game
 			GameWrapper wrapper = gameList.get(buttonIndex);
-			if ([select count() from Selection__c where Game__c = :wrapper.game.Id] > 0) {
+			if ([SELECT COUNT() FROM Selection__c WHERE Game__c = :wrapper.game.Id] > 0) {
 				ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,
 					'Unable to delete game ' + wrapper.gameNumber +
 						' because one or more selections reference this game.' +
@@ -168,7 +164,7 @@ public with sharing class GamesController {
 			
 			} else {
 				gameList.remove(buttonIndex);
-				if (wrapper.game.id != null) {
+				if (wrapper.game.Id != null) {
 					delete wrapper.game;
 				}
 				// Adjust game numbers
@@ -185,6 +181,8 @@ public with sharing class GamesController {
      * Games. If the Game is valid, it is added to a new list of Game objects that 
      * is suitable for upsert. If any of the Game objects is invalid, null is returned.
      * If all Game objects are valid, the validated list of Games is returned.
+     *
+     * @return List<Game__c>
      */
 	private List<Game__c> validateGames() {
 		Boolean valid = true;
@@ -273,13 +271,13 @@ public with sharing class GamesController {
 	
 	private List<GameWrapper> retrieveGameList() {
 		List<Game__c> games = [
-			select p.Name, p.Id, p.Week__c,
+			SELECT p.Name, p.Id, p.Week__c,
 				p.Start_Time__c, p.Home_Team__c, p.Home_Team__r.Name, p.Home_Score__c,
 				p.Spread__c, p.Visiting_Team__c, p.Visiting_Team__r.Name, p.Visiting_Score__c,
 				p.Final__c, p.Winner__c
-			from Game__c p
-			where p.Week__c = :weekNumber
-			order by p.Start_Time__c asc nulls last
+			FROM Game__c p
+			WHERE p.Week__c = :weekNumber
+			ORDER BY p.Start_Time__c ASC NULLS LAST
 		];
 		List<GameWrapper> gameList = new List<GameWrapper>();
 		for (Integer i = 0; i < games.size(); i++) {
@@ -295,8 +293,8 @@ public with sharing class GamesController {
 		public Boolean isLocked {
 			get {
 				if (game.Id != null) {
-					Game__c current = [select start_time__c from game__c where id = :game.Id];
-					return (current.start_time__c != null && (Datetime.now() > current.start_time__c));
+					Game__c current = [SELECT Start_Time__c FROM Game__c WHERE Id = :game.Id];
+					return (current.Start_Time__c != null && (Datetime.now() > current.Start_Time__c));
 				} else {
 					return false;
 				}

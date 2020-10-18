@@ -84,6 +84,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>Selector_Team</apexClass>
+        <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>SoapUtils</apexClass>
         <enabled>false</enabled>
     </classAccesses>
