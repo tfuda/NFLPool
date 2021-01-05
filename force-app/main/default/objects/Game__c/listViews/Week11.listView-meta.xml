@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ListView xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Week13</fullName>
+    <fullName>Week11</fullName>
     <columns>NAME</columns>
     <columns>Start_Time__c</columns>
     <columns>Home_Team__c</columns>
@@ -15,7 +15,7 @@
     <filters>
         <field>Week__c</field>
         <operation>equals</operation>
-        <value>13</value>
+        <value>11</value>
     </filters>
-    <label>Week 13</label>
+    <label>Week 11</label>
 </ListView>
