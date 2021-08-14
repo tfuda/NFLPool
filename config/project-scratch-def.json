@@ -1,19 +1,18 @@
 {
   "orgName": "NFL Pool Scratch Org",
+  "adminEmail": "tom.fuda@gmail.com",
   "edition": "Developer",
   "hasSampleData": false,
-  "features": [],
+  "features": ["API","Sites", "DefaultWorkflowUser"],
   "settings": {
+    "apexSettings": {
+      "enableCompileOnDeploy": true
+    },
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
     },
-    "securitySettings": {
-      "passwordPolicies": {
-        "enableSetPasswordInApi": true
-      }
-    },
-    "mobileSettings": {
-      "enableS1EncryptedStoragePref2": false
+    "chatterSettings": {
+      "enableChatter": true
     }
   }
 }
