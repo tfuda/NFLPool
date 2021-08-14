@@ -10,7 +10,7 @@
             <columnToColumn>false</columnToColumn>
             <isUnlocked>false</isUnlocked>
             <operator>notEqual</operator>
-            <value/>
+            <value></value>
         </criteriaItems>
         <criteriaItems>
             <column>Player__c$User__c.IsActive</column>

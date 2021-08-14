@@ -1,14 +1,17 @@
 <apex:page lightningStylesheets="true">
     <apex:pageBlock >
-        <p>Here is the prize breakdown for the 2021 playoff pool:</p>
+        <p>Here is the prize breakdown for the 2021 regular season pool:</p>
         <ul style="padding-left: 3px;">
-            <li>Number of entrants: 26</li>
-            <li>Total prize pool: 26 X $50 = $1300</li>
-            <li>Prize breakdown:
+            <li>Number of entrants: TBD</li>
+            <li>Total prize pool: TBD X $200 = $TBD</li>
+            <li>Weekly prize: $100</li>
+            <li>Seasonal prize total: TBD X $200 - (18 X $100) = $TBD</li>
+            <li>Seasonal prize breakdown:
                 <ul style="padding-left: 3px;">
-                    <li>First place: $700</li>
-                    <li>Second place: $400</li>
-                    <li>Third place: $200</li>
+                    <li>First place: $TBD</li>
+                    <li>Second place: $TBD</li>
+                    <li>Third place: $TBD</li>
+                    <li>Fourth place: $TBD</li>
                 </ul>
             </li>
         </ul>

@@ -11,21 +11,21 @@
     <layouts>
         <layout>Settings Layout</layout>
         <sections>
-            <label><!-- Custom Links --></label>
+            <label></label>
             <section>Custom Links</section>
         </sections>
     </layouts>
     <startsWith>Consonant</startsWith>
     <validationRules>
-        <errorMessage><!-- The current week must be a number between 1 and 17 inclusive. --></errorMessage>
+        <errorMessage></errorMessage>
         <name>Current_Week</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- The maximum number of games must be a number between 1 and 16 inclusive. --></errorMessage>
+        <errorMessage></errorMessage>
         <name>Max_Games</name>
     </validationRules>
     <validationRules>
-        <errorMessage><!-- The number of weeks must be a number between 4 and 17 inclusive. --></errorMessage>
+        <errorMessage></errorMessage>
         <name>Number_of_Weeks</name>
     </validationRules>
 </CustomObjectTranslation>

@@ -2,7 +2,7 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Number_of_Weeks</fullName>
     <active>true</active>
-    <errorConditionFormula>OR(NumberOfWeeks__c &lt; 4, NumberOfWeeks__c &gt; 17)</errorConditionFormula>
+    <errorConditionFormula>OR(NumberOfWeeks__c &lt; 4, NumberOfWeeks__c &gt; 18)</errorConditionFormula>
     <errorDisplayField>NumberOfWeeks__c</errorDisplayField>
-    <errorMessage>The number of weeks must be a number between 4 and 17 inclusive.</errorMessage>
+    <errorMessage>The number of weeks must be a number between 4 and 18 inclusive.</errorMessage>
 </ValidationRule>
