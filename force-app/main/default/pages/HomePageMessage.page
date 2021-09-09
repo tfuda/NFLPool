@@ -2,10 +2,10 @@
     <apex:pageBlock >
         <p>Here is the prize breakdown for the 2021 regular season pool:</p>
         <ul style="padding-left: 3px;">
-            <li>Number of entrants: TBD</li>
-            <li>Total prize pool: TBD X $200 = $TBD</li>
-            <li>Weekly prize: $100</li>
-            <li>Seasonal prize total: TBD X $200 - (18 X $100) = $TBD</li>
+            <li>Number of entrants: 27</li>
+            <li>Total prize pool: 27 X $200 = $5400</li>
+            <li>Weekly prize: $100 per week (18 weeks)</li>
+            <li>Seasonal prize total: (27 X $200) - (18 X $100) = $3600</li>
             <li>Seasonal prize breakdown:
                 <ul style="padding-left: 3px;">
                     <li>First place: $TBD</li>
