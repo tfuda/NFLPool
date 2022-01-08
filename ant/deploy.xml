@@ -18,26 +18,13 @@ or 'sfdx force:config:set defaultusername=[username]'">
 			</condition>
 
 		</fail>
-
 	</target>
 
 	<target name="deploy" depends="checkForDEAuthorization">
 		<exec executable="${sfdx.command}" failonerror="true">
-			<arg line="force:source:deploy -x manifest/package.xml"/>
+			<arg line="force:source:deploy -x manifest/package.xml --postdestructivechanges manifest/destructiveChanges.xml -g"/>
 		</exec>
 	</target>
-
-	<!--
-	Destructive changes are "deployed" using the force:mdapi:deploy command. The directory specified with the -d arg
-	should contain an empty package.xml, plus the destructiveChanges.xml file containing the artifacts to be destroyed.
-	-->
-	<target name="destroy" depends="checkForDEAuthorization" unless="${skip.destroy}">
-		<exec executable="${sfdx.command}" failonerror="true">
-			<arg line="force:mdapi:deploy -d destructive-changes -w 5 -g"/>
-		</exec>
-	</target>
-
-	<target name="deployThenDestroy" depends="deploy, destroy"/>
 
 	<target name="retrieve" depends="checkForDEAuthorization">
 		<exec executable="${sfdx.command}" failonerror="true">
