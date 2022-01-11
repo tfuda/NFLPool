@@ -16,7 +16,7 @@ public with sharing class fflib_ApexMocks implements System.StubProvider
 	private fflib_VerificationMode verificationMode;
 	private fflib_Answer myAnswer;
 
-	public Boolean Verifying { get; set; }
+	public Boolean verifying { get; set; }
 
 	public Boolean Stubbing
 	{
@@ -46,7 +46,7 @@ public with sharing class fflib_ApexMocks implements System.StubProvider
 	 */
 	public fflib_ApexMocks()
 	{
-		Verifying = false;
+		this.verifying = false;
 
 		this.methodCountRecorder = new fflib_MethodCountRecorder();
 		this.verificationMode = new fflib_VerificationMode();
@@ -106,7 +106,7 @@ public with sharing class fflib_ApexMocks implements System.StubProvider
 	 */
 	public Object verify(Object mockInstance, fflib_VerificationMode verificationMode)
 	{
-		Verifying = true;
+		this.verifying = true;
 		this.verificationMode = verificationMode;
 
 		return mockInstance;
@@ -132,7 +132,7 @@ public with sharing class fflib_ApexMocks implements System.StubProvider
 		this.methodVerifier.verifyMethodCall(mockInvocation, verificationMode);
 		this.methodVerifier = new fflib_AnyOrder();
 
-		Verifying = false;
+		this.verifying = false;
 	}
 
 	/**
@@ -251,7 +251,7 @@ public with sharing class fflib_ApexMocks implements System.StubProvider
 
 		fflib_InvocationOnMock invocation = new fflib_InvocationOnMock(qm, argValues, mockInstance);
 
-		if (Verifying)
+		if (this.verifying)
 		{
 			verifyMethodCall(invocation);
 		}
@@ -417,5 +417,16 @@ public with sharing class fflib_ApexMocks implements System.StubProvider
 	public void setOrderedVerifier(fflib_InOrder verifyOrderingMode)
 	{
 		this.methodVerifier = verifyOrderingMode;
+	}
+	
+	/**
+	 * A simple override to suppress the default toString logic, which is noisy and rarely useful.
+	 * In some cases, the Salesforce default implementation of toString here can cause internal Salesforce errors
+	 * if it has circular references.
+	 * @return "fflib_ApexMocks" String literal
+	 */
+	public override String toString()
+	{
+		return 'fflib_ApexMocks';
 	}
 }

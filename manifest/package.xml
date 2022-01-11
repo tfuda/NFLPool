@@ -92,6 +92,15 @@
         <members>fflib_SystemTest</members>
         <members>fflib_VerificationMode</members>
         <members>Selector_Team</members>
+        <members>fflib_IDomain</members>
+        <members>fflib_IDomainConstructor</members>
+        <members>fflib_IObjects</members>
+        <members>fflib_ISObjects</members>
+        <members>fflib_Objects</members>
+        <members>fflib_ObjectsTest</members>
+        <members>fflib_QualifiedMethodAndArgValuesTest</members>
+        <members>fflib_SObjects</members>
+        <members>fflib_SObjectsTest</members>
         <name>ApexClass</name>
     </types>
     <types>
