@@ -3,6 +3,7 @@
     <defaultLandingTab>Results</defaultLandingTab>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
     <label>Pool Manager</label>
     <tabs>Team__c</tabs>
     <tabs>Games</tabs>

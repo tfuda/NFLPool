@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DashboardFolder xmlns="http://soap.sforce.com/2006/04/metadata">
-    <accessType>Shared</accessType>
+    <folderShares>
+        <accessLevel>View</accessLevel>
+        <sharedTo>PoolAdministrators</sharedTo>
+        <sharedToType>Group</sharedToType>
+    </folderShares>
     <name>Pool Administrator&apos;s View</name>
-    <publicFolderAccess>ReadOnly</publicFolderAccess>
-    <sharedTo>
-        <group>PoolAdministrators</group>
-    </sharedTo>
 </DashboardFolder>
