@@ -2,18 +2,22 @@
   "orgName": "NFL Pool Scratch Org",
   "edition": "Developer",
   "hasSampleData": false,
-  "features": [],
+  "features": [
+    "API",
+    "AuthorApex",
+    "DefaultWorkflowUser",
+    "RecordTypes",
+    "Workflow"
+  ],
   "settings": {
+    "apexSettings": {
+      "enableCompileOnDeploy": true
+    },
     "lightningExperienceSettings": {
       "enableS1DesktopEnabled": true
     },
-    "securitySettings": {
-      "passwordPolicies": {
-        "enableSetPasswordInApi": true
-      }
-    },
-    "mobileSettings": {
-      "enableS1EncryptedStoragePref2": false
+    "chatterSettings": {
+      "enableChatter": true
     }
   }
 }
