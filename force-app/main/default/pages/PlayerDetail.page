@@ -87,7 +87,7 @@
                             <apex:param name="paymentIndex" value="{!pmtWrapper.index}" />
                         </apex:commandButton>
                         <apex:outputText escape="false" value="&nbsp;" />
-                        <apex:commandButton action="{!cancelPayment}" value="Cancel" rerender="paymentHistory, messages" style="width:60px;">
+                        <apex:commandButton action="{!cancelPayment}" value="Cancel" rerender="paymentHistory, messages" style="width:60px;" immediate="true">
                             <apex:param name="paymentIndex" value="{!pmtWrapper.index}" />
                         </apex:commandButton>
                     </apex:outputPanel>
