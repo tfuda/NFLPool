@@ -287,5 +287,5 @@
         <members>fflib_security_error_object_not_updateable</members>
         <name>CustomLabel</name>
     </types>
-    <version>55.0</version>
+    <version>56.0</version>
 </Package>

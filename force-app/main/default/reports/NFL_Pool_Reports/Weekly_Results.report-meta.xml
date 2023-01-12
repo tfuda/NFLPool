@@ -64,7 +64,7 @@
             <columnToColumn>false</columnToColumn>
             <isUnlocked>false</isUnlocked>
             <operator>equals</operator>
-            <value>1</value>
+            <value>18</value>
         </criteriaItems>
         <criteriaItems>
             <column>Game__c$Locked__c</column>
