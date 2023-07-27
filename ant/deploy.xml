@@ -6,7 +6,7 @@
 			  failonerror="false"
 			  resultproperty="sfdx.org.display.result"
 		>
-			<arg line="force:org:display"/>
+			<arg line="org display"/>
 		</exec>
 		<fail message="You don't have a default username set for this project directory.
 You should either: 'sfdx force:auth:web:login --setdefaultusername'
@@ -22,13 +22,13 @@ or 'sfdx force:config:set defaultusername=[username]'">
 
 	<target name="deploy" depends="checkForDEAuthorization">
 		<exec executable="${sfdx.command}" failonerror="true">
-			<arg line="force:source:deploy -x manifest/package.xml --postdestructivechanges manifest/destructiveChanges.xml -g"/>
+			<arg line="force source deploy -x manifest/package.xml --postdestructivechanges manifest/destructiveChanges.xml -g"/>
 		</exec>
 	</target>
 
 	<target name="retrieve" depends="checkForDEAuthorization">
 		<exec executable="${sfdx.command}" failonerror="true">
-			<arg line="force:source:retrieve -x manifest/package.xml"/>
+			<arg line="force source retrieve -x manifest/package.xml"/>
 		</exec>
 	</target>
 
@@ -36,7 +36,7 @@ or 'sfdx force:config:set defaultusername=[username]'">
 		<exec executable="${sfdx.command}" failonerror="true">
 			<!-- wait up to 60 minutes for the tests to finish -->
 			<!-- Currently running tests in parallel, that'll probably cause transient failures; consider the -y argument-->
-			<arg line="force:apex:test:run -w 60 --verbose"/>
+			<arg line="force apex test run -w 60 --verbose"/>
 		</exec>
 	</target>
 </project>
