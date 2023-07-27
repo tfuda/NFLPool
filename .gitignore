@@ -12,6 +12,9 @@
 # LWC Jest coverage reports
 coverage/
 
+# Anonymous Apex scripts
+apex/
+
 # Logs
 logs
 *.log
@@ -34,15 +37,6 @@ ehthumbs.db
 [Dd]esktop.ini
 $RECYCLE.BIN/
 
-# Illuminated Cloud
-.idea/
-!.idea/inspectionProfiles/Project_Default.xml
-!.idea/*.iml
-IlluminatedCloud
-projectFilesBackup/
-
-
 # Miscellaneous
-build.properties
 debug.log
 /.sf/
