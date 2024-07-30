@@ -2,14 +2,14 @@
     <apex:pageBlock >
         <p>Here is the prize breakdown for the 2024 playoff pool:</p>
         <ul style="padding-left: 3px;">
-            <li>Number of entrants: 25</li>
-            <li>Total prize pool: 25 X $75 = $1875</li>
+            <li>Number of entrants: TBD</li>
+            <li>Total prize pool: TBD X $200 = $TBD</li>
             <li>Prize breakdown:
                 <ul style="padding-left: 3px;">
-                    <li>First place: $900</li>
-                    <li>Second place: $525</li>
-                    <li>Third place: $325</li>
-                    <li>Fourth place: $125</li>
+                    <li>First place: TBD</li>
+                    <li>Second place: TBD</li>
+                    <li>Third place: TBD</li>
+                    <li>Fourth place: TBD</li>
                 </ul>
             </li>
         </ul>
