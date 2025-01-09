@@ -1,15 +1,15 @@
 <apex:page lightningStylesheets="true">
     <apex:pageBlock >
-        <p>Here is the prize breakdown for the 2024 playoff pool:</p>
+        <p>Here is the prize breakdown for the 2025 playoff pool:</p>
         <ul style="padding-left: 3px;">
-            <li>Number of entrants: TBD</li>
-            <li>Total prize pool: TBD X $200 = $TBD</li>
+            <li>Number of entrants: 26</li>
+            <li>Total prize pool: 26 X $75 = $1950</li>
             <li>Prize breakdown:
                 <ul style="padding-left: 3px;">
-                    <li>First place: TBD</li>
-                    <li>Second place: TBD</li>
-                    <li>Third place: TBD</li>
-                    <li>Fourth place: TBD</li>
+                    <li>First place: $925</li>
+                    <li>Second place: $550</li>
+                    <li>Third place: $350</li>
+                    <li>Fourth place: $125</li>
                 </ul>
             </li>
         </ul>
