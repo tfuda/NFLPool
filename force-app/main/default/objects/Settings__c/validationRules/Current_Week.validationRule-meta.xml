@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+<ValidationRule xmlns="https://soap.sforce.com/2006/04/metadata">
     <fullName>Current_Week</fullName>
     <active>true</active>
     <errorConditionFormula>OR(CurrentWeek__c &lt; 1,  CurrentWeek__c &gt; 18)</errorConditionFormula>

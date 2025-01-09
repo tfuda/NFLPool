@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+<CustomField xmlns="https://soap.sforce.com/2006/04/metadata">
     <fullName>Win_Percentage__c</fullName>
     <externalId>false</externalId>
     <formula>IF(Total_Points_Available__c == 0, 0,  Total_Points__c  /  Total_Points_Available__c)</formula>

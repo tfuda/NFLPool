@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+<CustomField xmlns="https://soap.sforce.com/2006/04/metadata">
     <fullName>Spread__c</fullName>
     <description>Point spread with respect to home team. Negative number indicates home team is favorite. Positive number indicates visiting team is favorite. Zero indicates a pick&apos;em game.</description>
     <externalId>false</externalId>

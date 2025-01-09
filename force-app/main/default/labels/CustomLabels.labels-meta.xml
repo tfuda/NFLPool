@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+<CustomLabels xmlns="https://soap.sforce.com/2006/04/metadata">
     <labels>
         <fullName>fflib_QueryFactory_crossobject_fieldsets_not_allowed_error</fullName>
         <language>en_US</language>
