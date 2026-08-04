@@ -78,6 +78,41 @@ private class Test_SelectionService {
         System.assertEquals(games[0].Visiting_Team__c, saved[0].Team__c);
     }
 
+    static testMethod void testSaveSelectionDeselect() {
+        Settings__c s = UnitTestUtils.createTestSettings();
+        UnitTestUtils.createTestTeams();
+        List<Game__c> games = UnitTestUtils.createTestGames(s, 1);
+        Player__c player = new Player__c(Name = 'Test Player', Nickname__c = 'TestP', Settings__c = s.Id);
+        insert player;
+
+        // Create initial selection
+        insert new Selection__c(Game__c = games[0].Id, Player__c = player.Id, Team__c = games[0].Home_Team__c);
+
+        Test.startTest();
+        // Deselecting (null team) should delete the underlying Selection__c record
+        SelectionService.saveSelection(games[0].Id, player.Id, null, false);
+        Test.stopTest();
+
+        List<Selection__c> saved = [SELECT Id FROM Selection__c WHERE Game__c = :games[0].Id AND Player__c = :player.Id];
+        System.assertEquals(0, saved.size());
+    }
+
+    static testMethod void testSaveSelectionDeselectNoExisting() {
+        Settings__c s = UnitTestUtils.createTestSettings();
+        UnitTestUtils.createTestTeams();
+        List<Game__c> games = UnitTestUtils.createTestGames(s, 1);
+        Player__c player = new Player__c(Name = 'Test Player', Nickname__c = 'TestP', Settings__c = s.Id);
+        insert player;
+
+        Test.startTest();
+        // Deselecting when there was never a selection should be a no-op, not an error
+        SelectionService.saveSelection(games[0].Id, player.Id, null, false);
+        Test.stopTest();
+
+        List<Selection__c> saved = [SELECT Id FROM Selection__c WHERE Game__c = :games[0].Id AND Player__c = :player.Id];
+        System.assertEquals(0, saved.size());
+    }
+
     static testMethod void testSaveSelectionLockedGame() {
         Settings__c s = UnitTestUtils.createTestSettings();
         UnitTestUtils.createTestTeams();

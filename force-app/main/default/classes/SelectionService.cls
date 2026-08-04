@@ -76,7 +76,9 @@ public with sharing class SelectionService {
         Game__c game = [SELECT Id, Start_Time__c FROM Game__c WHERE Id = :gameId LIMIT 1];
         Boolean isLocked = (game.Start_Time__c != null && Datetime.now() > game.Start_Time__c);
         if (isLocked && !isAdmin) {
-            throw new AuraHandledException('Unable to save selection because the game is locked.');
+            AuraHandledException ex = new AuraHandledException('Unable to save selection because the game is locked.');
+            ex.setMessage('Unable to save selection because the game is locked.');
+            throw ex;
         }
 
         List<Selection__c> existing = [
@@ -85,6 +87,13 @@ public with sharing class SelectionService {
             WHERE Game__c = :gameId AND Player__c = :playerId
             LIMIT 1
         ];
+
+        if (selectedTeamId == null) {
+            if (!existing.isEmpty()) {
+                delete existing[0];
+            }
+            return;
+        }
 
         Selection__c sel;
         if (!existing.isEmpty()) {
