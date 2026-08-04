@@ -103,33 +103,30 @@ export default class GameSelectionCard extends LightningElement {
   }
 
   get homeButtonClass() {
-    return this.buildButtonClass(
-      this.isHomeSelected,
-      this.isHomeWinner,
-      this.isVisitingWinner
-    );
+    return this.buildButtonClass(this.isHomeSelected, this.isHomeWinner);
   }
 
   get visitingButtonClass() {
     return this.buildButtonClass(
       this.isVisitingSelected,
-      this.isVisitingWinner,
-      this.isHomeWinner
+      this.isVisitingWinner
     );
   }
 
-  buildButtonClass(isSelected, isWinner, isOpponentWinner) {
+  buildButtonClass(isSelected, isTeamWinner) {
     let classes = "team-button";
     if (isSelected) {
       classes += " team-button_selected";
-    }
-    if (this.isFinal) {
-      if (this.isPush) {
-        classes += " team-button_push";
-      } else if (isWinner) {
-        classes += " team-button_winner";
-      } else if (isOpponentWinner) {
-        classes += " team-button_loser";
+      // Only the picked team's button is colored by outcome, since that's
+      // the pick being scored (mirrors the Selection__c.Points__c formula).
+      if (this.isFinal) {
+        if (this.isPush) {
+          classes += " team-button_push";
+        } else if (isTeamWinner) {
+          classes += " team-button_winner";
+        } else {
+          classes += " team-button_loser";
+        }
       }
     }
     if (!this.isEditable) {

@@ -112,12 +112,23 @@
 }
 
 .team-button_loser {
-  opacity: 0.6;
+  border-color: #c23934;
+  background: #fdeeed;
+}
+
+.team-button_loser .team-button__name,
+.team-button_loser .team-button__score {
+  color: #c23934;
 }
 
 .team-button_push {
-  border-color: #e5940a;
-  background: #fef3e3;
+  border-color: #dba100;
+  background: #fff8e1;
+}
+
+.team-button_push .team-button__name,
+.team-button_push .team-button__score {
+  color: #8a6d00;
 }
 
 .game-card__footer {
