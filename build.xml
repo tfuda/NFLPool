@@ -4,10 +4,10 @@
 	<property environment="env"/>
 	<property name="scratchorg.alias" value="NFLPoolScratchOrg"/>
 
-	<condition property="sfdx.command" value="sfdx.cmd">
+	<condition property="sf.command" value="sf.cmd">
 		<os family="windows"/>
 	</condition>
-	<property name="sfdx.command" value="sfdx"/>
+	<property name="sf.command" value="sf"/>
 
 	<import file="ant/deploy.xml"/>
 </project>

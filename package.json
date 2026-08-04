@@ -13,7 +13,10 @@
     "test:unit:debug": "sfdx-lwc-jest --debug",
     "test:unit:coverage": "sfdx-lwc-jest --coverage",
     "prettier": "prettier --write \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
-    "prettier:verify": "prettier --list-different \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\""
+    "prettier:verify": "prettier --list-different \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
+    "deploy": "sf project deploy start -x manifest/package.xml --post-destructive-changes manifest/destructiveChanges.xml --ignore-conflicts",
+    "retrieve": "sf project retrieve start -x manifest/package.xml",
+    "test:apex": "sf apex run test -w 60 --verbose"
   },
   "devDependencies": {
     "@prettier/plugin-xml": "^3.4.1",
