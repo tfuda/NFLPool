@@ -1,0 +1,71 @@
+<template>
+  <article class="game-card" aria-label={cardAriaLabel}>
+    <header class="game-card__header">
+      <span class="game-card__game-number">Game {gameNumber}</span>
+      <template if:true={game.Start_Time__c}>
+        <lightning-formatted-date-time
+          class="game-card__start-time"
+          value={game.Start_Time__c}
+          month="short"
+          day="2-digit"
+          hour="2-digit"
+          minute="2-digit"
+        ></lightning-formatted-date-time>
+      </template>
+      <template if:true={isLocked}>
+        <lightning-icon
+          icon-name="utility:lock"
+          size="x-small"
+          title="Locked"
+          class="game-card__lock-icon"
+        ></lightning-icon>
+      </template>
+    </header>
+
+    <div class="game-card__teams">
+      <button
+        type="button"
+        class={homeButtonClass}
+        data-team-id={homeTeamId}
+        disabled={buttonsDisabled}
+        onclick={handleTeamClick}
+      >
+        <span class="team-button__name">{homeLabel}</span>
+        <template if:true={showScores}>
+          <span class="team-button__score">{homeScoreDisplay}</span>
+        </template>
+      </button>
+
+      <span class="game-card__separator">vs</span>
+
+      <button
+        type="button"
+        class={visitingButtonClass}
+        data-team-id={visitingTeamId}
+        disabled={buttonsDisabled}
+        onclick={handleTeamClick}
+      >
+        <span class="team-button__name">{visitingLabel}</span>
+        <template if:true={showScores}>
+          <span class="team-button__score">{visitingScoreDisplay}</span>
+        </template>
+      </button>
+    </div>
+
+    <footer class="game-card__footer">
+      <template if:true={isFinal}>
+        <span class="game-card__result">{resultLabel}</span>
+      </template>
+      <template if:true={showPoints}>
+        <span class="game-card__points">{pointsLabel}</span>
+      </template>
+      <template if:true={isSaving}>
+        <lightning-spinner
+          alternative-text="Saving"
+          size="x-small"
+          class="game-card__spinner"
+        ></lightning-spinner>
+      </template>
+    </footer>
+  </article>
+</template>

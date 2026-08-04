@@ -1,0 +1,123 @@
+<template>
+  <div class="selections">
+    <header class="selections__header">
+      <h1 class="selections__title">Player Selections</h1>
+      <p class="selections__note">
+        Point spreads are shown with respect to each team. A positive spread
+        means that team is the underdog (getting points); a negative spread
+        means that team is favored (giving points).
+      </p>
+    </header>
+
+    <div class="selections__controls">
+      <template if:true={showPlayerPicker}>
+        <lightning-combobox
+          class="selections__control"
+          label="Player"
+          value={playerId}
+          options={playerOptions}
+          onchange={handlePlayerChange}
+        ></lightning-combobox>
+      </template>
+
+      <lightning-combobox
+        class="selections__control"
+        label="Week"
+        value={weekNumber}
+        options={weekOptions}
+        onchange={handleWeekChange}
+      ></lightning-combobox>
+
+      <div class="selections__actions">
+        <lightning-button
+          label="Edit"
+          onclick={handleEdit}
+          disabled={isEditDisabled}
+        ></lightning-button>
+        <template if:true={isAdmin}>
+          <lightning-button
+            label="Edit Locked Games"
+            variant="destructive-text"
+            onclick={handlePrivilegedEdit}
+            disabled={isPrivilegedEditDisabled}
+          ></lightning-button>
+        </template>
+        <lightning-button
+          label="Done"
+          variant="brand"
+          onclick={handleDone}
+          disabled={isDoneDisabled}
+        ></lightning-button>
+      </div>
+    </div>
+
+    <template if:true={showPrivilegedEditConfirm}>
+      <div class="selections__confirm" role="alertdialog">
+        <p>
+          You are about to enable privileged edit mode, which allows editing
+          locked games. Use this with caution.
+        </p>
+        <div class="selections__confirm-actions">
+          <lightning-button
+            label="Cancel"
+            onclick={handleCancelPrivilegedEdit}
+          ></lightning-button>
+          <lightning-button
+            label="Yes, Edit Locked Games"
+            variant="destructive"
+            onclick={handleConfirmPrivilegedEdit}
+          ></lightning-button>
+        </div>
+      </div>
+    </template>
+
+    <template if:true={showPlayerPrompt}>
+      <div class="selections__prompt">
+        Select a player to view or edit selections.
+      </div>
+    </template>
+
+    <template if:true={loadError}>
+      <div class="selections__error" role="alert">{loadError}</div>
+    </template>
+
+    <template if:true={isLoading}>
+      <lightning-spinner
+        alternative-text="Loading selections"
+        size="medium"
+      ></lightning-spinner>
+    </template>
+
+    <template if:false={isLoading}>
+      <template if:true={hasGames}>
+        <div class="selections__summary">
+          <span class="selections__mode-badge">{modeLabel}</span>
+          <span>{selectionSummary}</span>
+          <span class="selections__total">Total Points: {totalPoints}</span>
+        </div>
+
+        <template if:true={hasIncompleteSelections}>
+          <div class="selections__warning" role="alert">
+            {incompleteSelectionsMessage}
+          </div>
+        </template>
+
+        <div class="selections__grid">
+          <template for:each={gameSelections} for:item="gs">
+            <c-game-selection-card
+              key={gs.gameNumber}
+              game-selection={gs}
+              player-id={playerId}
+              mode={mode}
+              is-admin={isAdmin}
+              onselectionsaved={handleSelectionSaved}
+            ></c-game-selection-card>
+          </template>
+        </div>
+      </template>
+      <template if:false={hasGames}>
+        <div class="selections__empty">No games found for this week.</div>
+      </template>
+    </template>
+  </div>
+</template>
