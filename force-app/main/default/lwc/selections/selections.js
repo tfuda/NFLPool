@@ -1,4 +1,5 @@
 import { LightningElement, wire } from "lwc";
+import { CurrentPageReference } from "lightning/navigation";
 import { refreshApex } from "@salesforce/apex";
 import getSelectionsForPlayerWeek from "@salesforce/apex/SelectionService.getSelectionsForPlayerWeek";
 import getActivePlayers from "@salesforce/apex/SelectionService.getActivePlayers";
@@ -77,6 +78,17 @@ export default class Selections extends LightningElement {
   })
   wiredSelections(result) {
     this.selectionsResult = result;
+  }
+
+  // Lightning App Page tabs can stay mounted in the background when the user
+  // navigates away, so connectedCallback/@wire won't naturally re-fire on
+  // return. CurrentPageReference does fire on tab (re)activation, so use it
+  // to force a refetch and avoid showing stale data from a previous visit.
+  @wire(CurrentPageReference)
+  handleCurrentPageReference(pageReference) {
+    if (pageReference && this.selectionsResult) {
+      refreshApex(this.selectionsResult);
+    }
   }
 
   applyDefaultPlayer() {
