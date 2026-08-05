@@ -1,5 +1,5 @@
 import { LightningElement, wire } from "lwc";
-import { CurrentPageReference } from "lightning/navigation";
+import { CurrentPageReference, NavigationMixin } from "lightning/navigation";
 import { refreshApex } from "@salesforce/apex";
 import getSelectionsForPlayerWeek from "@salesforce/apex/SelectionService.getSelectionsForPlayerWeek";
 import getActivePlayers from "@salesforce/apex/SelectionService.getActivePlayers";
@@ -13,7 +13,7 @@ const MODE_VIEW = "view";
 const MODE_EDIT = "edit";
 const MODE_PRIVILEGED_EDIT = "privileged-edit";
 
-export default class Selections extends LightningElement {
+export default class Selections extends NavigationMixin(LightningElement) {
   isAdmin = false;
   currentPlayerId;
   playerId = "";
@@ -191,6 +191,10 @@ export default class Selections extends LightningElement {
     return !(this.playerId && !this.isViewMode);
   }
 
+  get isPrintableViewDisabled() {
+    return !this.playerId;
+  }
+
   handlePlayerChange(event) {
     this.playerId = event.detail.value;
     this.mode = MODE_VIEW;
@@ -220,6 +224,26 @@ export default class Selections extends LightningElement {
 
   handleDone() {
     this.mode = MODE_VIEW;
+  }
+
+  handlePrintableView() {
+    // Open the tab synchronously (within the click's user-gesture context) so
+    // popup blockers don't intercept it, then navigate it once the VF page's
+    // URL is resolved asynchronously via GenerateUrl.
+    const printWindow = window.open("", "_blank");
+    const params = new URLSearchParams();
+    params.set("weekNumber", this.weekNumber || "");
+    params.set("playerId", this.playerId || "");
+    this[NavigationMixin.GenerateUrl]({
+      type: "standard__webPage",
+      attributes: {
+        url: `/apex/PrintableSelections?${params.toString()}`
+      }
+    }).then((url) => {
+      if (printWindow) {
+        printWindow.location.href = url;
+      }
+    });
   }
 
   handleSelectionSaved() {
