@@ -135,16 +135,20 @@ private class Test_PlayerService {
         User adminUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
         System.runAs(adminUser) {
             insert playerUser;
+
+            // The User updates below must stay inside this runAs block: mixing
+            // DML on a setup object (User) with the earlier non-setup
+            // Settings__c insert in the same transaction throws
+            // MIXED_DML_OPERATION otherwise.
+            Test.startTest();
+            PlayerService.deactivateUser(playerUser.Id);
+            User deactivated = [SELECT IsActive FROM User WHERE Id = :playerUser.Id];
+            System.assertEquals(false, deactivated.IsActive);
+
+            PlayerService.activateUser(playerUser.Id);
+            User activated = [SELECT IsActive FROM User WHERE Id = :playerUser.Id];
+            System.assertEquals(true, activated.IsActive);
+            Test.stopTest();
         }
-
-        Test.startTest();
-        PlayerService.deactivateUser(playerUser.Id);
-        User deactivated = [SELECT IsActive FROM User WHERE Id = :playerUser.Id];
-        System.assertEquals(false, deactivated.IsActive);
-
-        PlayerService.activateUser(playerUser.Id);
-        User activated = [SELECT IsActive FROM User WHERE Id = :playerUser.Id];
-        System.assertEquals(true, activated.IsActive);
-        Test.stopTest();
     }
 }

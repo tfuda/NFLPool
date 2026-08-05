@@ -105,6 +105,22 @@ private class Test_ResultsService {
         Player__c player1, player2, player3, player4, player5;
 
         TestScaffold() {
+            // getSeasonalResults() filters Player__c WHERE User__r.IsActive = true
+            // (same pattern as SelectionService.getActivePlayers()), so player1
+            // and player2 need a linked, active User for that query to find them.
+            User adminUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+            User user1 = UnitTestUtils.createTestUser();
+            user1.Username = 'test.player1@nflpool.com';
+            user1.Alias = 'tplyr1';
+            user1.CommunityNickname = 'tplayer1';
+            User user2 = UnitTestUtils.createTestUser();
+            user2.Username = 'test.player2@nflpool.com';
+            user2.Alias = 'tplyr2';
+            user2.CommunityNickname = 'tplayer2';
+            System.runAs(adminUser) {
+                insert new List<User>{ user1, user2 };
+            }
+
             settings = new Settings__c(Name = 'Pool Settings', NumberOfWeeks__c = 4, CurrentWeek__c = 1,
                 MaxGames__c = 5, EntryFee__c = 50, UsernameSuffix__c = 'nflpool.com');
             insert settings;
@@ -125,9 +141,9 @@ private class Test_ResultsService {
             insert teams;
 
             List<Player__c> players = new List<Player__c>();
-            player1 = new Player__c(Name = 'Player One', Nickname__c = 'Player1', Settings__c = settings.Id);
+            player1 = new Player__c(Name = 'Player One', Nickname__c = 'Player1', Settings__c = settings.Id, User__c = user1.Id);
             players.add(player1);
-            player2 = new Player__c(Name = 'Player Two', Nickname__c = 'Player2', Settings__c = settings.Id);
+            player2 = new Player__c(Name = 'Player Two', Nickname__c = 'Player2', Settings__c = settings.Id, User__c = user2.Id);
             players.add(player2);
             player3 = new Player__c(Name = 'Player Three', Nickname__c = 'Player3', Settings__c = settings.Id);
             players.add(player3);

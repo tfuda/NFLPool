@@ -101,7 +101,9 @@ public with sharing class PlayerService {
     @AuraEnabled
     public static PlayerPayment__c savePayment(PlayerPayment__c payment, Decimal balanceDue) {
         if (payment.Amount__c != null && balanceDue != null && payment.Amount__c > balanceDue) {
-            throw new AuraHandledException('The payment amount is greater than the balance due.');
+            AuraHandledException ex = new AuraHandledException('The payment amount is greater than the balance due.');
+            ex.setMessage('The payment amount is greater than the balance due.');
+            throw ex;
         }
         upsert payment;
         return payment;

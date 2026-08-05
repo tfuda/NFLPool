@@ -38,7 +38,10 @@ public with sharing class GameService {
     public static List<GameWrapper> saveGames(List<Game__c> games) {
         List<String> errors = validateGames(games);
         if (!errors.isEmpty()) {
-            throw new AuraHandledException(String.join(errors, '\n'));
+            String message = String.join(errors, '\n');
+            AuraHandledException ex = new AuraHandledException(message);
+            ex.setMessage(message);
+            throw ex;
         }
         upsert games;
         if (!games.isEmpty()) {
@@ -50,10 +53,11 @@ public with sharing class GameService {
     @AuraEnabled
     public static List<GameWrapper> deleteGame(Id gameId, String weekNumber) {
         if ([SELECT COUNT() FROM Selection__c WHERE Game__c = :gameId] > 0) {
-            throw new AuraHandledException(
-                'Unable to delete game because one or more selections reference it. ' +
-                'Delete all selections for this game first.'
-            );
+            String message = 'Unable to delete game because one or more selections reference it. ' +
+                'Delete all selections for this game first.';
+            AuraHandledException ex = new AuraHandledException(message);
+            ex.setMessage(message);
+            throw ex;
         }
         Game__c game = [SELECT Id FROM Game__c WHERE Id = :gameId LIMIT 1];
         delete game;

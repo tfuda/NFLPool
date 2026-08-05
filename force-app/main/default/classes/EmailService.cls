@@ -57,16 +57,25 @@ public with sharing class EmailService {
         return recipients;
     }
 
+    // AuraHandledException.getMessage() only returns the constructor argument
+    // if setMessage() is also called explicitly; otherwise callers see a
+    // generic "Script-thrown exception" instead of this message.
+    private static AuraHandledException newAuraHandledException(String message) {
+        AuraHandledException ex = new AuraHandledException(message);
+        ex.setMessage(message);
+        return ex;
+    }
+
     @AuraEnabled
     public static void sendEmail(String subject, String body, List<Id> recipientIds, Boolean copyMe) {
         if (String.isBlank(subject)) {
-            throw new AuraHandledException('You must specify a subject for your email.');
+            throw newAuraHandledException('You must specify a subject for your email.');
         }
         if (String.isBlank(body)) {
-            throw new AuraHandledException('You must specify a message for your email.');
+            throw newAuraHandledException('You must specify a message for your email.');
         }
         if (recipientIds == null || recipientIds.isEmpty()) {
-            throw new AuraHandledException('You must specify at least one recipient for your email.');
+            throw newAuraHandledException('You must specify at least one recipient for your email.');
         }
 
         User me = [SELECT Id, Name, Email, CommunityNickname FROM User WHERE Id = :UserInfo.getUserId()];
