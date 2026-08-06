@@ -227,10 +227,11 @@ export default class Selections extends NavigationMixin(LightningElement) {
   }
 
   handlePrintableView() {
-    // Open the tab synchronously (within the click's user-gesture context) so
-    // popup blockers don't intercept it, then navigate it once the VF page's
-    // URL is resolved asynchronously via GenerateUrl.
-    const printWindow = window.open("", "_blank");
+    // Lightning Web Security blocks direct access to .location on a window
+    // reference from window.open(), so the usual "open blank tab, navigate it
+    // once the URL resolves" trick doesn't work here. GenerateUrl resolves
+    // near-instantly (no real network round trip), so opening the tab
+    // directly in its .then() still runs within the click's gesture window.
     const params = new URLSearchParams();
     params.set("weekNumber", this.weekNumber || "");
     params.set("playerId", this.playerId || "");
@@ -240,9 +241,7 @@ export default class Selections extends NavigationMixin(LightningElement) {
         url: `/apex/PrintableSelections?${params.toString()}`
       }
     }).then((url) => {
-      if (printWindow) {
-        printWindow.location.href = url;
-      }
+      window.open(url, "_blank");
     });
   }
 
