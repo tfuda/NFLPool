@@ -25,6 +25,9 @@ yarn-error.log*
 # IntelliJ IDEA
 .idea
 
+# VS Code (personal editor settings, not shared project config)
+.vscode/
+
 # Dependency directories
 node_modules/
 

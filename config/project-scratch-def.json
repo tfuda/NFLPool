@@ -18,6 +18,9 @@
     },
     "chatterSettings": {
       "enableChatter": true
+    },
+    "securitySettings": {
+      "enableAdminLoginAsAnyUser": true
     }
   }
 }

@@ -2,18 +2,18 @@
 <project name="deploy">
 	<target name="checkForDEAuthorization">
 		<!--Check to see if the org is already authorized on this machine-->
-		<exec executable="${sfdx.command}"
+		<exec executable="${sf.command}"
 			  failonerror="false"
-			  resultproperty="sfdx.org.display.result"
+			  resultproperty="sf.org.display.result"
 		>
 			<arg line="org display"/>
 		</exec>
 		<fail message="You don't have a default username set for this project directory.
-You should either: 'sfdx force:auth:web:login --setdefaultusername'
-or 'sfdx force:config:set defaultusername=[username]'">
+You should either: 'sf org login web --set-default'
+or 'sf config set target-org=[username]'">
 			<condition>
 				<not>
-					<equals arg1="${sfdx.org.display.result}" arg2="0"/>
+					<equals arg1="${sf.org.display.result}" arg2="0"/>
 				</not>
 			</condition>
 
@@ -21,22 +21,20 @@ or 'sfdx force:config:set defaultusername=[username]'">
 	</target>
 
 	<target name="deploy" depends="checkForDEAuthorization">
-		<exec executable="${sfdx.command}" failonerror="true">
-			<arg line="force source deploy -x manifest/package.xml --postdestructivechanges manifest/destructiveChanges.xml -g"/>
+		<exec executable="${sf.command}" failonerror="true">
+			<arg line="project deploy start -x manifest/package.xml --post-destructive-changes manifest/destructiveChanges.xml --ignore-conflicts"/>
 		</exec>
 	</target>
 
 	<target name="retrieve" depends="checkForDEAuthorization">
-		<exec executable="${sfdx.command}" failonerror="true">
-			<arg line="force source retrieve -x manifest/package.xml"/>
+		<exec executable="${sf.command}" failonerror="true">
+			<arg line="project retrieve start -x manifest/package.xml"/>
 		</exec>
 	</target>
 
 	<target name="test" depends="checkForDEAuthorization" unless="${skip.tests}">
-		<exec executable="${sfdx.command}" failonerror="true">
-			<!-- wait up to 60 minutes for the tests to finish -->
-			<!-- Currently running tests in parallel, that'll probably cause transient failures; consider the -y argument-->
-			<arg line="force apex test run -w 60 --verbose"/>
+		<exec executable="${sf.command}" failonerror="true">
+			<arg line="apex run test -w 60 --verbose"/>
 		</exec>
 	</target>
 </project>
