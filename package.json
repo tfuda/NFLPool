@@ -15,6 +15,7 @@
     "prettier": "prettier --write \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
     "prettier:verify": "prettier --list-different \"**/*.{cls,cmp,component,css,html,js,json,md,page,trigger,xml,yaml,yml}\"",
     "deploy": "sf project deploy start -x manifest/package.xml --post-destructive-changes manifest/destructiveChanges.xml --ignore-conflicts",
+    "scratch:create": "sf org create scratch -f config/project-scratch-def.json -a NFLPoolScratch1 -v DevHubOrg -d -y 30",
     "retrieve": "sf project retrieve start -x manifest/package.xml",
     "test:apex": "sf apex run test -w 60 --verbose"
   },
