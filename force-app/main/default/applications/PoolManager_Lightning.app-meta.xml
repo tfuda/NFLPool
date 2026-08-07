@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<CustomApplication xmlns="https://soap.sforce.com/2006/04/metadata">
+<CustomApplication xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionOverrides>
         <actionName>Tab</actionName>
         <content>PoolManagerHome</content>
@@ -17,6 +17,7 @@
     <isNavAutoTempTabsDisabled>true</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>true</isNavPersonalizationDisabled>
     <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
+    <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
     <label>Pool Manager</label>
     <navType>Standard</navType>
     <profileActionOverrides>
@@ -53,7 +54,7 @@
     </profileActionOverrides>
     <tabs>standard-home</tabs>
     <tabs>Selections_Lightning</tabs>
-    <tabs>Results</tabs>
+    <tabs>Results_Lightning</tabs>
     <tabs>MyAccount</tabs>
     <tabs>ContactInfo</tabs>
     <tabs>Email</tabs>

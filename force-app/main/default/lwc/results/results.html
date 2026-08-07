@@ -1,0 +1,99 @@
+<template>
+  <div class="results">
+    <header class="results__header">
+      <h1 class="results__title">Results</h1>
+      <p class="results__note">
+        This page refreshes automatically every two minutes.
+      </p>
+    </header>
+
+    <div class="results__controls">
+      <template if:true={showWeekPicker}>
+        <lightning-combobox
+          class="results__control"
+          label="Week"
+          value={weekNumber}
+          options={weekOptions}
+          onchange={handleWeekChange}
+        ></lightning-combobox>
+      </template>
+      <span class="results__last-refreshed"
+        >Last refreshed: {lastRefreshedLabel}</span
+      >
+    </div>
+
+    <section class="results__section">
+      <h2 class="results__section-title">Weekly Results</h2>
+      <template if:true={isWeeklyLoading}>
+        <lightning-spinner
+          alternative-text="Loading weekly results"
+          size="medium"
+        ></lightning-spinner>
+      </template>
+      <template if:true={weeklyLoadError}>
+        <div class="results__error" role="alert">{weeklyLoadError}</div>
+      </template>
+      <template if:false={isWeeklyLoading}>
+        <template if:true={weeklyHasResults}>
+          <div class="results__grid">
+            <c-bar-chart
+              title={weeklyPointsTitle}
+              rows={weeklyPointsRows}
+              max={weeklyPointsAvailable}
+              format-mode="points"
+              color="#0b5cab"
+            ></c-bar-chart>
+            <c-bar-chart
+              title={weeklyPercentTitle}
+              rows={weeklyPercentRows}
+              max={percentMax}
+              format-mode="percentage"
+              color="#c23934"
+            ></c-bar-chart>
+          </div>
+        </template>
+        <template if:false={weeklyHasResults}>
+          <div class="results__empty">Weekly results not yet available.</div>
+        </template>
+      </template>
+    </section>
+
+    <section class="results__section">
+      <h2 class="results__section-title">Seasonal Results</h2>
+      <template if:true={isSeasonalLoading}>
+        <lightning-spinner
+          alternative-text="Loading seasonal results"
+          size="medium"
+        ></lightning-spinner>
+      </template>
+      <template if:true={seasonalLoadError}>
+        <div class="results__error" role="alert">{seasonalLoadError}</div>
+      </template>
+      <template if:false={isSeasonalLoading}>
+        <template if:true={seasonalHasResults}>
+          <div class="results__grid">
+            <c-bar-chart
+              title="Points Scored - Season"
+              rows={seasonalPointsRows}
+              max={seasonalPointsAvailable}
+              format-mode="points"
+              color="#0b5cab"
+            ></c-bar-chart>
+            <c-bar-chart
+              title="Win Percentage - Season"
+              rows={seasonalPercentRows}
+              max={percentMax}
+              format-mode="percentage"
+              color="#c23934"
+            ></c-bar-chart>
+          </div>
+        </template>
+        <template if:false={seasonalHasResults}>
+          <div class="results__empty">
+            Seasonal results not yet available.
+          </div>
+        </template>
+      </template>
+    </section>
+  </div>
+</template>
