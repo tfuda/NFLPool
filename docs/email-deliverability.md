@@ -52,6 +52,8 @@ Gmail's SMTP server (`smtp.gmail.com`) requires authenticated SMTP, which needs 
 2. Go to `myaccount.google.com/apppasswords`, create one (name it something like "Salesforce Relay").
 3. Copy the 16-character password — shown only once.
 
+The app password currently in use is saved in the LastPass entry for the `poolmanagernfl@gmail.com` Google account — check there before generating a new one.
+
 ### 3. Configure the Email Relay
 
 Setup → Email → Email Relays → New Email Relay:
