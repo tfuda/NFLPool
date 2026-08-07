@@ -2,5 +2,5 @@
 <CustomTab xmlns="https://soap.sforce.com/2006/04/metadata">
     <label>Games</label>
     <motif>Custom52: Balls</motif>
-    <page>Games</page>
+    <flexiPage>Games_Lightning</flexiPage>
 </CustomTab>

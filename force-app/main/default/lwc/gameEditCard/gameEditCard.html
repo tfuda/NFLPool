@@ -1,0 +1,173 @@
+<template>
+  <article class="game-edit-card" aria-label={cardAriaLabel}>
+    <header class="game-edit-card__header">
+      <span class="game-edit-card__game-number">Game {gameNumber}</span>
+      <template if:true={isLocked}>
+        <lightning-icon
+          icon-name="utility:lock"
+          size="x-small"
+          title="Locked"
+          class="game-edit-card__lock-icon"
+        ></lightning-icon>
+      </template>
+    </header>
+
+    <div class="game-edit-card__field">
+      <template if:true={isStartTimeEditable}>
+        <c-date-time-input
+          label="Start Time"
+          value={game.Start_Time__c}
+          data-field="Start_Time__c"
+          onchange={handleFieldChange}
+        ></c-date-time-input>
+      </template>
+      <template if:false={isStartTimeEditable}>
+        <span class="game-edit-card__label">Start Time</span>
+        <lightning-formatted-date-time
+          value={game.Start_Time__c}
+          month="short"
+          day="2-digit"
+          hour="2-digit"
+          minute="2-digit"
+        ></lightning-formatted-date-time>
+      </template>
+    </div>
+
+    <div class="game-edit-card__row">
+      <div class="game-edit-card__field">
+        <template if:true={isHomeTeamEditable}>
+          <div class="slds-form-element">
+            <label class="slds-form-element__label" for="homeTeamSelect"
+              >Home Team</label
+            >
+            <div class="slds-form-element__control">
+              <select
+                id="homeTeamSelect"
+                class="slds-select"
+                data-field="Home_Team__c"
+                onchange={handleFieldChange}
+              >
+                <template for:each={homeTeamOptions} for:item="option">
+                  <option
+                    key={option.value}
+                    value={option.value}
+                    selected={option.selected}
+                    >{option.label}</option
+                  >
+                </template>
+              </select>
+            </div>
+          </div>
+        </template>
+        <template if:false={isHomeTeamEditable}>
+          <span class="game-edit-card__label">Home Team</span>
+          <span>{homeTeamName}</span>
+        </template>
+      </div>
+      <div class="game-edit-card__field">
+        <template if:true={isScoreEditable}>
+          <lightning-input
+            type="number"
+            label="Home Score"
+            value={game.Home_Score__c}
+            data-field="Home_Score__c"
+            onchange={handleFieldChange}
+          ></lightning-input>
+        </template>
+        <template if:false={isScoreEditable}>
+          <span class="game-edit-card__label">Home Score</span>
+          <span>{game.Home_Score__c}</span>
+        </template>
+      </div>
+    </div>
+
+    <div class="game-edit-card__field">
+      <template if:true={isSpreadEditable}>
+        <lightning-input
+          type="number"
+          step="0.1"
+          label="Spread"
+          value={game.Spread__c}
+          data-field="Spread__c"
+          onchange={handleFieldChange}
+        ></lightning-input>
+      </template>
+      <template if:false={isSpreadEditable}>
+        <span class="game-edit-card__label">Spread</span>
+        <span>{game.Spread__c}</span>
+      </template>
+    </div>
+
+    <div class="game-edit-card__row">
+      <div class="game-edit-card__field">
+        <template if:true={isVisitingTeamEditable}>
+          <div class="slds-form-element">
+            <label class="slds-form-element__label" for="visitingTeamSelect"
+              >Visiting Team</label
+            >
+            <div class="slds-form-element__control">
+              <select
+                id="visitingTeamSelect"
+                class="slds-select"
+                data-field="Visiting_Team__c"
+                onchange={handleFieldChange}
+              >
+                <template for:each={visitingTeamOptions} for:item="option">
+                  <option
+                    key={option.value}
+                    value={option.value}
+                    selected={option.selected}
+                    >{option.label}</option
+                  >
+                </template>
+              </select>
+            </div>
+          </div>
+        </template>
+        <template if:false={isVisitingTeamEditable}>
+          <span class="game-edit-card__label">Visiting Team</span>
+          <span>{visitingTeamName}</span>
+        </template>
+      </div>
+      <div class="game-edit-card__field">
+        <template if:true={isScoreEditable}>
+          <lightning-input
+            type="number"
+            label="Visiting Score"
+            value={game.Visiting_Score__c}
+            data-field="Visiting_Score__c"
+            onchange={handleFieldChange}
+          ></lightning-input>
+        </template>
+        <template if:false={isScoreEditable}>
+          <span class="game-edit-card__label">Visiting Score</span>
+          <span>{game.Visiting_Score__c}</span>
+        </template>
+      </div>
+    </div>
+
+    <footer class="game-edit-card__footer">
+      <lightning-input
+        type="checkbox"
+        label="Final"
+        checked={game.Final__c}
+        disabled={isFinalDisabled}
+        data-field="Final__c"
+        onchange={handleFieldChange}
+      ></lightning-input>
+      <template if:true={showWinner}>
+        <span class="game-edit-card__winner">{game.Winner__c}</span>
+      </template>
+      <template if:true={isDeleteVisible}>
+        <lightning-button-icon
+          icon-name="utility:delete"
+          alternative-text="Delete game"
+          variant="border-filled"
+          disabled={isDeleteDisabled}
+          onclick={handleDeleteClick}
+          class="game-edit-card__delete"
+        ></lightning-button-icon>
+      </template>
+    </footer>
+  </article>
+</template>
