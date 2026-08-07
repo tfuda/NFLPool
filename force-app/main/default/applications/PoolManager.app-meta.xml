@@ -6,7 +6,6 @@
     <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
     <label>Pool Manager</label>
     <tabs>Team__c</tabs>
-    <tabs>Games</tabs>
     <tabs>Selections</tabs>
     <tabs>PlayerManagement</tabs>
     <tabs>MyAccount</tabs>

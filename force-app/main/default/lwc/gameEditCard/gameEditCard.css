@@ -1,0 +1,75 @@
+:host {
+  display: block;
+}
+
+.game-edit-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: #ffffff;
+  border: 1px solid #dddbda;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.game-edit-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: #706e6b;
+}
+
+.game-edit-card__game-number {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.game-edit-card__lock-icon {
+  margin-left: auto;
+  --sds-c-icon-color-foreground-default: #706e6b;
+}
+
+.game-edit-card__row {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.game-edit-card__row .game-edit-card__field {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.game-edit-card__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.game-edit-card__label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #706e6b;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.game-edit-card__footer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 0.25rem;
+  border-top: 1px solid #f3f2f2;
+}
+
+.game-edit-card__winner {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #2e844a;
+}
+
+.game-edit-card__delete {
+  margin-left: auto;
+}

@@ -1,0 +1,29 @@
+<template>
+  <div class="date-time-input">
+    <div class="date-time-input__row">
+      <lightning-input
+        type="text"
+        label={label}
+        variant={variant}
+        placeholder="M/D/YYYY h:mm AM/PM"
+        value={displayValue}
+        autocomplete="off"
+        onchange={handleInnerChange}
+        onblur={handleBlur}
+        class="date-time-input__field"
+      ></lightning-input>
+      <lightning-button-icon
+        icon-name="utility:clock"
+        alternative-text="Use current date and time"
+        title="Use current date and time"
+        onclick={handleNowClick}
+        class="date-time-input__now-button"
+      ></lightning-button-icon>
+    </div>
+    <template if:true={hasError}>
+      <div class="date-time-input__error">
+        Enter a valid date/time, e.g. 8/9/2026 1:00 PM
+      </div>
+    </template>
+  </div>
+</template>

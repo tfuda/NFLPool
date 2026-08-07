@@ -40,10 +40,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>GamesController</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>PlayerController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -113,10 +109,6 @@
     </classAccesses>
     <classAccesses>
         <apexClass>Test_GameSelection</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>Test_GamesController</apexClass>
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
@@ -693,10 +685,6 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>Games</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>HelpfulLinks</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -738,10 +726,6 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>Game__c</tab>
-        <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>Games</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>

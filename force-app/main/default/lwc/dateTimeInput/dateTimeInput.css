@@ -1,0 +1,24 @@
+:host {
+  display: block;
+}
+
+.date-time-input__row {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+
+.date-time-input__field {
+  flex: 1 1 auto;
+  min-width: 9rem;
+}
+
+.date-time-input__now-button {
+  flex: 0 0 auto;
+}
+
+.date-time-input__error {
+  margin-top: 0.15rem;
+  font-size: 0.7rem;
+  color: #c23934;
+}
