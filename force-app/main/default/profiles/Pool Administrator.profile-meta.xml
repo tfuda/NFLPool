@@ -29,7 +29,11 @@
     </classAccesses>
     <classAccesses>
         <apexClass>EmailController</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>EmailService</apexClass>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>EmailTemplateDeleter</apexClass>
@@ -105,7 +109,11 @@
     </classAccesses>
     <classAccesses>
         <apexClass>Test_EmailController</apexClass>
-        <enabled>false</enabled>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Test_EmailService</apexClass>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>Test_EmailTemplateDeleter</apexClass>

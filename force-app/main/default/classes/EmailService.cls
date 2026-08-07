@@ -66,8 +66,13 @@ public with sharing class EmailService {
         return ex;
     }
 
+    public class SendEmailOutcome {
+        @AuraEnabled public Boolean success { get; set; }
+        @AuraEnabled public String warning { get; set; }
+    }
+
     @AuraEnabled
-    public static void sendEmail(String subject, String body, List<Id> recipientIds, Boolean copyMe) {
+    public static SendEmailOutcome sendEmail(String subject, String body, List<Id> recipientIds, Boolean copyMe) {
         if (String.isBlank(subject)) {
             throw newAuraHandledException('You must specify a subject for your email.');
         }
@@ -79,45 +84,18 @@ public with sharing class EmailService {
         }
 
         User me = [SELECT Id, Name, Email, CommunityNickname FROM User WHERE Id = :UserInfo.getUserId()];
-        String senderName = me.Name + ' (' + me.CommunityNickname + ')';
+        OrgWideEmailAddress sender = EmailSenderUtils.getVerifiedSender();
+        List<Messaging.SendEmailResult> results = EmailSenderUtils.sendToTargets(recipientIds, subject, body, copyMe, sender, me);
 
-        if (recipientIds.size() == 1) {
-            Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-            email.setTargetObjectId(recipientIds[0]);
-            email.setBccSender(copyMe);
-            email.setReplyTo(me.Email);
-            email.setSenderDisplayName(senderName);
-            email.setSubject(subject);
-            email.setPlainTextBody(body);
-            email.setSaveAsActivity(false);
-            Messaging.sendEmail(new List<Messaging.Email>{ email });
-        } else {
-            EmailTemplate template = createEmailTemplate(subject, body);
-            Messaging.MassEmailMessage email = new Messaging.MassEmailMessage();
-            email.setTargetObjectIds(recipientIds);
-            email.setBccSender(copyMe);
-            email.setReplyTo(me.Email);
-            email.setSenderDisplayName(senderName);
-            email.setTemplateId(template.Id);
-            email.setSaveAsActivity(false);
-            Messaging.sendEmail(new List<Messaging.Email>{ email });
+        if (EmailSenderUtils.isTotalFailure(results)) {
+            throw newAuraHandledException(
+                'Unable to send your email: ' + String.join(EmailSenderUtils.collectErrors(results), '; ')
+            );
         }
-    }
 
-    private static EmailTemplate createEmailTemplate(String subject, String body) {
-        Datetime now = Datetime.now();
-        EmailTemplate template = new EmailTemplate(
-            DeveloperName = 'Temp_' + UserInfo.getUserId() + '_' + now.format('yyyyMMddHHmmss'),
-            Name = 'Temp-' + UserInfo.getUserId() + '-' + now.format('yyyyMMddHHmmss'),
-            Description = 'Temporary template created by ' + UserInfo.getUserName() + ' on ' + now.format(),
-            Subject = subject,
-            Body = body,
-            TemplateType = 'text',
-            Encoding = 'ISO-8859-1',
-            FolderId = UserInfo.getUserId(),
-            IsActive = true
-        );
-        insert template;
-        return template;
+        SendEmailOutcome outcome = new SendEmailOutcome();
+        outcome.success = true;
+        outcome.warning = EmailSenderUtils.buildWarning(EmailSenderUtils.wasFallbackUsed(sender), results);
+        return outcome;
     }
 }

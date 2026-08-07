@@ -70,7 +70,7 @@ private class Test_EmailService {
 
     static testMethod void testSendEmailSingle() {
         Test.startTest();
-        EmailService.sendEmail(
+        EmailService.SendEmailOutcome outcome = EmailService.sendEmail(
             'Test Subject',
             'Test Body',
             new List<Id>{ UserInfo.getUserId() },
@@ -78,8 +78,8 @@ private class Test_EmailService {
         );
         Test.stopTest();
 
-        // If we get here without exception, the single email path worked
-        System.assert(true);
+        System.assertNotEquals(null, outcome);
+        System.assertEquals(true, outcome.success);
     }
 
     static testMethod void testSendEmailMass() {
@@ -95,7 +95,7 @@ private class Test_EmailService {
         }
 
         Test.startTest();
-        EmailService.sendEmail(
+        EmailService.SendEmailOutcome outcome = EmailService.sendEmail(
             'Test Mass Subject',
             'Test Mass Body',
             recipientIds,
@@ -103,11 +103,31 @@ private class Test_EmailService {
         );
         Test.stopTest();
 
-        // Verify the temporary email template was created
-        List<EmailTemplate> templates = [
-            SELECT Id, Subject FROM EmailTemplate
-            WHERE DeveloperName LIKE 'Temp_%'
-        ];
-        System.assert(templates.size() > 0);
+        System.assertEquals(true, outcome.success);
+    }
+
+    // Broadcast sends build one SingleEmailMessage per recipient instead of
+    // a MassEmailMessage backed by an ad-hoc EmailTemplate (the old
+    // implementation left an orphaned Temp_* template behind on every send).
+    // Verify no EmailTemplate records get created at all anymore.
+    static testMethod void testSendEmailMassCreatesNoOrphanedTemplates() {
+        List<Id> recipientIds = new List<Id>();
+        List<User> users = [SELECT Id FROM User WHERE IsActive = true AND Profile.Name = 'System Administrator' LIMIT 2];
+        for (User u : users) {
+            recipientIds.add(u.Id);
+        }
+        if (recipientIds.size() < 2) {
+            recipientIds.add(recipientIds[0]);
+        }
+
+        Integer templateCountBefore = [SELECT COUNT() FROM EmailTemplate];
+
+        Test.startTest();
+        EmailService.sendEmail('First Subject', 'First Body', recipientIds, false);
+        EmailService.sendEmail('Second Subject', 'Second Body', recipientIds, false);
+        Test.stopTest();
+
+        Integer templateCountAfter = [SELECT COUNT() FROM EmailTemplate];
+        System.assertEquals(templateCountBefore, templateCountAfter, 'Sending should not create any EmailTemplate records');
     }
 }
