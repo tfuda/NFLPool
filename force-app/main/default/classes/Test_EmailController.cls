@@ -51,6 +51,28 @@ private class Test_EmailController {
 		
 		pageRef = con.cancel();
 		System.assert(pageRef.getUrl().startsWith(Page.Email.getUrl()));
-	
+
+	}
+
+	// Broadcast sends now build one SingleEmailMessage per recipient instead
+	// of a MassEmailMessage backed by an ad-hoc EmailTemplate (the old
+	// implementation left an orphaned Temp_* template behind on every send).
+	// Verify no EmailTemplate records get created at all anymore.
+	static testMethod void testMassEmailCreatesNoOrphanedTemplates() {
+		Integer templateCountBefore = [SELECT COUNT() FROM EmailTemplate];
+
+		PageReference emailLandingPage = Page.EmailLanding;
+		System.Test.setCurrentPage(emailLandingPage);
+		EmailController con = new EmailController();
+		con.underTest = true;
+		con.emailPlayers();
+		con.selectAll = true;
+		con.selectDeselectAll();
+		con.subject = 'Test Subject';
+		con.message = 'Test Message';
+		con.send();
+
+		Integer templateCountAfter = [SELECT COUNT() FROM EmailTemplate];
+		System.assertEquals(templateCountBefore, templateCountAfter, 'Sending should not create any EmailTemplate records');
 	}
 }

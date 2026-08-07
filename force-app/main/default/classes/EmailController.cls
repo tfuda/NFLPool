@@ -160,12 +160,7 @@ public class EmailController {
 		
 		// Send the message.
 		try {
-			User me = [SELECT Id, Name, Email, CommunityNickname FROM User WHERE Id = :UserInfo.getUserId()];
-			if (targetIds.size() == 1) {
-				sendSingleEmailMessage(subject, message, targetIds[0], copyMe);
-			} else {
-				sendMassEmailMessage(subject, message, targetIds, copyMe);
-			}
+			sendEmailToTargets(subject, message, targetIds, copyMe);
 			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'Your message has been sent.'));
 			playerList = null;
 			subject = null;
@@ -180,56 +175,14 @@ public class EmailController {
 			return Page.Email;
 		}
 	}
-	
-	private static void sendSingleEmailMessage(String subject, String body, Id targetId, Boolean copyMe) {
+
+	private static void sendEmailToTargets(String subject, String body, List<Id> targetIds, Boolean copyMe) {
 		User me = [SELECT Id, Name, Email, CommunityNickname FROM User WHERE Id = :UserInfo.getUserId()];
-		List<Messaging.Email> emailList = new List<Messaging.Email>();
-		Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
-		email.setTargetObjectId(targetId);
-		email.setBccSender(copyMe);
-		email.setReplyTo(me.email);
-		email.setSenderDisplayName(me.name + ' (' + me.communitynickname + ')');
-		email.setSubject(subject);
-		email.setPlainTextBody(body);
-		email.setSaveAsActivity(false);
-		emailList.add(email);
-		System.debug('emailList.size(): ' + emailList.size());
-		if (!System.Test.isRunningTest()) {
-			Messaging.sendEmail(emailList);
+		OrgWideEmailAddress sender = EmailSenderUtils.getVerifiedSender();
+		List<Messaging.SendEmailResult> results = EmailSenderUtils.sendToTargets(targetIds, subject, body, copyMe, sender, me);
+		String warning = EmailSenderUtils.buildWarning(EmailSenderUtils.wasFallbackUsed(sender), results);
+		if (warning != null) {
+			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.WARNING, warning));
 		}
-	}
-	
-	private static void sendMassEmailMessage(String subject, String body, List<Id> targetIds, Boolean copyMe) {
-		User me = [SELECT Id, Name, Email, CommunityNickname FROM User WHERE Id = :UserInfo.getUserId()];
-		List<Messaging.Email> emailList = new List<Messaging.Email>();
-		Messaging.MassEmailMessage email = new Messaging.MassEmailMessage();
-		email.setTargetObjectIds(targetIds);
-		email.setBccSender(copyMe);
-		email.setReplyTo(me.email);
-		email.setSenderDisplayName(me.name + ' (' + me.communitynickname + ')');
-		email.setTemplateId(createEmailTemplate(subject, body).Id);
-		email.setSaveAsActivity(false);
-		emailList.add(email);
-		System.debug('emailList.size(): ' + emailList.size());
-		if (!System.Test.isRunningTest()) {
-			Messaging.sendEmail(emailList);
-		}
-	}
-	
-	private static EmailTemplate createEmailTemplate(String subject, String body) {
-		Datetime now = Datetime.now();
-		EmailTemplate template = new EmailTemplate(
-			DeveloperName = 'Temp_' + UserInfo.getUserId() + '_' + now.format('yyyyMMddHHmmss'),
-			Name = 'Temp-' + UserInfo.getUserId() + '-' + now.format('yyyyMMddHHmmss'),
-			Description = 'Temporary template created by ' + UserInfo.getUserName() + ' on ' + now.format(),
-			Subject = subject,
-			Body = body,
-			TemplateType = 'text',
-			Encoding = 'ISO-8859-1',
-			FolderId = UserInfo.getUserId(),
-			IsActive = true
-		);
-		insert template;
-		return template;
 	}
 }
