@@ -22,7 +22,7 @@ private class Test_EmailSenderUtils {
 
         Test.startTest();
         List<List<Messaging.SingleEmailMessage>> chunks = EmailSenderUtils.buildChunks(
-            targetIds, 'Subject', 'Body', false, null, getRunningUser()
+            targetIds, 'Subject', 'Body', null, getRunningUser()
         );
         Test.stopTest();
 
@@ -39,7 +39,7 @@ private class Test_EmailSenderUtils {
 
         Test.startTest();
         List<List<Messaging.SingleEmailMessage>> chunks = EmailSenderUtils.buildChunks(
-            targetIds, 'Subject', 'Body', false, null, getRunningUser()
+            targetIds, 'Subject', 'Body', null, getRunningUser()
         );
         Test.stopTest();
 
@@ -75,6 +75,22 @@ private class Test_EmailSenderUtils {
         Test.startTest();
         List<Messaging.SendEmailResult> results = EmailSenderUtils.sendToTargets(
             targetIds, 'Subject', 'Body', false, null, getRunningUser()
+        );
+        Test.stopTest();
+
+        System.assertEquals(0, results.size(), 'No real send should happen during a test');
+    }
+
+    static testMethod void testSendToTargetsBuildsConfirmationCopyWhenCopyMeTrue() {
+        List<Id> targetIds = new List<Id>{ UserInfo.getUserId() };
+
+        // The confirmation copy is built (exercising buildConfirmationCopy)
+        // even though the actual send is skipped in test context -- same
+        // "skip the real Messaging.sendEmail(), keep the pure logic covered"
+        // pattern as buildChunks/buildMessage.
+        Test.startTest();
+        List<Messaging.SendEmailResult> results = EmailSenderUtils.sendToTargets(
+            targetIds, 'Subject', 'Body', true, null, getRunningUser()
         );
         Test.stopTest();
 
