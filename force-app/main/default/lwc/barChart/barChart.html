@@ -1,0 +1,21 @@
+<template>
+  <section class="bar-chart">
+    <h3 class="bar-chart__title">{title}</h3>
+    <template if:true={caption}>
+      <p class="bar-chart__caption">{caption}</p>
+    </template>
+    <template if:true={hasRows}>
+      <div class="bar-chart__rows">
+        <template for:each={displayRows} for:item="row">
+          <div class="bar-row" key={row.label} title={row.titleAttr}>
+            <span class="bar-row__label">{row.label}</span>
+            <div class="bar-row__track">
+              <div class="bar-row__fill" style={row.fillStyle}></div>
+            </div>
+            <span class="bar-row__value">{row.valueLabel}</span>
+          </div>
+        </template>
+      </div>
+    </template>
+  </section>
+</template>

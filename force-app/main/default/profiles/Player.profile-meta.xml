@@ -68,8 +68,8 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ResultsController</apexClass>
-        <enabled>false</enabled>
+        <apexClass>ResultsService</apexClass>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>SaveException</apexClass>
@@ -134,6 +134,10 @@
     <classAccesses>
         <apexClass>Test_PoolManagerUtils</apexClass>
         <enabled>false</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Test_ResultsService</apexClass>
+        <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>Test_ResultsStuff</apexClass>
@@ -717,10 +721,6 @@
         <enabled>true</enabled>
     </pageAccesses>
     <pageAccesses>
-        <apexPage>Results</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
-    <pageAccesses>
         <apexPage>Selections</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
@@ -771,10 +771,6 @@
     <tabVisibilities>
         <tab>Player__c</tab>
         <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>Results</tab>
-        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Selection__c</tab>

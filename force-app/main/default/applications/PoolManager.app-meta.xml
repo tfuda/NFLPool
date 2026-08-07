@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomApplication xmlns="https://soap.sforce.com/2006/04/metadata">
-    <defaultLandingTab>Results</defaultLandingTab>
+    <defaultLandingTab>Selections</defaultLandingTab>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
     <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
@@ -8,7 +8,6 @@
     <tabs>Team__c</tabs>
     <tabs>Games</tabs>
     <tabs>Selections</tabs>
-    <tabs>Results</tabs>
     <tabs>PlayerManagement</tabs>
     <tabs>MyAccount</tabs>
     <tabs>Email</tabs>
