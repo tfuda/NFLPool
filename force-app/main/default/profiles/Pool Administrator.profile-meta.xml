@@ -720,10 +720,6 @@
         <apexPage>PrintableSelections</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
-    <pageAccesses>
-        <apexPage>Selections</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
     <tabVisibilities>
         <tab>AdminMessageBoard</tab>
         <visibility>DefaultOn</visibility>
@@ -771,10 +767,6 @@
     <tabVisibilities>
         <tab>Selection__c</tab>
         <visibility>Hidden</visibility>
-    </tabVisibilities>
-    <tabVisibilities>
-        <tab>Selections</tab>
-        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Selections_Lightning</tab>

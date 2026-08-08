@@ -1,4 +1,4 @@
-<apex:page showHeader="false" sidebar="false" controller="SelectionController" tabStyle="Selections__tab" renderAs="PDF" >
+<apex:page showHeader="false" sidebar="false" controller="SelectionController" tabStyle="Selections_Lightning__tab" renderAs="PDF" >
 	 <apex:dataTable id="selectionTable" value="{!gameSelections}" var="gameSelection" style="font-size:14px" rules="rows" 
 	 	width="100%" cellpadding="5px" border="2px" captionStyle="font-weight:bold; font-size:14px;">
 	 	<apex:facet name="caption" >Player Selections {!IF(playerName != null, ' - Player: ' + playerName, '')} {!IF(weekNumber != null, ' - Week: ' + weekNumber, '')}</apex:facet>

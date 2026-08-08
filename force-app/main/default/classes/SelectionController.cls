@@ -1,10 +1,8 @@
 public class SelectionController {
 	private Settings__c settings = PoolManagerUtils.getSettings();
-	
-	public String mode { get; set; }
-	
+
 	public String selectedPlayer { get; set; }
-	
+
 	public String playerName {
 		get {
 			if (selectedPlayer != null) {
@@ -20,48 +18,9 @@ public class SelectionController {
 			}
 		}
 	}
-	
-	public List<SelectOption> players {
-		get {
-			if (players == null) {
-				players = new List<SelectOption>();
-				players.add(new SelectOption('', '-- None --'));
-				List<Player__c> pList = [
-					select p.id, p.name, p.user__c,
-						p.user__r.communitynickname, p.user__r.isactive, p.user__r.profile.name
-					from player__c p
-					where (p.user__r.isactive = true)
-					and (p.user__r.profile.name = :Constants.PLAYER_PROFILE
-					or p.user__r.profile.name = :Constants.PLAYER_PLATFORM_PROFILE
-					or p.user__r.profile.name = :Constants.POOL_ADMIN_PROFILE)
-					order by p.name
-				];
-				for (Player__c p : pList) {
-					SelectOption player = new SelectOption(p.id, p.name + ' (' + p.user__r.communitynickname + ')');
-					players.add(player);
-				}
-			}
-			return players;
-		}
-		set;
-	}
-	
+
 	public String weekNumber { get; set; }
-	
-	public List<SelectOption> weekNumbers {
-		get {
-			if (weekNumbers == null) {
-				Integer numberOfWeeks = settings.NumberOfWeeks__c.intValue();
-				weekNumbers = new List<SelectOption>();
-				for (Integer i = 1; i <= numberOfWeeks; i++) {
-					weekNumbers.add(new SelectOption(i.format(), i.format()));
-				}
-			}
-			return weekNumbers;
-		}
-		set;
-	}
-	
+
 	// Returns true if the current user is an "admin"
 	public Boolean isAdmin {
 		get {
@@ -83,29 +42,12 @@ public class SelectionController {
 		}
 		set;
 	}
-	
+
 	// List displayed in data table
 	public List<GameSelection> gameSelections { get; set; }
-	
-	// Total number of points
-	public Double totalPoints { get; set; }
-	
-	public Boolean allLocked {
-		get {
-			allLocked = true;
-			for (GameSelection gs : gameSelections) {
-				allLocked &= gs.isLocked;
-			}
-			return allLocked;
-		}
-		set;
-	}
-	
-	public Integer selectedGame { get; set; }
-	
+
 	public SelectionController() {
-		
-		mode = 'view';
+
 		selectedPlayer = ApexPages.currentPage().getParameters().get('playerId');
 		weekNumber = ApexPages.currentPage().getParameters().get('weekNumber');
 		if (selectedPlayer == null) {
@@ -122,55 +64,12 @@ public class SelectionController {
 		}
 		refreshGameSelections(weekNumber, selectedPlayer);
 	}
-	
-	// Action functions
-	public PageReference go() {
-		mode = 'view';
-		refreshGameSelections(weekNumber, selectedPlayer);
-		return null;
-	}
-	
-	public PageReference edit() {
-		mode = 'edit';
-		return null;
-	}
-	
-	public PageReference privilegedEdit() {
-		mode = 'privileged-edit';
-		return null;
-	}
-	
-	public PageReference saveSelection() {
-		GameSelection gs = gameSelections.get(selectedGame - 1);
-		try {
-			gs.save(isAdmin);
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO,
-				'Game ' + selectedGame + ' saved successfully.'));
-		} catch (SaveException se) {
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,
-				'Game ' + selectedGame + ' could not be saved. ' + se.getMessage() +
-					'. Contact the pool administrator(s) to see if they can help.'));
-		} catch (Exception ex) {
-			ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR,
-				'Game ' + selectedGame + ' could not be saved. An unknown error occurred: ' + ex.getMessage() +
-					'. Contact the pool administrator(s) to see if they can help.'));
-		}
-		refreshGameSelections(weekNumber, selectedPlayer);
-		return null;
-	}
-	
-	public PageReference done() {
-		mode = 'view';
-		refreshGameSelections(weekNumber, selectedPlayer);
-		return null;
-	}
-	
-	/* Refreshes the gameSelections collection and calculates totalPoints in the process */
+
+	/* Refreshes the gameSelections collection */
 	public void refreshGameSelections(String weekNumber, String playerId) {
-		
+
 		gameSelections = new List<GameSelection>();
-		totalPoints = 0;
-		
+
 		// Get games for the specified week
 		List<Game__c> games = [
 			select id, name, start_time__c,
@@ -180,7 +79,7 @@ public class SelectionController {
 			where week__c = :weekNumber
 			order by start_time__c, name asc
 		];
-		
+
 		List<Selection__c> selections;
 		if (playerId != null) {
 			// Get selections for the specified player
@@ -190,33 +89,21 @@ public class SelectionController {
 				where player__c = :playerId and game__c in :games
 			];
 		}
-		
+
 		// Now map the Selection to the Game ID
 		Map<String, Selection__c> gameSelectionMap = new Map<String, Selection__c>();
 		if (selections != null) {
 			for (Selection__c selection: selections) {
 				gameSelectionMap.put(selection.game__c, selection);
-				totalPoints += selection.points__c;
 			}
 		}
-		
+
 		// Finally, build a List of <GameSelection> objects
-		Integer numGames = games.size();
-		Integer numSelections = 0;
 		for (Integer i = 0; i < games.size(); i++) {
 			Game__c game = games.get(i);
 			Selection__c selection = gameSelectionMap.get(game.Id);
-			if (selection != null && selection.team__c != null) {
-				numSelections++;
-			}
 			GameSelection gs = new GameSelection(i + 1, playerId, game, selection);
 			gameSelections.add(gs);
-		}
-		if (!String.isBlank(selectedPlayer)) {
-			ApexPages.addMessage(new ApexPages.Message(
-				numSelections < numGames ? ApexPages.Severity.WARNING : ApexPages.Severity.INFO,
-				'' + numSelections + ' of ' + numGames + ' selected.')
-			);
 		}
 	}
 }

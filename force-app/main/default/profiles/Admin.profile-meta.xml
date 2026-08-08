@@ -32,6 +32,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>EmailSenderUtils</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>EmailService</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -113,6 +117,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>Test_EmailController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>Test_EmailSenderUtils</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -740,10 +748,6 @@
         <apexPage>PrintableSelections</apexPage>
         <enabled>true</enabled>
     </pageAccesses>
-    <pageAccesses>
-        <apexPage>Selections</apexPage>
-        <enabled>true</enabled>
-    </pageAccesses>
     <tabVisibilities>
         <tab>AdminMessageBoard</tab>
         <visibility>DefaultOn</visibility>
@@ -759,6 +763,10 @@
     <tabVisibilities>
         <tab>Game__c</tab>
         <visibility>DefaultOff</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>Games_Lightning</tab>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Helpful_Links</tab>
@@ -789,12 +797,12 @@
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>Selection__c</tab>
-        <visibility>DefaultOff</visibility>
+        <tab>Results_Lightning</tab>
+        <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
-        <tab>Selections</tab>
-        <visibility>DefaultOn</visibility>
+        <tab>Selection__c</tab>
+        <visibility>DefaultOff</visibility>
     </tabVisibilities>
     <tabVisibilities>
         <tab>Selections_Lightning</tab>
