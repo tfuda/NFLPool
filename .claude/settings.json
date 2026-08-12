@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//tmp/**)",
+      "Edit(/.claude/skills/migrate-scratch-org-data/**)",
+      "Bash(bash scripts/migrate-scratch-org-data/migrate-all.sh sysadmin NFLPoolScratch2)"
+    ]
+  }
+}
