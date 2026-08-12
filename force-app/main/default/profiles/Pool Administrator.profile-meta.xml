@@ -75,10 +75,6 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>ScratchOrgDataLoader</apexClass>
-        <enabled>false</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>SelectionController</apexClass>
         <enabled>false</enabled>
     </classAccesses>

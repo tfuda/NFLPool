@@ -32,7 +32,6 @@
         <members>Test_SoapUtils</members>
         <members>TriggerTests</members>
         <members>UnitTestUtils</members>
-        <members>ScratchOrgDataLoader</members>
         <members>fflib_Answer</members>
         <members>fflib_AnswerTest</members>
         <members>fflib_AnyOrder</members>
