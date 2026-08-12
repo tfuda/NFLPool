@@ -57,10 +57,14 @@ public with sharing class PlayerService {
             String username, String nickname, String email, String phone,
             String street, String city, String state, String postalcode,
             String profileId, Boolean isActive) {
-        return PoolManagerUtils.createPlayerUser(
-            firstname, lastname, username, nickname, email, phone,
-            street, city, state, postalcode, profileId, isActive
-        );
+        try {
+            return PoolManagerUtils.createPlayerUser(
+                firstname, lastname, username, nickname, email, phone,
+                street, city, state, postalcode, profileId, isActive
+            );
+        } catch (DmlException e) {
+            throw toAuraHandledException(e, 'create user');
+        }
     }
 
     @AuraEnabled
@@ -68,10 +72,14 @@ public with sharing class PlayerService {
             String username, String nickname, String email, String phone,
             String street, String city, String state, String postalcode,
             String profileId, Boolean isActive) {
-        return PoolManagerUtils.updatePlayerUser(
-            userId, firstname, lastname, username, nickname, email, phone,
-            street, city, state, postalcode, profileId, isActive
-        );
+        try {
+            return PoolManagerUtils.updatePlayerUser(
+                userId, firstname, lastname, username, nickname, email, phone,
+                street, city, state, postalcode, profileId, isActive
+            );
+        } catch (DmlException e) {
+            throw toAuraHandledException(e, 'update user');
+        }
     }
 
     @AuraEnabled
@@ -173,13 +181,33 @@ public with sharing class PlayerService {
     public static void activateUser(Id userId) {
         User u = [SELECT Id, IsActive FROM User WHERE Id = :userId LIMIT 1];
         u.IsActive = true;
-        update u;
+        try {
+            update u;
+        } catch (DmlException e) {
+            throw toAuraHandledException(e, 'activate user');
+        }
     }
 
     @AuraEnabled
     public static void deactivateUser(Id userId) {
         User u = [SELECT Id, IsActive FROM User WHERE Id = :userId LIMIT 1];
         u.IsActive = false;
-        update u;
+        try {
+            update u;
+        } catch (DmlException e) {
+            throw toAuraHandledException(e, 'deactivate user');
+        }
+    }
+
+    // Uncaught DmlExceptions get sanitized to a generic, unhelpful message
+    // before reaching the client -- wrap as AuraHandledException with an
+    // explicit .setMessage() so the real reason (e.g. LICENSE_LIMIT_EXCEEDED
+    // when a User DML op would exceed the org's license count) reaches the
+    // LWC's error banner instead of being silently swallowed.
+    private static AuraHandledException toAuraHandledException(DmlException e, String action) {
+        String message = 'Unable to ' + action + ': ' + e.getDmlMessage(0);
+        AuraHandledException ex = new AuraHandledException(message);
+        ex.setMessage(message);
+        return ex;
     }
 }
