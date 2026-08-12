@@ -1,0 +1,355 @@
+<template>
+  <div class="player-detail-panel">
+    <header class="player-detail-panel__header">
+      <h2 class="player-detail-panel__title">{panelTitle}</h2>
+      <lightning-button-icon
+        icon-name="utility:close"
+        alternative-text="Close"
+        variant="bare"
+        onclick={handleCloseClick}
+      ></lightning-button-icon>
+    </header>
+
+    <template if:true={errorMessage}>
+      <div class="player-detail-panel__error" role="alert">{errorMessage}</div>
+    </template>
+
+    <template if:true={isLoading}>
+      <lightning-spinner alternative-text="Loading player" size="medium"></lightning-spinner>
+    </template>
+
+    <template if:false={isLoading}>
+      <div class="player-detail-panel__actions">
+        <lightning-button
+          label="Edit"
+          onclick={handleEditClick}
+          disabled={isEditOrNew}
+        ></lightning-button>
+        <lightning-button
+          label="Save"
+          variant="brand"
+          onclick={handleSaveClick}
+          disabled={isView}
+        ></lightning-button>
+        <lightning-button
+          label="Cancel"
+          onclick={handleCancelClick}
+          disabled={isView}
+        ></lightning-button>
+      </div>
+
+      <div class="player-detail-panel__fields">
+        <div class="player-detail-panel__field">
+          <template if:true={isEditOrNew}>
+            <lightning-input
+              label="First Name"
+              value={draftUsr.FirstName}
+              data-field="FirstName"
+              onchange={handleFieldChange}
+            ></lightning-input>
+          </template>
+          <template if:false={isEditOrNew}>
+            <span class="player-detail-panel__label">First Name</span>
+            <span>{draftUsr.FirstName}</span>
+          </template>
+        </div>
+
+        <div class="player-detail-panel__field">
+          <template if:true={isEditOrNew}>
+            <lightning-input
+              label="Last Name"
+              value={draftUsr.LastName}
+              data-field="LastName"
+              onchange={handleFieldChange}
+            ></lightning-input>
+          </template>
+          <template if:false={isEditOrNew}>
+            <span class="player-detail-panel__label">Last Name</span>
+            <span>{draftUsr.LastName}</span>
+          </template>
+        </div>
+
+        <div class="player-detail-panel__field">
+          <template if:true={isEditOrNew}>
+            <lightning-input
+              label="Username"
+              value={draftUsr.Username}
+              data-field="Username"
+              onchange={handleFieldChange}
+            ></lightning-input>
+          </template>
+          <template if:false={isEditOrNew}>
+            <span class="player-detail-panel__label">Username</span>
+            <span>{draftUsr.Username}</span>
+          </template>
+        </div>
+
+        <div class="player-detail-panel__field">
+          <template if:true={isEditOrNew}>
+            <lightning-input
+              label="Nickname"
+              value={draftUsr.CommunityNickname}
+              data-field="CommunityNickname"
+              onchange={handleFieldChange}
+            ></lightning-input>
+          </template>
+          <template if:false={isEditOrNew}>
+            <span class="player-detail-panel__label">Nickname</span>
+            <span>{draftUsr.CommunityNickname}</span>
+          </template>
+        </div>
+
+        <template if:true={hasPlayerRecord}>
+          <div class="player-detail-panel__field">
+            <span class="player-detail-panel__label">Player Object</span>
+            <a href={playerRecordUrl}>{playerRecordName}</a>
+          </div>
+        </template>
+
+        <div class="player-detail-panel__field">
+          <template if:true={isEditOrNew}>
+            <lightning-input
+              type="email"
+              label="Email"
+              value={draftUsr.Email}
+              data-field="Email"
+              onchange={handleFieldChange}
+            ></lightning-input>
+          </template>
+          <template if:false={isEditOrNew}>
+            <span class="player-detail-panel__label">Email</span>
+            <span>{draftUsr.Email}</span>
+          </template>
+        </div>
+
+        <div class="player-detail-panel__field">
+          <template if:true={isEditOrNew}>
+            <lightning-input
+              type="tel"
+              label="Phone"
+              value={draftUsr.Phone}
+              data-field="Phone"
+              onchange={handleFieldChange}
+            ></lightning-input>
+          </template>
+          <template if:false={isEditOrNew}>
+            <span class="player-detail-panel__label">Phone</span>
+            <span>{draftUsr.Phone}</span>
+          </template>
+        </div>
+
+        <div class="player-detail-panel__field">
+          <template if:true={isEditOrNew}>
+            <lightning-input
+              label="Street"
+              value={draftUsr.Street}
+              data-field="Street"
+              onchange={handleFieldChange}
+            ></lightning-input>
+          </template>
+          <template if:false={isEditOrNew}>
+            <span class="player-detail-panel__label">Street</span>
+            <span>{draftUsr.Street}</span>
+          </template>
+        </div>
+
+        <div class="player-detail-panel__field">
+          <template if:true={isEditOrNew}>
+            <lightning-input
+              label="City"
+              value={draftUsr.City}
+              data-field="City"
+              onchange={handleFieldChange}
+            ></lightning-input>
+          </template>
+          <template if:false={isEditOrNew}>
+            <span class="player-detail-panel__label">City</span>
+            <span>{draftUsr.City}</span>
+          </template>
+        </div>
+
+        <div class="player-detail-panel__field">
+          <template if:true={isEditOrNew}>
+            <lightning-input
+              label="State"
+              value={draftUsr.State}
+              data-field="State"
+              onchange={handleFieldChange}
+            ></lightning-input>
+          </template>
+          <template if:false={isEditOrNew}>
+            <span class="player-detail-panel__label">State</span>
+            <span>{draftUsr.State}</span>
+          </template>
+        </div>
+
+        <div class="player-detail-panel__field">
+          <template if:true={isEditOrNew}>
+            <lightning-input
+              label="Postal Code"
+              value={draftUsr.PostalCode}
+              data-field="PostalCode"
+              onchange={handleFieldChange}
+            ></lightning-input>
+          </template>
+          <template if:false={isEditOrNew}>
+            <span class="player-detail-panel__label">Postal Code</span>
+            <span>{draftUsr.PostalCode}</span>
+          </template>
+        </div>
+
+        <div class="player-detail-panel__field">
+          <template if:true={isEditOrNew}>
+            <lightning-combobox
+              label="Profile"
+              value={draftUsr.ProfileId}
+              options={profileOptions}
+              data-field="ProfileId"
+              onchange={handleFieldChange}
+            ></lightning-combobox>
+          </template>
+          <template if:false={isEditOrNew}>
+            <span class="player-detail-panel__label">Profile</span>
+            <span>{profileName}</span>
+          </template>
+        </div>
+
+        <template if:true={showActiveField}>
+          <div class="player-detail-panel__field">
+            <lightning-input
+              type="checkbox"
+              label="Active"
+              checked={draftUsr.IsActive}
+              data-field="IsActive"
+              onchange={handleFieldChange}
+            ></lightning-input>
+          </div>
+        </template>
+      </div>
+
+      <section class="player-detail-panel__payments">
+        <header class="player-detail-panel__payments-header">
+          <h3>Payment History</h3>
+          <lightning-button
+            label="Add Payment"
+            onclick={handleAddPaymentClick}
+            disabled={isAddPaymentDisabled}
+          ></lightning-button>
+        </header>
+
+        <div class="player-detail-panel__payments-summary">
+          <span><strong>Total Payments:</strong>
+            <lightning-formatted-number
+              value={totalPayments}
+              format-style="currency"
+              currency-code="USD"
+            ></lightning-formatted-number>
+          </span>
+          <span><strong>Balance Due:</strong>
+            <lightning-formatted-number
+              value={balanceDue}
+              format-style="currency"
+              currency-code="USD"
+            ></lightning-formatted-number>
+          </span>
+        </div>
+
+        <template if:true={hasPayments}>
+          <table class="player-detail-panel__payments-table">
+            <thead>
+              <tr>
+                <th scope="col">Amount</th>
+                <th scope="col">Payment Date</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <template for:each={paymentRows} for:item="row">
+                <tr key={row.index}>
+                  <td>
+                    <template if:true={row.isEditing}>
+                      <lightning-input
+                        type="number"
+                        step="0.01"
+                        label="Amount"
+                        variant="label-hidden"
+                        value={row.payment.Amount__c}
+                        data-index={row.index}
+                        data-field="Amount__c"
+                        onchange={handlePaymentFieldChange}
+                      ></lightning-input>
+                    </template>
+                    <template if:false={row.isEditing}>
+                      <lightning-formatted-number
+                        value={row.payment.Amount__c}
+                        format-style="currency"
+                        currency-code="USD"
+                      ></lightning-formatted-number>
+                    </template>
+                  </td>
+                  <td>
+                    <template if:true={row.isEditing}>
+                      <lightning-input
+                        type="date"
+                        label="Payment Date"
+                        variant="label-hidden"
+                        value={row.payment.PaymentDate__c}
+                        data-index={row.index}
+                        data-field="PaymentDate__c"
+                        onchange={handlePaymentFieldChange}
+                      ></lightning-input>
+                    </template>
+                    <template if:false={row.isEditing}>
+                      <lightning-formatted-date-time
+                        value={row.payment.PaymentDate__c}
+                        year="numeric"
+                        month="short"
+                        day="2-digit"
+                        time-zone="UTC"
+                      ></lightning-formatted-date-time>
+                    </template>
+                  </td>
+                  <td>
+                    <template if:true={row.isEditing}>
+                      <lightning-button
+                        label="Save"
+                        variant="brand"
+                        data-index={row.index}
+                        onclick={handleSavePaymentClick}
+                      ></lightning-button>
+                      <lightning-button
+                        label="Cancel"
+                        data-index={row.index}
+                        onclick={handleCancelPaymentClick}
+                      ></lightning-button>
+                    </template>
+                    <template if:false={row.isEditing}>
+                      <lightning-button
+                        label="Edit"
+                        data-index={row.index}
+                        onclick={handleEditPaymentClick}
+                        disabled={row.isRowActionDisabled}
+                      ></lightning-button>
+                      <template if:true={row.canDelete}>
+                        <lightning-button
+                          label="Delete"
+                          variant="destructive-text"
+                          data-index={row.index}
+                          onclick={handleDeletePaymentClick}
+                          disabled={row.isRowActionDisabled}
+                        ></lightning-button>
+                      </template>
+                    </template>
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </template>
+        <template if:false={hasPayments}>
+          <div class="player-detail-panel__payments-empty">No payments recorded.</div>
+        </template>
+      </section>
+    </template>
+  </div>
+</template>

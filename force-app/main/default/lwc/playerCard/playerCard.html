@@ -1,0 +1,58 @@
+<template>
+  <article class="player-card" aria-label={cardAriaLabel}>
+    <header class="player-card__header">
+      <button class="player-card__name" onclick={handleViewClick}>{player.name}</button>
+      <lightning-icon
+        icon-name={player.activeIconName}
+        size="x-small"
+        alternative-text={player.activeLabel}
+        title={player.activeLabel}
+      ></lightning-icon>
+    </header>
+
+    <div class="player-card__row">
+      <div class="player-card__field">
+        <span class="player-card__label">Nickname</span>
+        <span>{player.nickname}</span>
+      </div>
+      <div class="player-card__field">
+        <span class="player-card__label">Username</span>
+        <span>{player.username}</span>
+      </div>
+    </div>
+
+    <div class="player-card__row">
+      <div class="player-card__field">
+        <span class="player-card__label">Phone</span>
+        <span>{player.phone}</span>
+      </div>
+      <div class="player-card__field">
+        <span class="player-card__label">Balance Due</span>
+        <lightning-formatted-number
+          value={player.balanceDue}
+          format-style="currency"
+          currency-code="USD"
+        ></lightning-formatted-number>
+      </div>
+    </div>
+
+    <div class="player-card__field">
+      <span class="player-card__label">Email</span>
+      <span>{player.email}</span>
+    </div>
+
+    <div class="player-card__field">
+      <span class="player-card__label">Profile</span>
+      <span>{player.profileName}</span>
+    </div>
+
+    <footer class="player-card__footer">
+      <template if:true={player.isActive}>
+        <lightning-button label="Deactivate" onclick={handleDeactivateClick}></lightning-button>
+      </template>
+      <template if:false={player.isActive}>
+        <lightning-button label="Activate" onclick={handleActivateClick}></lightning-button>
+      </template>
+    </footer>
+  </article>
+</template>

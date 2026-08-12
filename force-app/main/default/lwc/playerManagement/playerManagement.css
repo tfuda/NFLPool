@@ -1,0 +1,140 @@
+:host {
+  display: block;
+}
+
+.playerManagement {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  position: relative;
+}
+
+.playerManagement__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.playerManagement__title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #080707;
+}
+
+.playerManagement__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+.playerManagement__error {
+  padding: 0.75rem 1rem;
+  border-radius: 0.4rem;
+  font-size: 0.85rem;
+  background: #fdeeed;
+  border: 1px solid #c23934;
+  color: #8a1a12;
+}
+
+.playerManagement__empty {
+  padding: 0.75rem 1rem;
+  background: #f3f2f2;
+  border-radius: 0.4rem;
+  color: #444;
+  font-size: 0.85rem;
+}
+
+.playerManagement__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.playerManagement__table th,
+.playerManagement__table td {
+  padding: 0.5rem;
+  border-bottom: 1px solid #dddbda;
+  text-align: left;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.playerManagement__table th {
+  color: #706e6b;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.playerManagement__link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #0070d2;
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.playerManagement__link:hover {
+  text-decoration: underline;
+}
+
+.playerManagement__name-link {
+  font-weight: 400;
+  color: #080707;
+}
+
+.playerManagement__cards {
+  display: none;
+}
+
+.playerManagement__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 9000;
+}
+
+.playerManagement__panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 32rem;
+  background: #ffffff;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+  z-index: 9001;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .playerManagement__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .playerManagement__actions {
+    margin-left: 0;
+  }
+
+  .playerManagement__table-wrapper {
+    display: none;
+  }
+
+  .playerManagement__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .playerManagement__panel {
+    max-width: 100%;
+  }
+}

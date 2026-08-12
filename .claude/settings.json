@@ -4,7 +4,9 @@
       "Read(//tmp/**)",
       "Edit(/.claude/skills/migrate-scratch-org-data/**)",
       "Bash(bash scripts/migrate-scratch-org-data/migrate-all.sh sysadmin NFLPoolScratch2)",
-      "Bash(git rm *)"
+      "Bash(git rm *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }

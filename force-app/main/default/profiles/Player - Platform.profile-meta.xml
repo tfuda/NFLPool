@@ -736,6 +736,10 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>PlayerManagement_Lightning</tab>
+        <visibility>Hidden</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>PlayerPayment__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>

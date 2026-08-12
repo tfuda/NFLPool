@@ -6,7 +6,13 @@ public with sharing class PlayerService {
         @AuraEnabled public List<PlayerPayment__c> payments { get; set; }
     }
 
-    @AuraEnabled(cacheable=true)
+    // Not cacheable: called imperatively from playerManagement.js to refresh
+    // after activateUser/deactivateUser/savePlayerRecord/savePayment/
+    // deletePayment mutations. Imperative Apex calls to a cacheable=true
+    // method share the platform's client-side cache with @wire, so a
+    // refresh call right after a mutation can silently return stale
+    // pre-mutation data.
+    @AuraEnabled
     public static PlayerDetail getPlayer(String userId) {
         if (String.isBlank(userId)) {
             userId = UserInfo.getUserId();
@@ -37,37 +43,54 @@ public with sharing class PlayerService {
         return options;
     }
 
+    // Split from a single createPlayerUser/updatePlayerUser method (which
+    // used to insert/update User and Player__c in the same transaction) into
+    // two separate @AuraEnabled methods. Mixing DML on a setup object (User)
+    // with a non-setup object (Player__c) in one transaction throws
+    // MIXED_DML_OPERATION. The old VF controller avoided this via a SOAP
+    // self-callout to PoolManagerUtils, which ran in its own transaction --
+    // each Apex invocation from the client is likewise its own transaction,
+    // so two sequential calls from the LWC (createUser/updateUser, then
+    // savePlayerRecord) achieve the same separation without a callout.
     @AuraEnabled
-    public static String createPlayerUser(String firstname, String lastname,
+    public static String createUser(String firstname, String lastname,
             String username, String nickname, String email, String phone,
             String street, String city, String state, String postalcode,
             String profileId, Boolean isActive) {
-        String userId = PoolManagerUtils.createPlayerUser(
-            firstname, lastname, username, nickname, email, phone,
-            street, city, state, postalcode, profileId, isActive
-        );
-        createPlayerObject(userId);
-        return userId;
+        try {
+            return PoolManagerUtils.createPlayerUser(
+                firstname, lastname, username, nickname, email, phone,
+                street, city, state, postalcode, profileId, isActive
+            );
+        } catch (DmlException e) {
+            throw toAuraHandledException(e, 'create user');
+        }
     }
 
     @AuraEnabled
-    public static String updatePlayerUser(String userId, String firstname, String lastname,
+    public static String updateUser(String userId, String firstname, String lastname,
             String username, String nickname, String email, String phone,
             String street, String city, String state, String postalcode,
             String profileId, Boolean isActive) {
-        String resultId = PoolManagerUtils.updatePlayerUser(
-            userId, firstname, lastname, username, nickname, email, phone,
-            street, city, state, postalcode, profileId, isActive
-        );
+        try {
+            return PoolManagerUtils.updatePlayerUser(
+                userId, firstname, lastname, username, nickname, email, phone,
+                street, city, state, postalcode, profileId, isActive
+            );
+        } catch (DmlException e) {
+            throw toAuraHandledException(e, 'update user');
+        }
+    }
+
+    @AuraEnabled
+    public static Id savePlayerRecord(String userId) {
         List<Player__c> players = [
             SELECT Id FROM Player__c WHERE User__c = :userId LIMIT 1
         ];
         if (!players.isEmpty()) {
-            updatePlayerObject(players[0].Id, userId);
-        } else {
-            createPlayerObject(userId);
+            return updatePlayerObject(players[0].Id, userId);
         }
-        return resultId;
+        return createPlayerObject(userId);
     }
 
     private static Id createPlayerObject(String userId) {
@@ -115,7 +138,8 @@ public with sharing class PlayerService {
         delete payment;
     }
 
-    @AuraEnabled(cacheable=true)
+    // Not cacheable -- see getPlayer for why.
+    @AuraEnabled
     public static List<PlayerDetail> getPlayerList(Boolean activeOnly) {
         String query = 'SELECT Id, Name, IsActive, Username, Email, Phone, ' +
             'CommunityNickname, Profile.Name ' +
@@ -157,13 +181,33 @@ public with sharing class PlayerService {
     public static void activateUser(Id userId) {
         User u = [SELECT Id, IsActive FROM User WHERE Id = :userId LIMIT 1];
         u.IsActive = true;
-        update u;
+        try {
+            update u;
+        } catch (DmlException e) {
+            throw toAuraHandledException(e, 'activate user');
+        }
     }
 
     @AuraEnabled
     public static void deactivateUser(Id userId) {
         User u = [SELECT Id, IsActive FROM User WHERE Id = :userId LIMIT 1];
         u.IsActive = false;
-        update u;
+        try {
+            update u;
+        } catch (DmlException e) {
+            throw toAuraHandledException(e, 'deactivate user');
+        }
+    }
+
+    // Uncaught DmlExceptions get sanitized to a generic, unhelpful message
+    // before reaching the client -- wrap as AuraHandledException with an
+    // explicit .setMessage() so the real reason (e.g. LICENSE_LIMIT_EXCEEDED
+    // when a User DML op would exceed the org's license count) reaches the
+    // LWC's error banner instead of being silently swallowed.
+    private static AuraHandledException toAuraHandledException(DmlException e, String action) {
+        String message = 'Unable to ' + action + ': ' + e.getDmlMessage(0);
+        AuraHandledException ex = new AuraHandledException(message);
+        ex.setMessage(message);
+        return ex;
     }
 }

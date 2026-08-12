@@ -151,4 +151,105 @@ private class Test_PlayerService {
             Test.stopTest();
         }
     }
+
+    static testMethod void testCreateUser() {
+        Settings__c s = UnitTestUtils.createTestSettings();
+        Profile p = [SELECT Id FROM Profile WHERE Name = :Constants.PLAYER_PROFILE];
+        User adminUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+
+        String userId;
+        System.runAs(adminUser) {
+            // Must stay inside this runAs block -- inserting a User (setup
+            // object) after the earlier non-setup Settings__c insert throws
+            // MIXED_DML_OPERATION otherwise. This is the exact gap
+            // createUser/updateUser exist to isolate: the LWC calls this as
+            // its own round-trip, separate from savePlayerRecord.
+            Test.startTest();
+            userId = PlayerService.createUser(
+                'Test', 'NewPlayer', 'test.newplayer@nflpool.com', 'newbie',
+                'newplayer@test.com', '(222) 333-4444',
+                '123 Main St', 'Stamford', 'CT', '06905',
+                p.Id, true
+            );
+            Test.stopTest();
+        }
+
+        System.assertNotEquals(null, userId);
+        User created = [SELECT FirstName, LastName, IsActive FROM User WHERE Id = :userId];
+        System.assertEquals('Test', created.FirstName);
+        System.assertEquals('NewPlayer', created.LastName);
+        System.assertEquals(true, created.IsActive);
+    }
+
+    static testMethod void testUpdateUser() {
+        Settings__c s = UnitTestUtils.createTestSettings();
+        User playerUser = UnitTestUtils.createTestUser();
+        User adminUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+
+        String resultId;
+        System.runAs(adminUser) {
+            insert playerUser;
+
+            Test.startTest();
+            resultId = PlayerService.updateUser(
+                playerUser.Id, 'Updated', playerUser.LastName, playerUser.Username,
+                'updatednick', playerUser.Email, playerUser.Phone,
+                playerUser.Street, playerUser.City, playerUser.State, playerUser.PostalCode,
+                playerUser.ProfileId, false
+            );
+            Test.stopTest();
+        }
+
+        System.assertEquals(playerUser.Id, resultId);
+        User updated = [SELECT FirstName, CommunityNickname, IsActive FROM User WHERE Id = :playerUser.Id];
+        System.assertEquals('Updated', updated.FirstName);
+        System.assertEquals('updatednick', updated.CommunityNickname);
+        System.assertEquals(false, updated.IsActive);
+    }
+
+    static testMethod void testSavePlayerRecordCreatesWhenNoPlayerExists() {
+        Settings__c s = UnitTestUtils.createTestSettings();
+        User playerUser = UnitTestUtils.createTestUser();
+        User adminUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+
+        Id playerId;
+        System.runAs(adminUser) {
+            insert playerUser;
+
+            Test.startTest();
+            playerId = PlayerService.savePlayerRecord(playerUser.Id);
+            Test.stopTest();
+        }
+
+        System.assertNotEquals(null, playerId);
+        Player__c created = [SELECT User__c, Nickname__c FROM Player__c WHERE Id = :playerId];
+        System.assertEquals(playerUser.Id, created.User__c);
+        System.assertEquals(playerUser.CommunityNickname, created.Nickname__c);
+    }
+
+    static testMethod void testSavePlayerRecordUpdatesWhenPlayerExists() {
+        Settings__c s = UnitTestUtils.createTestSettings();
+        User playerUser = UnitTestUtils.createTestUser();
+        User adminUser = [SELECT Id FROM User WHERE Id = :UserInfo.getUserId()];
+        Player__c existing;
+
+        System.runAs(adminUser) {
+            insert playerUser;
+            existing = UnitTestUtils.createTestPlayer(playerUser, 'OldNick');
+
+            // Re-sync from a changed User to prove savePlayerRecord takes the
+            // update branch (not create) when a Player__c row already exists.
+            playerUser.CommunityNickname = 'NewNick';
+            update playerUser;
+
+            Test.startTest();
+            Id playerId = PlayerService.savePlayerRecord(playerUser.Id);
+            Test.stopTest();
+
+            System.assertEquals(existing.Id, playerId);
+        }
+
+        Player__c updated = [SELECT Nickname__c FROM Player__c WHERE Id = :existing.Id];
+        System.assertEquals('NewNick', updated.Nickname__c);
+    }
 }
