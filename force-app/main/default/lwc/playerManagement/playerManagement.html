@@ -1,0 +1,134 @@
+<template>
+  <div class="playerManagement">
+    <header class="playerManagement__header">
+      <h1 class="playerManagement__title">{activeOnlyLabel}</h1>
+      <div class="playerManagement__actions">
+        <lightning-button
+          label={toggleButtonLabel}
+          onclick={handleActiveOnlyToggle}
+        ></lightning-button>
+        <lightning-button
+          label="New Player"
+          variant="brand"
+          onclick={handleNewPlayer}
+        ></lightning-button>
+      </div>
+    </header>
+
+    <template if:true={loadError}>
+      <div class="playerManagement__error" role="alert">{loadError}</div>
+    </template>
+
+    <template if:true={isLoading}>
+      <lightning-spinner
+        alternative-text="Loading players"
+        size="medium"
+      ></lightning-spinner>
+    </template>
+
+    <template if:false={isLoading}>
+      <template if:true={hasPlayers}>
+        <div class="playerManagement__table-wrapper">
+          <table class="playerManagement__table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">Name</th>
+                <th scope="col">Nickname</th>
+                <th scope="col">Username</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Email</th>
+                <th scope="col">Balance Due</th>
+                <th scope="col">Profile</th>
+                <th scope="col">Active</th>
+              </tr>
+            </thead>
+            <tbody>
+              <template for:each={playerRows} for:item="row">
+                <tr key={row.key}>
+                  <td>
+                    <template if:true={row.isActive}>
+                      <button
+                        class="playerManagement__link"
+                        data-userid={row.userId}
+                        onclick={handleTableDeactivateClick}
+                      >Deactivate</button>
+                    </template>
+                    <template if:false={row.isActive}>
+                      <button
+                        class="playerManagement__link"
+                        data-userid={row.userId}
+                        onclick={handleTableActivateClick}
+                      >Activate</button>
+                    </template>
+                  </td>
+                  <td>
+                    <button
+                      class="playerManagement__link playerManagement__name-link"
+                      data-userid={row.userId}
+                      onclick={handleTableViewClick}
+                    >{row.name}</button>
+                  </td>
+                  <td>{row.nickname}</td>
+                  <td>{row.username}</td>
+                  <td>{row.phone}</td>
+                  <td>{row.email}</td>
+                  <td>
+                    <lightning-formatted-number
+                      value={row.balanceDue}
+                      format-style="currency"
+                      currency-code="USD"
+                    ></lightning-formatted-number>
+                  </td>
+                  <td>{row.profileName}</td>
+                  <td>
+                    <lightning-icon
+                      icon-name={row.activeIconName}
+                      size="x-small"
+                      alternative-text={row.activeLabel}
+                      title={row.activeLabel}
+                    ></lightning-icon>
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="playerManagement__cards">
+          <template for:each={playerRows} for:item="row">
+            <c-player-card
+              key={row.key}
+              row={row}
+              onactivate={handleCardActivate}
+              ondeactivate={handleCardDeactivate}
+              onselect={handleCardSelect}
+            ></c-player-card>
+          </template>
+        </div>
+      </template>
+      <template if:false={hasPlayers}>
+        <div class="playerManagement__empty">No players found.</div>
+      </template>
+    </template>
+
+    <template if:true={isPanelOpen}>
+      <div class="playerManagement__backdrop" onclick={handlePanelClose}></div>
+      <c-player-detail-panel
+        class="playerManagement__panel"
+        player-detail={panelDetail}
+        mode={panelMode}
+        profile-options={profileOptions}
+        is-loading={isPanelLoading}
+        is-saving={isSaving}
+        error-message={panelError}
+        onedit={handlePanelEdit}
+        onsave={handlePanelSave}
+        oncancel={handlePanelCancel}
+        onclose={handlePanelClose}
+        onsavepayment={handlePanelSavePayment}
+        ondeletepayment={handlePanelDeletePayment}
+      ></c-player-detail-panel>
+    </template>
+  </div>
+</template>

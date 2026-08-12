@@ -55,6 +55,10 @@
         <enabled>false</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>PlayerService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>PlayerWrapper</apexClass>
         <enabled>false</enabled>
     </classAccesses>
@@ -745,6 +749,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>PlayerManagement</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>PlayerManagement_Lightning</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
