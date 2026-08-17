@@ -748,6 +748,10 @@
         <visibility>Hidden</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>Results_Lightning</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>Selection__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
