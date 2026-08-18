@@ -11,6 +11,10 @@
         <visible>true</visible>
     </applicationVisibilities>
     <classAccesses>
+        <apexClass>ChatterMessageBoardService</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>ChatterMsgBoardController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -744,6 +748,10 @@
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>
+        <tab>AdminMessageBoard_Lightning</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>ContactInfo</tab>
         <visibility>DefaultOff</visibility>
     </tabVisibilities>
@@ -765,6 +773,10 @@
     </tabVisibilities>
     <tabVisibilities>
         <tab>MessageBoard</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
+        <tab>MessageBoard_Lightning</tab>
         <visibility>DefaultOn</visibility>
     </tabVisibilities>
     <tabVisibilities>

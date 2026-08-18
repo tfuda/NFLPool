@@ -59,6 +59,7 @@
     <tabs>ContactInfo</tabs>
     <tabs>Email</tabs>
     <tabs>MessageBoard</tabs>
+    <tabs>MessageBoard_Lightning</tabs>
     <tabs>Helpful_Links</tabs>
     <uiType>Lightning</uiType>
 </CustomApplication>
