@@ -12,7 +12,11 @@ public with sharing class GameService {
         }
     }
 
-    @AuraEnabled(cacheable=true)
+    // Not cacheable: called imperatively from games.js, including on return
+    // to the tab after saveGames/deleteGame mutations. Imperative Apex calls
+    // to a cacheable=true method share the platform's client-side cache, so
+    // the refresh would silently return stale pre-mutation data.
+    @AuraEnabled
     public static List<GameWrapper> getGamesForWeek(String weekNumber) {
         List<Game__c> games = [
             SELECT Id, Name, Week__c, Start_Time__c,
