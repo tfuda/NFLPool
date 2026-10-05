@@ -82,7 +82,9 @@ export default class PlayerManagement extends LightningElement {
   }
 
   get activeOnlyLabel() {
-    return this.activeOnly ? "Active Players" : "All Players (Includes Inactive)";
+    return this.activeOnly
+      ? "Active Players"
+      : "All Players (Includes Inactive)";
   }
 
   get toggleButtonLabel() {

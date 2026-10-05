@@ -21,14 +21,20 @@ export default class PlayerCard extends LightningElement {
   }
 
   handleViewClick() {
-    this.dispatchEvent(new CustomEvent("select", { detail: { userId: this.player.userId } }));
+    this.dispatchEvent(
+      new CustomEvent("select", { detail: { userId: this.player.userId } })
+    );
   }
 
   handleActivateClick() {
-    this.dispatchEvent(new CustomEvent("activate", { detail: { userId: this.player.userId } }));
+    this.dispatchEvent(
+      new CustomEvent("activate", { detail: { userId: this.player.userId } })
+    );
   }
 
   handleDeactivateClick() {
-    this.dispatchEvent(new CustomEvent("deactivate", { detail: { userId: this.player.userId } }));
+    this.dispatchEvent(
+      new CustomEvent("deactivate", { detail: { userId: this.player.userId } })
+    );
   }
 }

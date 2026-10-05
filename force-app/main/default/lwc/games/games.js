@@ -12,7 +12,11 @@ const MODE_VIEW = "view";
 const MODE_EDIT = "edit";
 const MODE_EDIT_LOCKED = "edit-locked";
 
-const NUMERIC_FIELDS = new Set(["Home_Score__c", "Visiting_Score__c", "Spread__c"]);
+const NUMERIC_FIELDS = new Set([
+  "Home_Score__c",
+  "Visiting_Score__c",
+  "Spread__c"
+]);
 const CHECKBOX_FIELDS = new Set(["Final__c"]);
 const LOOKUP_FIELDS = new Set(["Home_Team__c", "Visiting_Team__c"]);
 
@@ -174,7 +178,9 @@ export default class Games extends LightningElement {
       showWinner: this.isViewMode,
       isDeleteVisible: this.isEditLockedMode,
       isDeleteDisabled: wrapper.game.Final__c === true,
-      homeTeamName: wrapper.game.Home_Team__r ? wrapper.game.Home_Team__r.Name : "",
+      homeTeamName: wrapper.game.Home_Team__r
+        ? wrapper.game.Home_Team__r.Name
+        : "",
       visitingTeamName: wrapper.game.Visiting_Team__r
         ? wrapper.game.Visiting_Team__r.Name
         : "",
@@ -257,7 +263,11 @@ export default class Games extends LightningElement {
   addGamesToList(count) {
     const blanks = [];
     for (let i = 0; i < count; i++) {
-      blanks.push({ game: { Week__c: this.weekNumber }, isLocked: false, gameNumber: 0 });
+      blanks.push({
+        game: { Week__c: this.weekNumber },
+        isLocked: false,
+        gameNumber: 0
+      });
     }
     this.games = this.renumber([...this.games, ...blanks]);
     // Unlike the old VF page (which always dropped back to plain "edit"),
@@ -270,7 +280,10 @@ export default class Games extends LightningElement {
   }
 
   renumber(list) {
-    return list.map((wrapper, index) => ({ ...wrapper, gameNumber: index + 1 }));
+    return list.map((wrapper, index) => ({
+      ...wrapper,
+      gameNumber: index + 1
+    }));
   }
 
   extractFieldValue(field, detail) {
@@ -278,7 +291,9 @@ export default class Games extends LightningElement {
       return detail.checked;
     }
     if (NUMERIC_FIELDS.has(field)) {
-      return detail.value === "" || detail.value == null ? null : Number(detail.value);
+      return detail.value === "" || detail.value == null
+        ? null
+        : Number(detail.value);
     }
     if (LOOKUP_FIELDS.has(field)) {
       return detail.value === "" ? null : detail.value;
@@ -335,7 +350,10 @@ export default class Games extends LightningElement {
     }
     if (wrapper.game.Id) {
       try {
-        await deleteGame({ gameId: wrapper.game.Id, weekNumber: this.weekNumber });
+        await deleteGame({
+          gameId: wrapper.game.Id,
+          weekNumber: this.weekNumber
+        });
       } catch (error) {
         this.errorLines = this.reduceErrorLines(error);
         return;

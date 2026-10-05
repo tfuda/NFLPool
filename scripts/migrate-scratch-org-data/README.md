@@ -30,7 +30,7 @@ That gives every record a stable, cross-org identifier without the two orgs'
 real Salesforce Ids ever needing to match.
 
 Lookup fields are carried across by writing the CSV column as
-`<Field>__r.External_ID__c` and filling it with the *source* org's Id for
+`<Field>__r.External_ID__c` and filling it with the _source_ org's Id for
 the parent record. Bulk API resolves that against the target org's
 `External_ID__c` values — which only works if the parent object was
 imported first. That's why configs are numbered (`01-team.conf` before

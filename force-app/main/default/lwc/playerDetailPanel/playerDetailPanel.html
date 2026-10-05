@@ -15,7 +15,10 @@
     </template>
 
     <template if:true={isLoading}>
-      <lightning-spinner alternative-text="Loading player" size="medium"></lightning-spinner>
+      <lightning-spinner
+        alternative-text="Loading player"
+        size="medium"
+      ></lightning-spinner>
     </template>
 
     <template if:false={isLoading}>
@@ -238,14 +241,16 @@
         </header>
 
         <div class="player-detail-panel__payments-summary">
-          <span><strong>Total Payments:</strong>
+          <span
+            ><strong>Total Payments:</strong>
             <lightning-formatted-number
               value={totalPayments}
               format-style="currency"
               currency-code="USD"
             ></lightning-formatted-number>
           </span>
-          <span><strong>Balance Due:</strong>
+          <span
+            ><strong>Balance Due:</strong>
             <lightning-formatted-number
               value={balanceDue}
               format-style="currency"
@@ -347,7 +352,9 @@
           </table>
         </template>
         <template if:false={hasPayments}>
-          <div class="player-detail-panel__payments-empty">No payments recorded.</div>
+          <div class="player-detail-panel__payments-empty">
+            No payments recorded.
+          </div>
         </template>
       </section>
     </template>

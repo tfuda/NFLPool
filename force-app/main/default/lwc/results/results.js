@@ -64,7 +64,10 @@ export default class Results extends LightningElement {
     // Intentional polling to auto-refresh results every 2 minutes (matches
     // the old VF page's setTimeout behavior); cleared in disconnectedCallback.
     // eslint-disable-next-line @lwc/lwc/no-async-operation
-    this.refreshTimerId = setInterval(() => this.refreshAll(), REFRESH_INTERVAL_MS);
+    this.refreshTimerId = setInterval(
+      () => this.refreshAll(),
+      REFRESH_INTERVAL_MS
+    );
   }
 
   disconnectedCallback() {
