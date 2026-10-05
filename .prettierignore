@@ -4,7 +4,19 @@
 
 **/staticresources/**
 .localdevserver
+.sf
 .sfdx
 .vscode
 
 coverage/
+package-lock.json
+
+# Prettier's style doesn't match the repo's conventions for these, and
+# Salesforce tooling regenerates metadata XML in its own format on every
+# retrieve. Listed here (not just left out of the npm script globs) so
+# editor format-on-save leaves them alone too.
+**/*.cls
+**/*.trigger
+**/*.xml
+**/*.page
+**/*.component

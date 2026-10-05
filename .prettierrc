@@ -6,7 +6,7 @@
       "options": { "parser": "lwc" }
     },
     {
-      "files": "*.{cmp,page,component}",
+      "files": "*.cmp",
       "options": { "parser": "html" }
     }
   ]
