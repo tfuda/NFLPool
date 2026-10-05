@@ -1,7 +1,9 @@
 <template>
   <article class="player-card" aria-label={cardAriaLabel}>
     <header class="player-card__header">
-      <button class="player-card__name" onclick={handleViewClick}>{player.name}</button>
+      <button class="player-card__name" onclick={handleViewClick}>
+        {player.name}
+      </button>
       <lightning-icon
         icon-name={player.activeIconName}
         size="x-small"
@@ -48,10 +50,16 @@
 
     <footer class="player-card__footer">
       <template if:true={player.isActive}>
-        <lightning-button label="Deactivate" onclick={handleDeactivateClick}></lightning-button>
+        <lightning-button
+          label="Deactivate"
+          onclick={handleDeactivateClick}
+        ></lightning-button>
       </template>
       <template if:false={player.isActive}>
-        <lightning-button label="Activate" onclick={handleActivateClick}></lightning-button>
+        <lightning-button
+          label="Activate"
+          onclick={handleActivateClick}
+        ></lightning-button>
       </template>
     </footer>
   </article>

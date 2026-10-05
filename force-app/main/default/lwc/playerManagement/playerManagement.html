@@ -52,14 +52,18 @@
                         class="playerManagement__link"
                         data-userid={row.userId}
                         onclick={handleTableDeactivateClick}
-                      >Deactivate</button>
+                      >
+                        Deactivate
+                      </button>
                     </template>
                     <template if:false={row.isActive}>
                       <button
                         class="playerManagement__link"
                         data-userid={row.userId}
                         onclick={handleTableActivateClick}
-                      >Activate</button>
+                      >
+                        Activate
+                      </button>
                     </template>
                   </td>
                   <td>
@@ -67,7 +71,9 @@
                       class="playerManagement__link playerManagement__name-link"
                       data-userid={row.userId}
                       onclick={handleTableViewClick}
-                    >{row.name}</button>
+                    >
+                      {row.name}
+                    </button>
                   </td>
                   <td>{row.nickname}</td>
                   <td>{row.username}</td>

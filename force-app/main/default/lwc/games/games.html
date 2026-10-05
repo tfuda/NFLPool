@@ -3,9 +3,9 @@
     <header class="games__header">
       <h1 class="games__title">Games - Week {weekNumber}</h1>
       <p class="games__note">
-        Point spreads are with respect to the home team. Enter a positive
-        spread if the home team is the underdog (getting points). Enter a
-        negative spread if the home team is the favorite (giving points).
+        Point spreads are with respect to the home team. Enter a positive spread
+        if the home team is the underdog (getting points). Enter a negative
+        spread if the home team is the favorite (giving points).
       </p>
     </header>
 
@@ -165,13 +165,17 @@
                         data-field="Home_Team__c"
                         onchange={handleTableFieldChange}
                       >
-                        <template for:each={row.homeTeamOptions} for:item="option">
+                        <template
+                          for:each={row.homeTeamOptions}
+                          for:item="option"
+                        >
                           <option
                             key={option.value}
                             value={option.value}
                             selected={option.selected}
-                            >{option.label}</option
                           >
+                            {option.label}
+                          </option>
                         </template>
                       </select>
                     </template>
@@ -222,13 +226,17 @@
                         data-field="Visiting_Team__c"
                         onchange={handleTableFieldChange}
                       >
-                        <template for:each={row.visitingTeamOptions} for:item="option">
+                        <template
+                          for:each={row.visitingTeamOptions}
+                          for:item="option"
+                        >
                           <option
                             key={option.value}
                             value={option.value}
                             selected={option.selected}
-                            >{option.label}</option
                           >
+                            {option.label}
+                          </option>
                         </template>
                       </select>
                     </template>

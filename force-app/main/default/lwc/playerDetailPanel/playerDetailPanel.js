@@ -46,11 +46,13 @@ export default class PlayerDetailPanel extends LightningElement {
     this._playerDetail = value;
     this.draftUsr = value && value.usr ? { ...value.usr } : {};
     this._baselineUsr = { ...this.draftUsr };
-    this.draftPayments = ((value && value.payments) || []).map((payment, index) => ({
-      index,
-      payment: { ...payment },
-      rowMode: "view"
-    }));
+    this.draftPayments = ((value && value.payments) || []).map(
+      (payment, index) => ({
+        index,
+        payment: { ...payment },
+        rowMode: "view"
+      })
+    );
     this.editingPaymentIndex = null;
   }
 
@@ -59,7 +61,8 @@ export default class PlayerDetailPanel extends LightningElement {
       return true;
     }
     return EDITABLE_USR_FIELDS.some(
-      (field) => (this.draftUsr[field] || "") !== (this._baselineUsr[field] || "")
+      (field) =>
+        (this.draftUsr[field] || "") !== (this._baselineUsr[field] || "")
     );
   }
 
@@ -94,7 +97,10 @@ export default class PlayerDetailPanel extends LightningElement {
   }
 
   get profileName() {
-    return (this.draftUsr && this.draftUsr.Profile && this.draftUsr.Profile.Name) || "";
+    return (
+      (this.draftUsr && this.draftUsr.Profile && this.draftUsr.Profile.Name) ||
+      ""
+    );
   }
 
   get panelTitle() {
@@ -113,15 +119,21 @@ export default class PlayerDetailPanel extends LightningElement {
   }
 
   get playerRecordUrl() {
-    return this.hasPlayerRecord ? `/lightning/r/Player__c/${this.playerDetail.player.Id}/view` : "";
+    return this.hasPlayerRecord
+      ? `/lightning/r/Player__c/${this.playerDetail.player.Id}/view`
+      : "";
   }
 
   get totalPayments() {
-    return this.hasPlayerRecord ? this.playerDetail.player.TotalPaymentsRollup__c : 0;
+    return this.hasPlayerRecord
+      ? this.playerDetail.player.TotalPaymentsRollup__c
+      : 0;
   }
 
   get balanceDue() {
-    return this.hasPlayerRecord ? this.playerDetail.player.BalanceDueFormula__c : 0;
+    return this.hasPlayerRecord
+      ? this.playerDetail.player.BalanceDueFormula__c
+      : 0;
   }
 
   get paymentRows() {
@@ -129,7 +141,9 @@ export default class PlayerDetailPanel extends LightningElement {
       index: row.index,
       payment: row.payment,
       isEditing: row.rowMode === "edit",
-      isRowActionDisabled: this.editingPaymentIndex !== null && this.editingPaymentIndex !== row.index,
+      isRowActionDisabled:
+        this.editingPaymentIndex !== null &&
+        this.editingPaymentIndex !== row.index,
       canDelete: !!row.payment.Id
     }));
   }
@@ -139,12 +153,17 @@ export default class PlayerDetailPanel extends LightningElement {
   }
 
   get isAddPaymentDisabled() {
-    return this.isEditOrNew || this.editingPaymentIndex !== null || !this.hasPlayerRecord;
+    return (
+      this.isEditOrNew ||
+      this.editingPaymentIndex !== null ||
+      !this.hasPlayerRecord
+    );
   }
 
   handleFieldChange(event) {
     const field = event.currentTarget.dataset.field;
-    const value = field === "IsActive" ? event.detail.checked : event.detail.value;
+    const value =
+      field === "IsActive" ? event.detail.checked : event.detail.value;
     this.draftUsr = { ...this.draftUsr, [field]: value };
   }
 
@@ -153,7 +172,9 @@ export default class PlayerDetailPanel extends LightningElement {
   }
 
   handleSaveClick() {
-    this.dispatchEvent(new CustomEvent("save", { detail: { usr: this.draftUsr } }));
+    this.dispatchEvent(
+      new CustomEvent("save", { detail: { usr: this.draftUsr } })
+    );
   }
 
   handleCancelClick() {
@@ -182,7 +203,10 @@ export default class PlayerDetailPanel extends LightningElement {
       Amount__c: null,
       PaymentDate__c: null
     };
-    this.draftPayments = [...this.draftPayments, { index: newIndex, payment: blankPayment, rowMode: "edit" }];
+    this.draftPayments = [
+      ...this.draftPayments,
+      { index: newIndex, payment: blankPayment, rowMode: "edit" }
+    ];
     this.editingPaymentIndex = newIndex;
   }
 
@@ -202,7 +226,9 @@ export default class PlayerDetailPanel extends LightningElement {
     const field = event.currentTarget.dataset.field;
     const value = event.detail.value;
     this.draftPayments = this.draftPayments.map((row) =>
-      row.index === index ? { ...row, payment: { ...row.payment, [field]: value } } : row
+      row.index === index
+        ? { ...row, payment: { ...row.payment, [field]: value } }
+        : row
     );
   }
 
@@ -213,7 +239,9 @@ export default class PlayerDetailPanel extends LightningElement {
       return;
     }
     this.dispatchEvent(
-      new CustomEvent("savepayment", { detail: { payment: row.payment, balanceDue: this.balanceDue } })
+      new CustomEvent("savepayment", {
+        detail: { payment: row.payment, balanceDue: this.balanceDue }
+      })
     );
   }
 
@@ -228,7 +256,11 @@ export default class PlayerDetailPanel extends LightningElement {
     if (!ok) {
       return;
     }
-    this.dispatchEvent(new CustomEvent("deletepayment", { detail: { paymentId: row.payment.Id } }));
+    this.dispatchEvent(
+      new CustomEvent("deletepayment", {
+        detail: { paymentId: row.payment.Id }
+      })
+    );
   }
 
   handleCancelPaymentClick(event) {
@@ -238,11 +270,18 @@ export default class PlayerDetailPanel extends LightningElement {
       return;
     }
     if (row.payment.Id) {
-      const original = ((this.playerDetail && this.playerDetail.payments) || []).find(
-        (p) => p.Id === row.payment.Id
-      );
+      const original = (
+        (this.playerDetail && this.playerDetail.payments) ||
+        []
+      ).find((p) => p.Id === row.payment.Id);
       this.draftPayments = this.draftPayments.map((r) =>
-        r.index === index ? { ...r, payment: original ? { ...original } : r.payment, rowMode: "view" } : r
+        r.index === index
+          ? {
+              ...r,
+              payment: original ? { ...original } : r.payment,
+              rowMode: "view"
+            }
+          : r
       );
     } else {
       this.draftPayments = this.draftPayments.filter((r) => r.index !== index);
