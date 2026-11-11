@@ -44,7 +44,9 @@
     <tabs>PlayerManagement_Lightning</tabs>
     <tabs>Email</tabs>
     <tabs>MessageBoard</tabs>
+    <tabs>MessageBoard_Lightning</tabs>
     <tabs>AdminMessageBoard</tabs>
+    <tabs>AdminMessageBoard_Lightning</tabs>
     <tabs>Helpful_Links</tabs>
     <tabs>standard-report</tabs>
     <tabs>standard-Dashboard</tabs>

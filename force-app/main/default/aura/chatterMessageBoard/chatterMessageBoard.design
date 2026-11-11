@@ -1,0 +1,3 @@
+<design:component label="Chatter Message Board">
+    <design:attribute name="groupName" label="Chatter Group Name" description="Exact Name of the CollaborationGroup whose feed should be displayed" />
+</design:component>
